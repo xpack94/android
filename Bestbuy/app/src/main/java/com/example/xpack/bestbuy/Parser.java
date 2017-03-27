@@ -1,10 +1,13 @@
 package com.example.xpack.bestbuy;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -24,8 +27,6 @@ public class Parser {
 
     private static JSONObject getJSON(String Url) throws IOException, JSONException {
 
-        if (json != null)
-            return json;
 
         Request request = new Request.Builder().url(Url).build();
 
@@ -39,7 +40,7 @@ public class Parser {
         return json;
     }
 
-    public static Products[] getProducts(String Url) throws IOException, JSONException {
+    public static ArrayList<Products> getProducts(ArrayList<Products> produits,String Url) throws IOException, JSONException {
 
         JSONObject json = getJSON(Url);
         JSONArray products = json.getJSONArray("products");
@@ -47,15 +48,17 @@ public class Parser {
 
 
 
-        Products[] produits = new Products[products.length()];
+        //Products[] produits = new Products[products.length()];
+       // ArrayList<Products> produits = new ArrayList<Products>(products.length());
 
         for (int i=0;i<products.length();i++){
             JSONObject prod = products.getJSONObject(i);
-            produits[i]=new Products(
-                    prod.getString("salePrice"),
+            Log.d("t", ""+prod.getString("name"));
+            produits.add(new Products(
+                    prod.getString("salePrice")+"$",
                     prod.getString("name"),
                     prod.getString("mediumImage")
-            );
+            ));
         }
 
 

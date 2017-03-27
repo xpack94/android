@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -20,10 +21,8 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-/**
- * Created by xpack on 24/03/17.
- */
 
 public class AllProducts extends AppCompatActivity {
 
@@ -32,7 +31,9 @@ public class AllProducts extends AppCompatActivity {
     int page=1;
     ProgressDialog pDialog;
     itemsAdapter mAdapter;
-    Products [] produits;
+    int pos=1;
+
+    ArrayList<Products> produits=new ArrayList<Products>();
 
 
 
@@ -49,11 +50,9 @@ public class AllProducts extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                     page++;
-
-                Fetch l= new Fetch();
+                    pos++;
+                Fetcher l = new Fetcher();
                 l.execute();
-
-
             }
         });
         list.addFooterView(btnLoadMore);
@@ -73,50 +72,62 @@ public class AllProducts extends AppCompatActivity {
 
 
 
-    public class Fetcher extends AsyncTask<Object, Object, Products[]> {
+    public class Fetcher extends AsyncTask<Object, Object, ArrayList<Products>> {
 
 
 
 
 
         @Override
-        protected Products[] doInBackground(Object... params) {
+        protected ArrayList<Products> doInBackground(Object... params) {
 
-                produits=new Products[0];
+
 
             try {
-                produits = Parser.getProducts("https://api.bestbuy.com/v1/products?format=json&show=mediumImage,name,salePrice&pageSize=25&page="+(page)+"&apiKey=tghcgc6qnf72tat8a5kbja9r");
+
+                Parser.getProducts(produits,"https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page="+page+"&apiKey=tghcgc6qnf72tat8a5kbja9r");
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
+            Log.i("test",""+produits.get(produits.size()-1).name);
+
             return produits;
         }
 
         @Override
-        protected void onPostExecute(final Products[] produits) {
-            mAdapter=new itemsAdapter(produits);
-            mAdapter.notifyDataSetChanged();
-            list.setAdapter(mAdapter);
+        protected void onPostExecute(final ArrayList<Products> prods) {
+
+            if (pos==1){
+                mAdapter=new itemsAdapter(produits);
+                list.setAdapter(mAdapter);
+            }else{
+                mAdapter.notifyDataSetChanged();
+
+
+            }
+
 
     }
 
 
 
-}
+
+    }
     class  itemsAdapter extends BaseAdapter{
 
-        Products [] produits;
-        public itemsAdapter( Products[] produits){
+
+        ArrayList<Products> produits;
+        public itemsAdapter(ArrayList<Products> produits){
             super();
             this.produits=produits;
         }
 
         @Override
         public int getCount() {
-            return produits.length;
+            return produits.size();
         }
 
         @Override
@@ -132,6 +143,7 @@ public class AllProducts extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
+
             if(convertView == null)
                 convertView = getLayoutInflater().inflate(R.layout.products, parent, false);
 
@@ -140,11 +152,13 @@ public class AllProducts extends AppCompatActivity {
             ImageView image = (ImageView) convertView.findViewById(R.id.image);
 
 
-                name.setText(produits[position].name);
-                sku.setText(produits[position].salePrice);
+
+
+                name.setText(produits.get(position).name);
+                sku.setText(produits.get(position).salePrice);
 
                 Picasso.with(getApplicationContext())
-                        .load(produits[position].url)
+                        .load(produits.get(position).url)
                         .into(image);
 
 
@@ -163,44 +177,7 @@ public class AllProducts extends AppCompatActivity {
 
 
 
-    public class Fetch extends AsyncTask<Object, Object, Products[]> {
 
-
-
-
-
-        @Override
-        protected Products[] doInBackground(Object... params) {
-
-
-
-
-            try {
-                produits = Parser.getProducts("https://api.bestbuy.com/v1/products?format=json&show=mediumImage,name,salePrice&pageSize=25&page="+(page)+"&apiKey=tghcgc6qnf72tat8a5kbja9r");
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            return produits;
-        }
-
-        @Override
-        protected void onPostExecute(final Products[] produits) {
-
-//            int currentPosition = list.getFirstVisiblePosition();
-
-
-
-           // list.setSelectionFromTop(currentPosition + 1, 0);
-            list.setAdapter(mAdapter);
-
-
-
-        }
-
-    }
 
 
 
