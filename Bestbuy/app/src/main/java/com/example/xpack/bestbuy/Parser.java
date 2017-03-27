@@ -57,7 +57,8 @@ public class Parser {
             produits.add(new Products(
                     prod.getString("salePrice")+"$",
                     prod.getString("name"),
-                    prod.getString("mediumImage")
+                    prod.getString("mediumImage"),
+                    prod.getString("customerReviewAverage")
             ));
         }
 

@@ -18,24 +18,42 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_width="wrap_content">
+        android:layout_width="208dp">
 
         <TextView
             android:text="name"
-            android:layout_width="307dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12dp"
+            android:textSize="10sp"
             android:id="@+id/name"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <TextView
             android:text="salePrice"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/salePrice" />
 
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:id="@+id/ratings"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:stepSize="0.5"
+            android:numStars="5"
+             />
+
     </LinearLayout>
+
+    <TextView
+        android:layout_width="99dp"
+        android:layout_height="35dp"
+        android:id="@+id/addToWishList"
+
+        android:text="+"
+        android:textSize="25sp"
+        android:onClick="addToWishList"
+        />
 
 
 </LinearLayout>

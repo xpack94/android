@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class AllProducts extends AppCompatActivity {
     int pos=1;
 
     ArrayList<Products> produits=new ArrayList<Products>();
+    ProgressDialog progress = new ProgressDialog(this);
 
 
 
@@ -76,7 +78,12 @@ public class AllProducts extends AppCompatActivity {
 
 
 
+        public void onPreExecute() {
 
+            progress.setMessage("fetching data :) ");
+            progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progress.setIndeterminate(true);
+        }
 
         @Override
         protected ArrayList<Products> doInBackground(Object... params) {
@@ -150,12 +157,22 @@ public class AllProducts extends AppCompatActivity {
             TextView name = (TextView) convertView.findViewById(R.id.name);
             TextView sku = (TextView) convertView.findViewById(R.id.salePrice);
             ImageView image = (ImageView) convertView.findViewById(R.id.image);
-
+            //TextView customerReview =(TextView) convertView.findViewById(R.id.customerReview);
+            RatingBar rat= (RatingBar) convertView.findViewById(R.id.ratings);
 
 
 
                 name.setText(produits.get(position).name);
                 sku.setText(produits.get(position).salePrice);
+                if (produits.get(position).customerReview=="null"){
+                    rat.setRating(Float.parseFloat("0"));
+
+            }else{
+
+                    rat.setRating(Float.parseFloat(produits.get(position).customerReview));
+                }
+
+
 
                 Picasso.with(getApplicationContext())
                         .load(produits.get(position).url)
