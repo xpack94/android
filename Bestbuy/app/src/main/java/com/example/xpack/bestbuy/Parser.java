@@ -58,7 +58,9 @@ public class Parser {
                     prod.getString("salePrice")+"$",
                     prod.getString("name"),
                     prod.getString("mediumImage"),
-                    prod.getString("customerReviewAverage")
+                    prod.getString("customerReviewAverage"),
+                    prod.getString("largeFrontImage"),
+                    prod.getString("onlineAvailabilityUpdateDate")
             ));
         }
 

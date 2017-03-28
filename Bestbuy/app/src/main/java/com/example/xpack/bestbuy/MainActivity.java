@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
 
@@ -49,8 +48,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         View header=(View ) navigationView.getHeaderView(0);
-        TextView header_text=(TextView) header.findViewById(R.id.head);
-        header_text.setText("BestBuy");
+//        TextView header_text=(TextView) header.findViewById(R.id.head);
+//        header_text.setText("BestBuy");
 
 
 

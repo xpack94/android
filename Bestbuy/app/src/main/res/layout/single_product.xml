@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center|top"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="283dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/name"
+        android:textSize="15sp"
+        android:text="name"
+        android:layout_weight="0.10" />
+
+    <ImageView
+        android:layout_width="288dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/largeFrontImage"
+        android:layout_weight="0.22" />
+
+    <LinearLayout
+        android:layout_width="381dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@id/salePrice"
+            android:text="saleprice"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:textColor="@android:color/holo_red_dark" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/salesEnd"
+            android:text="sales end: "
+            android:textSize="14sp"
+            />
+    </LinearLayout>
+</LinearLayout>

@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,10 +22,11 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class AllProducts extends AppCompatActivity {
+public class AllProducts extends AppCompatActivity implements Serializable {
 
 
     ListView list;
@@ -35,7 +36,7 @@ public class AllProducts extends AppCompatActivity {
     int pos=1;
 
     ArrayList<Products> produits=new ArrayList<Products>();
-    ProgressDialog progress = new ProgressDialog(this);
+    ProgressDialog progress ;
 
 
 
@@ -44,6 +45,7 @@ public class AllProducts extends AppCompatActivity {
 
         setContentView(R.layout.test);
         Intent intent=getIntent();
+        progress=new ProgressDialog(this);
         list= (ListView) findViewById(R.id.list);
         Button btnLoadMore = new Button(this);
         btnLoadMore.setText("Load More");
@@ -80,9 +82,10 @@ public class AllProducts extends AppCompatActivity {
 
         public void onPreExecute() {
 
-            progress.setMessage("fetching data :) ");
-            progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progress.setIndeterminate(true);
+
+            progress.setCancelable(false);
+            progress.setTitle("loading products");
+            progress.show();
         }
 
         @Override
@@ -92,6 +95,7 @@ public class AllProducts extends AppCompatActivity {
 
             try {
 
+
                 Parser.getProducts(produits,"https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page="+page+"&apiKey=tghcgc6qnf72tat8a5kbja9r");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -99,14 +103,14 @@ public class AllProducts extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            Log.i("test",""+produits.get(produits.size()-1).name);
+
 
             return produits;
         }
 
         @Override
         protected void onPostExecute(final ArrayList<Products> prods) {
-
+            progress.hide();
             if (pos==1){
                 mAdapter=new itemsAdapter(produits);
                 list.setAdapter(mAdapter);
@@ -116,8 +120,23 @@ public class AllProducts extends AppCompatActivity {
 
             }
 
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(AllProducts.this, SingleProductInfos.class);
 
-    }
+                    intent.putExtra("page", page);
+                    intent.putExtra("position", position);
+                   // intent.putExtra("produits",produits);
+
+                    startActivity(intent);
+                }
+            });
+
+
+
+
+        }
 
 
 
@@ -186,6 +205,8 @@ public class AllProducts extends AppCompatActivity {
         }
 
 
+
+
     }
 
 
@@ -239,24 +260,12 @@ public class AllProducts extends AppCompatActivity {
         @Override
         public void onScrollStateChanged(AbsListView view, int scrollState) {
         }
+
+
+
+
+
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

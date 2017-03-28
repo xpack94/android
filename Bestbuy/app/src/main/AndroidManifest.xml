@@ -21,8 +21,13 @@
         </activity>
         <activity android:name=".AllProducts"
             android:theme="@style/AppTheme"
-            android:label="the_activity"
+            android:label="all products"
             />
+        <activity android:name=".SingleProductInfos"
+            android:theme="@style/AppTheme"
+            android:label="product informations"
+            />
+
     </application>
 
 </manifest>
