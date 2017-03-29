@@ -60,7 +60,10 @@ public class Parser {
                     prod.getString("mediumImage"),
                     prod.getString("customerReviewAverage"),
                     prod.getString("largeFrontImage"),
-                    prod.getString("onlineAvailabilityUpdateDate")
+                    prod.getString("onlineAvailabilityUpdateDate"),
+                    prod.getString("customerReviewCount"),
+                    prod.getString("inStoreAvailability"),
+                    prod.getString("longDescription")
             ));
         }
 

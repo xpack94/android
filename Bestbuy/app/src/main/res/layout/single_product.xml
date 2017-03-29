@@ -1,29 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center|top"
     android:weightSum="1">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+       android:orientation="vertical"
+        >
     <TextView
-        android:layout_width="283dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/name"
         android:textSize="15sp"
         android:text="name"
-        android:layout_weight="0.10" />
+        android:layout_marginBottom="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textStyle="bold"/>
 
-    <ImageView
-        android:layout_width="288dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/largeFrontImage"
-        android:layout_weight="0.22" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:id="@+id/largeFrontImage"
+            android:layout_weight="1" />
+
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="381dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="left">
+        android:gravity="left"
+        android:layout_weight="0.22"
+
+        android:weightSum="1">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,14 +60,112 @@
             android:text="saleprice"
             android:fontFamily="sans-serif"
             android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark" />
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_weight="0.84"
+            android:padding="15dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/isAvailable"
+                android:textSize="15sp"
+                android:textStyle="italic"
+                android:paddingRight="6dp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:elevation="0dp"
+            android:theme="@style/Base.V12.Widget.AppCompat.AutoCompleteTextView"
+            android:background="#c1c1c1"
+            android:clickable="false"
+            android:focusableInTouchMode="false"
+            android:focusable="false">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratingCount"
+                android:text="rating count"
+                android:textSize="15sp"
+                android:layout_marginLeft="25dp"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textColorLink="@android:color/transparent"
+                android:background="@android:color/transparent"
+                android:clickable="false" />
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratings"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_marginLeft="25dp"
+                android:numStars="5"
+                android:stepSize="0.1"
+                tools:backgroundTint="@android:color/holo_orange_light"
+                android:clickable="false"
+                android:background="#c1c1c1"
+                tools:background="@android:color/darker_gray" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:textSize="15sp"
+                android:id="@+id/rate"
+                android:background="@android:color/transparent"
+                android:textColorLink="@android:color/transparent"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/Base.V12.Widget.AppCompat.AutoCompleteTextView"
+            android:background="#c1c1c1"
+            android:layout_marginTop="1dp"
+            android:orientation="horizontal"
+            android:id="@+id/clickable">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Description"
+                android:text="Description"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="25dp"
+                android:background="@android:color/transparent"
+                android:textColorLink="@android:color/transparent"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:id="@+id/toggle"
+                android:text="+"
+                android:textSize="40sp"
+                android:layout_marginLeft="150dp"
+                android:background="@android:color/transparent"
+                android:textColorLink="@android:color/transparent"/>
+
+        </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/salesEnd"
-            android:text="sales end: "
-            android:textSize="14sp"
+            android:id="@+id/longDescription"
+            android:text="this is just a test"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             />
+
     </LinearLayout>
+
+
+
 </LinearLayout>
+</ScrollView>

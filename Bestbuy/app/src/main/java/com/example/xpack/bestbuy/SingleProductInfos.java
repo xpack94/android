@@ -92,6 +92,10 @@ public class SingleProductInfos extends AppCompatActivity {
                     args.putString("largeImage",prod.largeImage);
                     args.putString("salePrice",prod.salePrice);
                     args.putString("salesEnd",prod.salesEnd);
+                    args.putString("ratingCount",prod.ratingCount);
+                    args.putString("ratings",prod.customerReview);
+                    args.putString("isAvailable",prod.isAvailable);
+                    args.putString("longDescription",prod.longDescription);
 
                     fragment.setArguments(args);
 
