@@ -12,11 +12,12 @@ public class Products {
     public String ratingCount;
     public String isAvailable;
     public String longDescription;
+    public String addToCartUrl;
 
 
 
     public Products(String sku, String name, String url, String customerReview, String largeImage, String salesEnd, String ratingCount,
-                    String isAvailable, String longDescription){
+                    String isAvailable, String longDescription,String addToCartUrl){
         this.salePrice=sku;
         this.name=name;
         this.url=url;
@@ -26,5 +27,6 @@ public class Products {
         this.ratingCount=ratingCount;
         this.isAvailable=isAvailable;
         this.longDescription=longDescription;
+        this.addToCartUrl=addToCartUrl;
     }
 }

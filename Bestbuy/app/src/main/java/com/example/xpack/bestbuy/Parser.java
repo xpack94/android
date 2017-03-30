@@ -62,8 +62,9 @@ public class Parser {
                     prod.getString("largeFrontImage"),
                     prod.getString("onlineAvailabilityUpdateDate"),
                     prod.getString("customerReviewCount"),
-                    prod.getString("inStoreAvailability"),
-                    prod.getString("longDescription")
+                    prod.getString("onlineAvailability"),
+                    prod.getString("longDescription"),
+                    prod.getString("addToCartUrl")
             ));
         }
 

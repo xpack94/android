@@ -1,8 +1,10 @@
 package com.example.xpack.bestbuy;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -27,7 +30,7 @@ public class SingleProductFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.single_product, container, false);
 
         Bundle args=getArguments();
@@ -40,7 +43,8 @@ public class SingleProductFragment extends Fragment {
         String ratingCount= args.getString("ratingCount");
         String isAvailable=args.getString("isAvailable");
         String longDescription=args.getString("longDescription");
-        Animation Toggle;
+        final String addToCart = args.getString("addToCartUrl");
+        final Animation Toggle;
         final TextView ld;
         Toggle= AnimationUtils.loadAnimation(getActivity().getApplicationContext(),R.anim.slide_down);
         Toggle.setDuration(2000);
@@ -54,6 +58,7 @@ public class SingleProductFragment extends Fragment {
 
         TextView inStoreAvailability =(TextView) v.findViewById(R.id.isAvailable);
         LinearLayout clickable= (LinearLayout) v.findViewById(R.id.clickable);
+        Button add_to_cart= (Button) v.findViewById(R.id.addToCart);
        // TextView endDate =(TextView) v.findViewById(R.id.salesEnd);
 
         Price.setText(salePrice);
@@ -80,6 +85,21 @@ public class SingleProductFragment extends Fragment {
 
             }
         });
+        toggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(toggle.getText().equals("+")) {
+                    ld.setVisibility(View.VISIBLE);
+
+
+                    toggle.setText("-");
+                }else{
+                    ld.setVisibility(View.GONE);
+                    toggle.setText("+");
+                }
+
+            }
+        });
 
         ImageView largeImage = (ImageView) v.findViewById(R.id.largeFrontImage);
 
@@ -87,11 +107,14 @@ public class SingleProductFragment extends Fragment {
         LayerDrawable stars = (LayerDrawable) rt.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
 
-        
+
         if (isAvailable.equals("true")){
-            inStoreAvailability.setText("item available in store");
+            inStoreAvailability.setText("item available online");
+            add_to_cart.setEnabled(true);
+            add_to_cart.setClickable(true);
         }else{
-            inStoreAvailability.setText("item not available in store");
+            inStoreAvailability.setText("item only available in store");
+
         }
 
         if(!ratings.equals("null")) {
@@ -125,6 +148,19 @@ public class SingleProductFragment extends Fragment {
         Picasso.with(getActivity())
                 .load(image)
                 .into(largeImage);
+
+
+        add_to_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 Uri cart = Uri.parse(""+addToCart);
+                Intent intent = new Intent(Intent.ACTION_VIEW, cart);
+                startActivity(intent);
+
+            }
+        });
+
+
 
 
 

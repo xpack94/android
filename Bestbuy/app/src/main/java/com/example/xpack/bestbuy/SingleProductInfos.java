@@ -96,6 +96,7 @@ public class SingleProductInfos extends AppCompatActivity {
                     args.putString("ratings",prod.customerReview);
                     args.putString("isAvailable",prod.isAvailable);
                     args.putString("longDescription",prod.longDescription);
+                    args.putString("addToCartUrl",prod.addToCartUrl);
 
                     fragment.setArguments(args);
 

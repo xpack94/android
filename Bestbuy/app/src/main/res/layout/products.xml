@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:weightSum="1"
     android:paddingTop="5dp"
     android:paddingBottom="5dp">
@@ -13,12 +13,13 @@
         android:layout_height="67dp"
         android:layout_weight="0.01"
         android:maxWidth="67dp"
-        android:minHeight="67dp" />
+        android:minHeight="67dp"
+        android:layout_marginRight="5dp"/>
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_height="match_parent"
-        android:layout_width="208dp">
+        android:layout_height="wrap_content"
+        android:layout_width="200dp">
 
         <TextView
             android:text="name"
@@ -45,15 +46,18 @@
 
     </LinearLayout>
 
+
+
     <TextView
-        android:layout_width="99dp"
+        android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:id="@+id/addToWishList"
-
         android:text="+"
         android:textSize="25sp"
         android:onClick="addToWishList"
+        android:textDirection="rtl"
+        android:layout_marginLeft="2dp"
         />
+    </LinearLayout>
 
 
-</LinearLayout>

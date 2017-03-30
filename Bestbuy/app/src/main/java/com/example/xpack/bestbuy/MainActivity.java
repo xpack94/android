@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         View header=(View ) navigationView.getHeaderView(0);
+        ImageView v= (ImageView) header.findViewById(R.id.imageView);
+      //  v.setImageResource(R.drawable.icon);
 //        TextView header_text=(TextView) header.findViewById(R.id.head);
 //        header_text.setText("BestBuy");
 
