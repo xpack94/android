@@ -8,6 +8,7 @@ public class Products {
     public String salePrice;
     public String customerReview;
     public String largeImage;
+    public String mediumImage;
     public String salesEnd;
     public String ratingCount;
     public String isAvailable;
@@ -17,7 +18,7 @@ public class Products {
 
 
     public Products(String sku, String name, String url, String customerReview, String largeImage, String salesEnd, String ratingCount,
-                    String isAvailable, String longDescription,String addToCartUrl){
+                    String isAvailable, String longDescription,String addToCartUrl,String mediumImage){
         this.salePrice=sku;
         this.name=name;
         this.url=url;
@@ -28,5 +29,6 @@ public class Products {
         this.isAvailable=isAvailable;
         this.longDescription=longDescription;
         this.addToCartUrl=addToCartUrl;
+        this.mediumImage=mediumImage;
     }
 }

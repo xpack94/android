@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.LinearLayout;
 
 import org.json.JSONException;
 
@@ -24,6 +25,7 @@ public class SingleProductInfos extends AppCompatActivity {
     private int startPosition;
     ArrayList<Products> produits=new ArrayList<Products>();
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +35,7 @@ public class SingleProductInfos extends AppCompatActivity {
         page=args.getInt("page");
         startPosition =args.getInt("position");
        // produits= (ArrayList<Products>) args.getSerializable("produits");
-        pager= (ViewPager) findViewById(R.id.pager);
+        pager = (ViewPager) findViewById(R.id.pager);
         Fetcher fetcher = new Fetcher();
         fetcher.execute();
 
@@ -109,5 +111,13 @@ public class SingleProductInfos extends AppCompatActivity {
 
 
 
+
+
     }
+
+
+
+
+
+
 }

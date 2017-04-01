@@ -1,6 +1,9 @@
 package com.example.xpack.bestbuy;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -11,11 +14,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 
@@ -23,6 +36,20 @@ public class MainActivity extends AppCompatActivity
 
 
     ListView liste;
+    LayoutInflater inflater;
+    ProgressDialog progress;
+    LinearLayout inLay,inLay2,inLay3,inLay4,inLay5;
+    String [] categories= new String[2];
+    int line=1;
+    String url1="https://api.bestbuy.com/v1/products(categoryPath.id=";
+    String url2="*)?format=json&show=all&pageSize=25&page=2&apiKey=tghcgc6qnf72tat8a5kbja9r";
+    int cat=0;
+    ArrayList<Products> produits1=new ArrayList<Products>();
+    ArrayList<Products> produits2=new ArrayList<Products>();
+    ArrayList<Products> produits3=new ArrayList<Products>();
+    ArrayList<Products> produits4=new ArrayList<Products>();
+    ArrayList<Products> produits5=new ArrayList<Products>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +82,62 @@ public class MainActivity extends AppCompatActivity
 //        header_text.setText("BestBuy");
 
 
+        inflater=getLayoutInflater();
+        inLay=(LinearLayout) findViewById(R.id.innerLay);
+        inLay2=(LinearLayout) findViewById(R.id.innerLay2);
+        inLay3=(LinearLayout) findViewById(R.id.innerLay3);
+        inLay4=(LinearLayout) findViewById(R.id.innerLay4);
+        inLay5=(LinearLayout) findViewById(R.id.innerLay5);
+        TextView tv_theater=(TextView) findViewById(R.id.tv_theater);
+        TextView com_tab=(TextView) findViewById(R.id.Computer_Tablets);
+        TextView mobiles=(TextView) findViewById(R.id.mobiles);
+        TextView videoGames=(TextView) findViewById(R.id.video_games);
+        TextView movies_music=(TextView) findViewById(R.id.Movies_Music);
+
+        tv_theater.setTextColor(Color.parseColor("#FFFFFF"));
+        com_tab.setTextColor(Color.parseColor("#FFFFFF"));
+        videoGames.setTextColor(Color.parseColor("#FFFFFF"));
+        movies_music.setTextColor(Color.parseColor("#FFFFFF"));
+        mobiles.setTextColor(Color.parseColor("#FFFFFF"));
+        progress=new ProgressDialog(this);
+
+
+        Fetcher l = new Fetcher(1,url1,url2,"abcat0100000",produits1);
+        Fetcher k = new Fetcher(2,url1,url2,"abcat0500000",produits2);
+        //movies and music
+        Fetcher f = new Fetcher(3,url1,url2,"abcat0600000",produits3);
+        //video games
+        Fetcher j = new Fetcher(4,url1,url2,"abcat0700000",produits4);
+        //mobiles
+        Fetcher w = new Fetcher(5,url1,url2,"abcat0800000",produits5);
+
+
+
+
+            l.execute();
+
+//            line++;
+            k.execute();
+            f.execute();
+            j.execute();
+            w.execute();
+
+
+
+
+
+            //appelle a la methode getView pour remplir le layout avec des images
+
+
+
+
+
+
 
 
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -136,7 +216,108 @@ public class MainActivity extends AppCompatActivity
     }
 
 
- }
+
+
+    public class Fetcher extends AsyncTask<Object, Object, ArrayList<Products>> {
+
+        int number;
+        String url1;
+        String url2;
+        String id;
+        ArrayList<Products> produits;
+
+        Fetcher(int number, String url1, String url2, String id, ArrayList<Products> produits) {
+            this.number = number;
+            this.url1 = url1;
+            this.url2 = url2;
+            this.id = id;
+            this.produits = produits;
+        }
+
+
+        public void onPreExecute() {
+            progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progress.setIndeterminate(true);
+//            progress.setCancelable(false);
+//            progress.setTitle("loading products");
+            progress.show();
+        }
+
+
+        @Override
+        protected ArrayList<Products> doInBackground(Object... params) {
+
+
+            try {
+
+
+                Parser.getProducts(this.produits, url1 + id + url2);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            return produits;
+        }
+
+        @Override
+        protected void onPostExecute(final ArrayList<Products> prods) {
+            progress.hide();
+            if (number == 1) {
+
+                for (int x = 0; x < 25; x++) {
+                    inLay.addView(getView(x, prods));
+
+                }
+            } else if (number == 2) {
+                for (int x = 0; x < 25; x++) {
+                    inLay2.addView(getView(x, prods));
+
+                }
+            } else if (number == 3) {
+                for (int x = 0; x < 25; x++) {
+                    inLay3.addView(getView(x, prods));
+                }
+            } else if (number == 4) {
+                for (int x = 0; x < 25; x++) {
+                    inLay4.addView(getView(x, prods));
+
+                }
+            } else if (number == 5) {
+                for (int x = 0; x < 25; x++) {
+                    inLay5.addView(getView(x, prods));
+                }
+            }
+
+        }
+    }
+    private View getView(int x,ArrayList<Products> prods) {
+
+        View rootView = inflater.inflate( R.layout.groups,null);
+        ImageView image = (ImageView) rootView.findViewById(R.id.image);
+        Picasso.with(getApplicationContext())
+                .load(prods.get(x).mediumImage)
+                .into(image);
+        return rootView;
+    }
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
 
 
 

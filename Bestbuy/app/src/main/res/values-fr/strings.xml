@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Bestbuy</string>
+    <string name="tv_theater" translatable="false">tv et théâtre</string>
+    <string name="computer_talets" translatable="false">ordinateurs et tablets</string>
+    <string name="mobiles" translatable="false">Mobiles</string>
+    <string name="movies_music" translatable="false">Films et Music</string>
+    <string name="video_games" translatable="false">Jeux Videos</string>
+</resources>

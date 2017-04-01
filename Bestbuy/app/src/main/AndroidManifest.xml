@@ -22,6 +22,8 @@
         <activity android:name=".AllProducts"
             android:theme="@style/AppTheme"
             android:label="all products"
+            android:icon="@drawable/ic_menu_camera"
+            android:logo="@drawable/ic_menu_camera"
             />
         <activity android:name=".SingleProductInfos"
             android:theme="@style/AppTheme"

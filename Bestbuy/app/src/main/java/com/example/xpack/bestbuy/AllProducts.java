@@ -43,8 +43,13 @@ public class AllProducts extends AppCompatActivity implements Serializable {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         setContentView(R.layout.test);
+
         Intent intent=getIntent();
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.logo);
+//        getActionBar().setHomeButtonEnabled(true);
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
         progress=new ProgressDialog(this);
         list= (ListView) findViewById(R.id.list);
         Button btnLoadMore = new Button(this);
