@@ -39,10 +39,12 @@ public class MainActivity extends AppCompatActivity
     LayoutInflater inflater;
     ProgressDialog progress;
     LinearLayout inLay,inLay2,inLay3,inLay4,inLay5;
+    int page=2;
     String [] categories= new String[2];
     int line=1;
     String url1="https://api.bestbuy.com/v1/products(categoryPath.id=";
-    String url2="*)?format=json&show=all&pageSize=25&page=2&apiKey=tghcgc6qnf72tat8a5kbja9r";
+    String url2="*)?format=json&show=all&pageSize=25&page=";
+    String url3="&apiKey=tghcgc6qnf72tat8a5kbja9r";
     int cat=0;
     ArrayList<Products> produits1=new ArrayList<Products>();
     ArrayList<Products> produits2=new ArrayList<Products>();
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -77,9 +80,6 @@ public class MainActivity extends AppCompatActivity
 
         View header=(View ) navigationView.getHeaderView(0);
         ImageView v= (ImageView) header.findViewById(R.id.imageView);
-      //  v.setImageResource(R.drawable.icon);
-//        TextView header_text=(TextView) header.findViewById(R.id.head);
-//        header_text.setText("BestBuy");
 
 
         inflater=getLayoutInflater();
@@ -111,26 +111,11 @@ public class MainActivity extends AppCompatActivity
         //mobiles
         Fetcher w = new Fetcher(5,url1,url2,"abcat0800000",produits5);
 
-
-
-
             l.execute();
-
-//            line++;
             k.execute();
             f.execute();
             j.execute();
             w.execute();
-
-
-
-
-
-            //appelle a la methode getView pour remplir le layout avec des images
-
-
-
-
 
 
 
@@ -251,7 +236,7 @@ public class MainActivity extends AppCompatActivity
             try {
 
 
-                Parser.getProducts(this.produits, url1 + id + url2);
+                Parser.getProducts(this.produits, url1 + id +url2+page+ url3);
 
 
             } catch (IOException e) {
@@ -270,40 +255,58 @@ public class MainActivity extends AppCompatActivity
             if (number == 1) {
 
                 for (int x = 0; x < 25; x++) {
-                    inLay.addView(getView(x, prods));
+                    inLay.addView(getView(x, prods,this.id));
 
                 }
             } else if (number == 2) {
                 for (int x = 0; x < 25; x++) {
-                    inLay2.addView(getView(x, prods));
+                    inLay2.addView(getView(x, prods,this.id));
 
                 }
             } else if (number == 3) {
                 for (int x = 0; x < 25; x++) {
-                    inLay3.addView(getView(x, prods));
+                    inLay3.addView(getView(x, prods,this.id));
                 }
             } else if (number == 4) {
                 for (int x = 0; x < 25; x++) {
-                    inLay4.addView(getView(x, prods));
+                    inLay4.addView(getView(x, prods,this.id));
 
                 }
             } else if (number == 5) {
                 for (int x = 0; x < 25; x++) {
-                    inLay5.addView(getView(x, prods));
+                    inLay5.addView(getView(x, prods,this.id));
                 }
             }
+           // showInfo();
 
         }
     }
-    private View getView(int x,ArrayList<Products> prods) {
-
+    private View getView(int x,ArrayList<Products> prods,String id) {
         View rootView = inflater.inflate( R.layout.groups,null);
         ImageView image = (ImageView) rootView.findViewById(R.id.image);
+        image.setTag(25+x);
+        image.setTag(R.string.tag,id);
         Picasso.with(getApplicationContext())
                 .load(prods.get(x).mediumImage)
                 .into(image);
+
+
         return rootView;
     }
+
+    public void showInfo(View v){
+
+        Intent intent = new Intent(MainActivity.this,SingleProductInfos.class);
+        intent.putExtra("page", 2);
+        intent.putExtra("position", Integer.parseInt(""+v.getTag()));
+        intent.putExtra("url",url1+v.getTag(R.string.tag)+url2);
+        intent.putExtra("url3",url3);
+        intent.putExtra("offset",2);
+
+        startActivity(intent);
+       // Log.e("t", ""+url1+v.getTag(R.string.tag)+url2 );
+    }
+
 
 
 

@@ -13,4 +13,6 @@
     <string name="movies_music" translatable="false">Movies and Music</string>
     <string name="video_games" translatable="false">Video Games</string>
     <string name="mobiles" translatable="false">Mobiles</string>
+    <string name="tag" translatable="false">tag</string>
+
 </resources>

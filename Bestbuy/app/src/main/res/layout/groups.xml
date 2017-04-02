@@ -11,6 +11,11 @@
         android:layout_height="95dp"
         android:id="@+id/image"
         android:layout_marginRight="0dp"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        android:onClick="showInfo"
+
+        />
+
+
 
 </LinearLayout>

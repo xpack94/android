@@ -34,6 +34,8 @@ public class AllProducts extends AppCompatActivity implements Serializable {
     ProgressDialog pDialog;
     itemsAdapter mAdapter;
     int pos=1;
+    String url1="https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=";
+    String url2="&apiKey=tghcgc6qnf72tat8a5kbja9r";
 
     ArrayList<Products> produits=new ArrayList<Products>();
     ProgressDialog progress ;
@@ -132,6 +134,12 @@ public class AllProducts extends AppCompatActivity implements Serializable {
 
                     intent.putExtra("page", page);
                     intent.putExtra("position", position);
+                    intent.putExtra("url",url1);
+                    intent.putExtra("url3",url2);
+                    //le offset est utiliser dans le viewpager pour savoir quand est-ce que on atteint la fin du viewpager et
+                    //faire un load more
+                    intent.putExtra("offset",1);
+
                    // intent.putExtra("produits",produits);
 
                     startActivity(intent);
