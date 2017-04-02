@@ -46,7 +46,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tv_theater"
+                android:text=""
                 android:id="@+id/tv_theater"
                 android:textSize="17sp"
                 android:layout_marginLeft="6dp"
@@ -74,7 +74,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/computer_talets"
+                android:text=""
                 android:textSize="17sp"
                 android:id="@+id/Computer_Tablets"
                 android:layout_marginLeft="6dp"
@@ -102,7 +102,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/movies_music"
+                android:text=""
                 android:textSize="17sp"
                 android:id="@+id/Movies_Music"
                 android:layout_marginLeft="6dp"
@@ -130,7 +130,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/video_games"
+                android:text=""
                 android:textSize="17sp"
                 android:id="@+id/video_games"
                 android:layout_marginLeft="6dp"
@@ -158,7 +158,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mobiles"
+                android:text=""
                 android:textSize="17sp"
                 android:id="@+id/mobiles"
                 android:layout_marginLeft="6dp"

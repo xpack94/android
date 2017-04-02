@@ -64,7 +64,16 @@ public class SingleProductFragment extends Fragment {
         Price.setText(salePrice);
         //endDate.setText("sales Ends : "+salesEnd);
         ld =(TextView) v.findViewById(R.id.longDescription);
-        ld.setText(longDescription);
+
+        if(!longDescription.equals("null")){
+
+            ld.setText(longDescription);
+
+        }else{
+            ld.setText("this item has no description");
+
+        }
+
         ld.setVisibility(View.GONE);
 
 

@@ -8,11 +8,15 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tv_theater" translatable="false">tv and home theater</string>
-    <string name="computer_talets" translatable="false">Computer and Tablets</string>
-    <string name="movies_music" translatable="false">Movies and Music</string>
-    <string name="video_games" translatable="false">Video Games</string>
-    <string name="mobiles" translatable="false">Mobiles</string>
+    <string name="tv_theater" translatable="true">tv and home theater</string>
+    <string name="computer_talets" translatable="true">Computer and Tablets</string>
+    <string name="movies_music" translatable="true">Movies and Music</string>
+    <string name="video_games" translatable="true">Video Games</string>
+    <string name="mobiles" translatable="true">Mobiles</string>
     <string name="tag" translatable="false">tag</string>
+    <string name="internet" translatable="false">internet problem</string>
+    <string name="internetMessage" translatable="false">you arent connected to the internet !
+    check your internet settings or press on ok if the wifi is off
+    </string>
 
 </resources>

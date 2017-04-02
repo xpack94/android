@@ -1,8 +1,11 @@
 package com.example.xpack.bestbuy;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -51,6 +54,8 @@ public class MainActivity extends AppCompatActivity
     ArrayList<Products> produits3=new ArrayList<Products>();
     ArrayList<Products> produits4=new ArrayList<Products>();
     ArrayList<Products> produits5=new ArrayList<Products>();
+    TextView tv_theater, com_tab,mobiles,videoGames, movies_music;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,47 +85,50 @@ public class MainActivity extends AppCompatActivity
 
         View header=(View ) navigationView.getHeaderView(0);
         ImageView v= (ImageView) header.findViewById(R.id.imageView);
+        //tester si le telephone est connecté a internet
+        //afficher une boite de dialogue sinon
+        if(!haveNetworkConnection()){
+            NoInternet ni =new NoInternet();
+            ni.show(getFragmentManager(),"dialog");
+            //creer un thread qui attend que le button ok soit appuyer pour faire appele a la methode load
+            //afin de charger les données
+            new Thread(){
+                public void run(){
+                    while (!NoInternet.clicked && !haveNetworkConnection()){
 
+                    }
+                    try {
+                        Thread.sleep(6000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                load();
+                            }
+                        });
 
-        inflater=getLayoutInflater();
-        inLay=(LinearLayout) findViewById(R.id.innerLay);
-        inLay2=(LinearLayout) findViewById(R.id.innerLay2);
-        inLay3=(LinearLayout) findViewById(R.id.innerLay3);
-        inLay4=(LinearLayout) findViewById(R.id.innerLay4);
-        inLay5=(LinearLayout) findViewById(R.id.innerLay5);
-        TextView tv_theater=(TextView) findViewById(R.id.tv_theater);
-        TextView com_tab=(TextView) findViewById(R.id.Computer_Tablets);
-        TextView mobiles=(TextView) findViewById(R.id.mobiles);
-        TextView videoGames=(TextView) findViewById(R.id.video_games);
-        TextView movies_music=(TextView) findViewById(R.id.Movies_Music);
-
-        tv_theater.setTextColor(Color.parseColor("#FFFFFF"));
-        com_tab.setTextColor(Color.parseColor("#FFFFFF"));
-        videoGames.setTextColor(Color.parseColor("#FFFFFF"));
-        movies_music.setTextColor(Color.parseColor("#FFFFFF"));
-        mobiles.setTextColor(Color.parseColor("#FFFFFF"));
-        progress=new ProgressDialog(this);
-
-
-        Fetcher l = new Fetcher(1,url1,url2,"abcat0100000",produits1);
-        Fetcher k = new Fetcher(2,url1,url2,"abcat0500000",produits2);
-        //movies and music
-        Fetcher f = new Fetcher(3,url1,url2,"abcat0600000",produits3);
-        //video games
-        Fetcher j = new Fetcher(4,url1,url2,"abcat0700000",produits4);
-        //mobiles
-        Fetcher w = new Fetcher(5,url1,url2,"abcat0800000",produits5);
-
-            l.execute();
-            k.execute();
-            f.execute();
-            j.execute();
-            w.execute();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
 
 
+                }
+            }.start();
 
-    }
+
+
+        }else{
+            load();
+        }
+
+
+
+        }
+
+
+
+
+
 
 
 
@@ -200,6 +208,49 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    //la methode load permet de charger les données dans l'activité principale
+    public void load(){
+
+
+
+            inflater=getLayoutInflater();
+            inLay=(LinearLayout) findViewById(R.id.innerLay);
+            inLay2=(LinearLayout) findViewById(R.id.innerLay2);
+            inLay3=(LinearLayout) findViewById(R.id.innerLay3);
+            inLay4=(LinearLayout) findViewById(R.id.innerLay4);
+            inLay5=(LinearLayout) findViewById(R.id.innerLay5);
+            tv_theater=(TextView) findViewById(R.id.tv_theater);
+            com_tab=(TextView) findViewById(R.id.Computer_Tablets);
+            mobiles=(TextView) findViewById(R.id.mobiles);
+            videoGames=(TextView) findViewById(R.id.video_games);
+            movies_music=(TextView) findViewById(R.id.Movies_Music);
+
+            tv_theater.setTextColor(Color.parseColor("#FFFFFF"));
+            com_tab.setTextColor(Color.parseColor("#FFFFFF"));
+            videoGames.setTextColor(Color.parseColor("#FFFFFF"));
+            movies_music.setTextColor(Color.parseColor("#FFFFFF"));
+            mobiles.setTextColor(Color.parseColor("#FFFFFF"));
+            progress=new ProgressDialog(this);
+
+
+            Fetcher l = new Fetcher(1,url1,url2,"abcat0100000",produits1);
+            Fetcher k = new Fetcher(2,url1,url2,"abcat0500000",produits2);
+            //movies and music
+            Fetcher f = new Fetcher(3,url1,url2,"abcat0600000",produits3);
+            //video games
+            Fetcher j = new Fetcher(4,url1,url2,"abcat0700000",produits4);
+            //mobiles
+            Fetcher w = new Fetcher(5,url1,url2,"abcat0800000",produits5);
+
+            l.execute();
+            k.execute();
+            f.execute();
+            j.execute();
+            w.execute();
+
+
+    }
+
 
 
 
@@ -221,10 +272,8 @@ public class MainActivity extends AppCompatActivity
 
 
         public void onPreExecute() {
-            progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progress.setIndeterminate(true);
-//            progress.setCancelable(false);
-//            progress.setTitle("loading products");
+            progress.setCancelable(false);
+            progress.setTitle("loading...");
             progress.show();
         }
 
@@ -253,26 +302,30 @@ public class MainActivity extends AppCompatActivity
         protected void onPostExecute(final ArrayList<Products> prods) {
             progress.hide();
             if (number == 1) {
-
+                tv_theater.setText(R.string.tv_theater);
                 for (int x = 0; x < 25; x++) {
                     inLay.addView(getView(x, prods,this.id));
 
                 }
             } else if (number == 2) {
+                com_tab.setText(R.string.computer_talets);
                 for (int x = 0; x < 25; x++) {
                     inLay2.addView(getView(x, prods,this.id));
 
                 }
             } else if (number == 3) {
+                movies_music.setText(R.string.movies_music);
                 for (int x = 0; x < 25; x++) {
                     inLay3.addView(getView(x, prods,this.id));
                 }
             } else if (number == 4) {
+                videoGames.setText(R.string.video_games);
                 for (int x = 0; x < 25; x++) {
                     inLay4.addView(getView(x, prods,this.id));
 
                 }
             } else if (number == 5) {
+                mobiles.setText(R.string.mobiles);
                 for (int x = 0; x < 25; x++) {
                     inLay5.addView(getView(x, prods,this.id));
                 }
@@ -308,6 +361,24 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+
+
+    private boolean haveNetworkConnection(){
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
 
 
 
