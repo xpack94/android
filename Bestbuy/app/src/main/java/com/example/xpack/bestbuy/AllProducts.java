@@ -2,6 +2,7 @@ package com.example.xpack.bestbuy;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -59,9 +60,7 @@ public class AllProducts extends AppCompatActivity implements Serializable {
         page=intent.getExtras().getInt("page");
         decalage=intent.getExtras().getInt("decalage");
         setTitle(title);
-//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.logo);
-//        getActionBar().setHomeButtonEnabled(true);
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
+
         progress=new ProgressDialog(this);
         list= (ListView) findViewById(R.id.list);
         btnLoadMore = new Button(this);
@@ -81,6 +80,9 @@ public class AllProducts extends AppCompatActivity implements Serializable {
 
         Fetcher l= new Fetcher();
         l.execute();
+
+
+
 
 
 
@@ -175,7 +177,6 @@ public class AllProducts extends AppCompatActivity implements Serializable {
 
 
 
-
         }
 
 
@@ -218,6 +219,8 @@ public class AllProducts extends AppCompatActivity implements Serializable {
             ImageView image = (ImageView) convertView.findViewById(R.id.image);
             //TextView customerReview =(TextView) convertView.findViewById(R.id.customerReview);
             RatingBar rat= (RatingBar) convertView.findViewById(R.id.ratings);
+            ImageView pic=(ImageView) convertView.findViewById(R.id.AvailablOnline);
+            TextView avOnline =(TextView) convertView.findViewById(R.id.AvailablOnlineText);
 
 
 
@@ -236,6 +239,19 @@ public class AllProducts extends AppCompatActivity implements Serializable {
                 Picasso.with(getApplicationContext())
                         .load(produits.get(position).url)
                         .into(image);
+
+            //verifier si le produit et disponible en ligne
+            if (produits.get(position).isAvailable.equals("true")){
+                pic.setImageResource(R.drawable.available_24dp);
+                avOnline.setText(R.string.available_online);
+                avOnline.setTextColor(Color.parseColor("#2F4F4F"));
+            }else{
+                pic.setImageResource(R.drawable.ic_block_black_24dp);
+                avOnline.setText(R.string.not_available);
+                avOnline.setTextColor(Color.parseColor("#2F4F4F"));
+
+            }
+
 
 
 

@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity
 
                     }
                     try {
-                        Thread.sleep(6000);
+                        Thread.sleep(7000);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -197,48 +197,41 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        Intent intent=new Intent(getApplicationContext(),AllProducts.class);
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Fragment f=null;
         if (id == R.id.Computer_Tablets) {
             f=new Computers_Tablets();
         } else if (id == R.id.all_products) {
-            Intent intent=new Intent(getApplicationContext(),AllProducts.class);
+
             intent.putExtra("url1","https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=");
-            intent.putExtra("url2","&apiKey=tghcgc6qnf72tat8a5kbja9r");
-            intent.putExtra("page",1);
-            intent.putExtra("decalage",0);
             intent.putExtra("title",""+getResources().getString(R.string.all_products));
-            startActivity(intent);
-
-
 
         } else if (id == R.id.tv_theater) {
-
+                intent.putExtra("url1",url1+"abcat0100000"+url2);
+                intent.putExtra("title",""+getResources().getString(R.string.tv_theater));
         } else if (id == R.id.audio) {
 
         } else if (id == R.id.movies_music) {
-
+            intent.putExtra("url1",url1+"abcat0600000"+url2);
+            intent.putExtra("title",getResources().getString(R.string.movies_music));
         } else if (id == R.id.video_games) {
-
+            intent.putExtra("url1",url1+"abcat0700000"+url2);
+            intent.putExtra("title",getResources().getString(R.string.video_games));
         }else if (id==R.id.Mobies){
-
+            intent.putExtra("url1",url1+"abcat0800000"+url2);
+            intent.putExtra("title",getResources().getString(R.string.mobiles));
         }
         else if (id==R.id.Cameras){
 
         }
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction().replace(R.id.fragment_container, f).commit();
-
-
-//        android.support.v4.app.FragmentTransaction fragmentTransaction =
-//                getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.fragment_container, f);
-//        fragmentTransaction.commit();
-
+        intent.putExtra("url2","&apiKey=tghcgc6qnf72tat8a5kbja9r");
+        intent.putExtra("page",1);
+        intent.putExtra("decalage",0);
+        startActivity(intent);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-
 
         return true;
     }
@@ -268,14 +261,16 @@ public class MainActivity extends AppCompatActivity
             progress=new ProgressDialog(this);
 
 
-            Fetcher l = new Fetcher(1,url1,url2,"abcat0100000",produits1);
-            Fetcher k = new Fetcher(2,url1,url2,"abcat0500000",produits2);
             //movies and music
-            Fetcher f = new Fetcher(3,url1,url2,"abcat0600000",produits3);
+            Fetcher f = new Fetcher(1,url1,url2,"abcat0600000",produits3);
             //video games
-            Fetcher j = new Fetcher(4,url1,url2,"abcat0700000",produits4);
+            Fetcher j = new Fetcher(2,url1,url2,"abcat0700000",produits4);
             //mobiles
-            Fetcher w = new Fetcher(5,url1,url2,"abcat0800000",produits5);
+            Fetcher w = new Fetcher(3,url1,url2,"abcat0800000",produits5);
+            //computers and tablets
+            Fetcher k = new Fetcher(4,url1,url2,"abcat0500000",produits2);
+            //tv and home theater
+             Fetcher l = new Fetcher(5,url1,url2,"abcat0100000",produits1);
 
             l.execute();
             k.execute();
@@ -336,46 +331,46 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(final ArrayList<Products> prods) {
             progress.hide();
-            if (number == 1) {
-                tv_theater.setText(R.string.tv_theater);
+            if (number == 5) {
+                tv_theater.setText(getResources().getString(R.string.tv_theater)+">");
                 tv_theater.setTag("tv_theater");
                 tv_theater.setTag(R.string.tag,"abcat0100000");
                 for (int x = 0; x < 25; x++) {
                     inLay.addView(getView(x, prods,this.id));
 
                 }
-            } else if (number == 2) {
-                com_tab.setText(R.string.computer_talets);
+            } else if (number == 4) {
+                com_tab.setText(getResources().getString(R.string.computer_talets)+">");
                 com_tab.setTag("com_tab");
                 com_tab.setTag(R.string.tag,"abcat0500000");
                 for (int x = 0; x < 25; x++) {
                     inLay2.addView(getView(x, prods,this.id));
 
                 }
-            } else if (number == 3) {
-                movies_music.setText(R.string.movies_music);
+            } else if (number == 1) {
+                movies_music.setText(getResources().getString(R.string.movies_music)+">");
                 movies_music.setTag("movies_music");
                 movies_music.setTag(R.string.tag,"abcat0600000");
                 for (int x = 0; x < 25; x++) {
                     inLay3.addView(getView(x, prods,this.id));
                 }
-            } else if (number == 4) {
-                videoGames.setText(R.string.video_games);
+            } else if (number == 2) {
+                videoGames.setText(getResources().getString(R.string.video_games)+">");
                 videoGames.setTag("videoGames");
                 videoGames.setTag(R.string.tag,"abcat0700000");
                 for (int x = 0; x < 25; x++) {
                     inLay4.addView(getView(x, prods,this.id));
 
                 }
-            } else if (number == 5) {
-                mobiles.setText(R.string.mobiles);
+            } else if (number == 3) {
+                mobiles.setText(getResources().getString(R.string.mobiles)+">");
                 mobiles.setTag("mobiles");
                 mobiles.setTag(R.string.tag,"abcat0800000");
                 for (int x = 0; x < 25; x++) {
                     inLay5.addView(getView(x, prods,this.id));
                 }
             }
-           // showInfo();
+
 
         }
     }

@@ -37,12 +37,31 @@
 
         <RatingBar
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:id="@+id/ratings"
             style="@style/Widget.AppCompat.RatingBar.Small"
             android:stepSize="0.5"
             android:numStars="5"
+            android:layout_marginBottom="2dp"
              />
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           <ImageView
+               android:layout_width="20dp"
+               android:layout_height="20dp"
+               android:id="@+id/AvailablOnline"
+               />
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:id="@+id/AvailablOnlineText"
+               android:text="@string/available_online"
+               android:layout_marginLeft="3dp"
+               android:textSize="12sp"
+               />
+       </LinearLayout>
 
     </LinearLayout>
 
