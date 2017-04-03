@@ -16,6 +16,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -144,8 +145,37 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        //chercher le searchView de l'actionBar
+        MenuItem item =(MenuItem) menu.findItem(R.id.action_search);
+        SearchView searchView =(SearchView) item.getActionView();
+
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //si l'utilisateur tape un nom de produit a rechercher
+                //appeler l'activité AllProducts qui a son tours s'occupe de chercher
+                //le nom du produit tapé par l'utilisateur
+                Intent intent=new Intent(MainActivity.this,AllProducts.class);
+                intent.putExtra("url1","https://api.bestbuy.com/v1/products(name="+query+"*%7Csearch="+query+"*)?format=json&show=all&pageSize=25&page=");
+                intent.putExtra("url2","&apiKey=tghcgc6qnf72tat8a5kbja9r");
+                intent.putExtra("page",1);
+                intent.putExtra("decalage",0);
+                intent.putExtra("title",getResources().getString(R.string.search_results));
+                startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+
+
+
         return true;
     }
 
@@ -174,6 +204,11 @@ public class MainActivity extends AppCompatActivity
             f=new Computers_Tablets();
         } else if (id == R.id.all_products) {
             Intent intent=new Intent(getApplicationContext(),AllProducts.class);
+            intent.putExtra("url1","https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=");
+            intent.putExtra("url2","&apiKey=tghcgc6qnf72tat8a5kbja9r");
+            intent.putExtra("page",1);
+            intent.putExtra("decalage",0);
+            intent.putExtra("title",""+getResources().getString(R.string.all_products));
             startActivity(intent);
 
 
@@ -303,29 +338,39 @@ public class MainActivity extends AppCompatActivity
             progress.hide();
             if (number == 1) {
                 tv_theater.setText(R.string.tv_theater);
+                tv_theater.setTag("tv_theater");
+                tv_theater.setTag(R.string.tag,"abcat0100000");
                 for (int x = 0; x < 25; x++) {
                     inLay.addView(getView(x, prods,this.id));
 
                 }
             } else if (number == 2) {
                 com_tab.setText(R.string.computer_talets);
+                com_tab.setTag("com_tab");
+                com_tab.setTag(R.string.tag,"abcat0500000");
                 for (int x = 0; x < 25; x++) {
                     inLay2.addView(getView(x, prods,this.id));
 
                 }
             } else if (number == 3) {
                 movies_music.setText(R.string.movies_music);
+                movies_music.setTag("movies_music");
+                movies_music.setTag(R.string.tag,"abcat0600000");
                 for (int x = 0; x < 25; x++) {
                     inLay3.addView(getView(x, prods,this.id));
                 }
             } else if (number == 4) {
                 videoGames.setText(R.string.video_games);
+                videoGames.setTag("videoGames");
+                videoGames.setTag(R.string.tag,"abcat0700000");
                 for (int x = 0; x < 25; x++) {
                     inLay4.addView(getView(x, prods,this.id));
 
                 }
             } else if (number == 5) {
                 mobiles.setText(R.string.mobiles);
+                mobiles.setTag("mobiles");
+                mobiles.setTag(R.string.tag,"abcat0800000");
                 for (int x = 0; x < 25; x++) {
                     inLay5.addView(getView(x, prods,this.id));
                 }
@@ -354,7 +399,7 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra("position", Integer.parseInt(""+v.getTag()));
         intent.putExtra("url",url1+v.getTag(R.string.tag)+url2);
         intent.putExtra("url3",url3);
-        intent.putExtra("offset",2);
+
 
         startActivity(intent);
        // Log.e("t", ""+url1+v.getTag(R.string.tag)+url2 );
@@ -378,6 +423,32 @@ public class MainActivity extends AppCompatActivity
                     haveConnectedMobile = true;
         }
         return haveConnectedWifi || haveConnectedMobile;
+    }
+
+    public void jumpToDetails(View v){
+        String tag=(String)v.getTag();
+        Intent intent=new Intent(MainActivity.this,AllProducts.class);
+
+        if(tag.equals("tv_theater")){
+            intent.putExtra("url1",url1+v.getTag(R.string.tag)+url2);
+            intent.putExtra("title",""+getResources().getString(R.string.tv_theater));
+        }else if(tag.equals("com_tab")){
+            intent.putExtra("url1",url1+v.getTag(R.string.tag)+url2);
+            intent.putExtra("title",""+getResources().getString(R.string.computer_talets));
+        }else if(tag.equals("movies_music")){
+            intent.putExtra("url1",url1+v.getTag(R.string.tag)+url2);
+            intent.putExtra("title",""+getResources().getString(R.string.movies_music));
+        }else if (tag.equals("videoGames")){
+            intent.putExtra("url1",url1+v.getTag(R.string.tag)+url2);
+            intent.putExtra("title",""+getResources().getString(R.string.video_games));
+        }else{
+            intent.putExtra("url1",url1+v.getTag(R.string.tag)+url2);
+            intent.putExtra("title",""+ getResources().getString(R.string.mobiles));
+        }
+        intent.putExtra("url2",url3);
+        intent.putExtra("page",2);
+        intent.putExtra("decalage",25);
+        startActivity(intent);
     }
 
 

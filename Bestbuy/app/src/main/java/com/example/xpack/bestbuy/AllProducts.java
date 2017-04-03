@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,12 +31,14 @@ public class AllProducts extends AppCompatActivity implements Serializable {
 
 
     ListView list;
-    int page=1;
+    int page;
     ProgressDialog pDialog;
     itemsAdapter mAdapter;
-    int pos=1;
-    String url1="https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=";
-    String url2="&apiKey=tghcgc6qnf72tat8a5kbja9r";
+    int pos=1,decalage;
+    String url1,url2;
+    String title;
+    Button btnLoadMore;
+    Boolean exist=false;
 
     ArrayList<Products> produits=new ArrayList<Products>();
     ProgressDialog progress ;
@@ -49,12 +52,19 @@ public class AllProducts extends AppCompatActivity implements Serializable {
         setContentView(R.layout.test);
 
         Intent intent=getIntent();
+        title=intent.getExtras().getString("title");
+
+        url1=intent.getExtras().getString("url1");
+        url2=intent.getExtras().getString("url2");
+        page=intent.getExtras().getInt("page");
+        decalage=intent.getExtras().getInt("decalage");
+        setTitle(title);
 //        getSupportActionBar().setHomeAsUpIndicator(R.drawable.logo);
 //        getActionBar().setHomeButtonEnabled(true);
 //        getActionBar().setDisplayHomeAsUpEnabled(true);
         progress=new ProgressDialog(this);
         list= (ListView) findViewById(R.id.list);
-        Button btnLoadMore = new Button(this);
+        btnLoadMore = new Button(this);
         btnLoadMore.setText("Load More");
        // list.setOnScrollListener(new EndlessScrollListener());
         btnLoadMore.setOnClickListener(new Button.OnClickListener() {
@@ -62,14 +72,17 @@ public class AllProducts extends AppCompatActivity implements Serializable {
             public void onClick(View v) {
                     page++;
                     pos++;
+
+
                 Fetcher l = new Fetcher();
                 l.execute();
             }
         });
-        list.addFooterView(btnLoadMore);
 
         Fetcher l= new Fetcher();
         l.execute();
+
+
 
 
 
@@ -84,6 +97,7 @@ public class AllProducts extends AppCompatActivity implements Serializable {
 
 
     public class Fetcher extends AsyncTask<Object, Object, ArrayList<Products>> {
+
 
 
 
@@ -103,7 +117,7 @@ public class AllProducts extends AppCompatActivity implements Serializable {
             try {
 
 
-                Parser.getProducts(produits,"https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page="+page+"&apiKey=tghcgc6qnf72tat8a5kbja9r");
+                Parser.getProducts(produits,url1+page+url2);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -133,18 +147,31 @@ public class AllProducts extends AppCompatActivity implements Serializable {
                     Intent intent = new Intent(AllProducts.this, SingleProductInfos.class);
 
                     intent.putExtra("page", page);
-                    intent.putExtra("position", position);
+                    intent.putExtra("position", decalage+position);
                     intent.putExtra("url",url1);
                     intent.putExtra("url3",url2);
                     //le offset est utiliser dans le viewpager pour savoir quand est-ce que on atteint la fin du viewpager et
                     //faire un load more
-                    intent.putExtra("offset",1);
+
 
                    // intent.putExtra("produits",produits);
 
                     startActivity(intent);
                 }
             });
+
+            //verifier que le tableau produits n'est pas vide
+            //si le tableau est vide afficher que aucun produit n'a etait trouvé
+            if(produits.size()!=0){
+                if(exist==false){
+                    list.addFooterView(btnLoadMore);
+                    exist=true;
+                }
+            }else{
+                list.setVisibility(View.GONE);
+                RelativeLayout r=(RelativeLayout) findViewById(R.id.layout_empty);
+                r.setVisibility(View.VISIBLE);
+            }
 
 
 

@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Bestbuy</string>
-    <string name="tv_theater" translatable="false">tv et théâtre</string>
-    <string name="computer_talets" translatable="false">ordinateurs et tablets</string>
-    <string name="mobiles" translatable="false">Mobiles</string>
-    <string name="movies_music" translatable="false">Films et Music</string>
-    <string name="video_games" translatable="false">Jeux Videos</string>
+    <string name="tv_theater" translatable="false">tv et théâtre ></string>
+    <string name="computer_talets" translatable="false">ordinateurs et tablets ></string>
+    <string name="mobiles" translatable="false">Mobiles ></string>
+    <string name="movies_music" translatable="false">Films et Music ></string>
+    <string name="video_games" translatable="false">Jeux Videos ></string>
+    <string name="internetMessage" translatable="false">vous n\'etes pas connecter sur internet! verifier votre connexion ou clicker sur ok pour allumer le wifi</string>
+    <string name="all_products" translatable="false">tous les produits</string>
+    <string name="search_results">resultats de la recherche</string>
+    <string name="no_item_found">aucun produit n\'a etait trouvé</string>
 </resources>

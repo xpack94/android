@@ -67,8 +67,8 @@ public class SingleProductInfos extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                if(pos%24==0 && state==1){
-                    if (pos+offset==produits.size()){
+
+                    if (pos==produits.size()-1 && state==1){
 
                         produits = new ArrayList<Products>();
                         mAdapter.notifyDataSetChanged();
@@ -82,7 +82,7 @@ public class SingleProductInfos extends AppCompatActivity {
 
                }
 
-                }
+
 
 
         });

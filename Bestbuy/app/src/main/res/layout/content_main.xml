@@ -50,7 +50,8 @@
                 android:id="@+id/tv_theater"
                 android:textSize="17sp"
                 android:layout_marginLeft="6dp"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="4dp"
+                android:onClick="jumpToDetails"/>
             <HorizontalScrollView
                 android:id="@+id/hsv"
                 android:layout_width="fill_parent"
@@ -78,7 +79,8 @@
                 android:textSize="17sp"
                 android:id="@+id/Computer_Tablets"
                 android:layout_marginLeft="6dp"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="4dp"
+                android:onClick="jumpToDetails"/>
             <HorizontalScrollView
                 android:id="@+id/hsv2"
                 android:layout_width="fill_parent"
@@ -106,7 +108,8 @@
                 android:textSize="17sp"
                 android:id="@+id/Movies_Music"
                 android:layout_marginLeft="6dp"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="4dp"
+                android:onClick="jumpToDetails"/>
             <HorizontalScrollView
                 android:id="@+id/hsv3"
                 android:layout_width="fill_parent"
@@ -134,7 +137,8 @@
                 android:textSize="17sp"
                 android:id="@+id/video_games"
                 android:layout_marginLeft="6dp"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="4dp"
+                android:onClick="jumpToDetails"/>
             <HorizontalScrollView
                 android:id="@+id/hsv4"
                 android:layout_width="fill_parent"
@@ -162,7 +166,8 @@
                 android:textSize="17sp"
                 android:id="@+id/mobiles"
                 android:layout_marginLeft="6dp"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="4dp"
+                android:onClick="jumpToDetails"/>
             <HorizontalScrollView
                 android:id="@+id/hsv5"
                 android:layout_width="fill_parent"
