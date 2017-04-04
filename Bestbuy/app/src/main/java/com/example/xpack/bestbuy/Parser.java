@@ -53,7 +53,6 @@ public class Parser {
 
         for (int i=0;i<products.length();i++){
             JSONObject prod = products.getJSONObject(i);
-            Log.d("t", ""+prod.getString("name"));
             produits.add(new Products(
                     prod.getString("salePrice")+"$",
                     prod.getString("name"),

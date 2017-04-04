@@ -50,6 +50,7 @@ public class SingleProductFragment extends Fragment {
         Toggle.setDuration(2000);
 
 
+
         TextView nameOfProduct = (TextView) v.findViewById(R.id.name);
         nameOfProduct.setText(name);
         TextView Price=(TextView) v.findViewById(R.id.salePrice);

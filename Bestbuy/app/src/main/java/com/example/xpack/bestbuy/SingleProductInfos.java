@@ -1,6 +1,8 @@
 package com.example.xpack.bestbuy;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +11,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 
@@ -26,12 +32,25 @@ public class SingleProductInfos extends AppCompatActivity {
     ArrayList<Products> produits = new ArrayList<Products>();
     pagerAdaper mAdapter ;
     int pos=0,offset;
-
+    Toolbar toolbar;
+    ImageView logo,share;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        ActionBar bar = getActionBar();
+//        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#333")));
         setContentView(R.layout.single_product_infos);
+        logo=(ImageView) findViewById(R.id.logo);
+        toolbar =(Toolbar) findViewById(R.id.toolbar);
+        toolbar.setBackground(new ColorDrawable(Color.BLACK));
+        toolbar.setAlpha(Float.parseFloat("0.1"));
+        Picasso.with(getApplicationContext())
+                .load("http://www.userlogos.org/files/logos/mafi0z/BestBuy.png")
+                .into(logo);
+
+
+
         Bundle args = getIntent().getExtras();
         mAdapter= new pagerAdaper(getSupportFragmentManager());
         progress = new ProgressDialog(this);
@@ -89,6 +108,7 @@ public class SingleProductInfos extends AppCompatActivity {
 
 
     }
+
 
     public class Fetcher extends AsyncTask<Object, Object, ArrayList<Products>> {
         String url,url3;
@@ -164,6 +184,9 @@ public class SingleProductInfos extends AppCompatActivity {
             args.putString("isAvailable", prod.isAvailable);
             args.putString("longDescription", prod.longDescription);
             args.putString("addToCartUrl", prod.addToCartUrl);
+           /// args.putString("logo","http://logok.org/wp-content/uploads/2014/09/Best_Buy_Logo.png");
+
+
 
             fragment.setArguments(args);
 

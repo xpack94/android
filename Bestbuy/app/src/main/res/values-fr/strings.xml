@@ -12,4 +12,6 @@
     <string name="no_item_found">aucun produit n\'a etait trouvé</string>
     <string name="available_online">disponible en ligne</string>
     <string name="not_available">pas disponible en ligne</string>
+    <string name="search_products">chercher des produits</string>
+    <string name="footer_text">plus aucun produit a afficher</string>
 </resources>

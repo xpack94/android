@@ -18,6 +18,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -158,7 +159,34 @@ public class MainActivity extends AppCompatActivity
                 //appeler l'activité AllProducts qui a son tours s'occupe de chercher
                 //le nom du produit tapé par l'utilisateur
                 Intent intent=new Intent(MainActivity.this,AllProducts.class);
-                intent.putExtra("url1","https://api.bestbuy.com/v1/products(name="+query+"*%7Csearch="+query+"*)?format=json&show=all&pageSize=25&page=");
+                String ur="https://api.bestbuy.com/v1/products(search=";
+                String word="";
+                Boolean word_found=false;
+                int i=0;
+                while(i<query.length()){
+                    Log.e("t", "the inde is  "+i );
+                    while((i<query.length()) && (query.charAt(i)!=' ')){
+
+                        word+=query.charAt(i);
+                        word_found=true;
+                        i++;
+                        Log.e("t", "index:"+i+" word = "+word);
+                       // Log.e("t", "the word is  "+word );
+
+                    }
+
+                    if(word_found){
+                        word+=" ";
+                        word_found=false;
+                    }
+
+                    i++;
+                }
+                ur+=word.replaceAll(" ","&search=")+"*)?format=json&shwo=all&pageSize=25&page=";
+
+
+              //  intent.putExtra("url1","https://api.bestbuy.com/v1/products(name="+query+"*%7Csearch="+query+"*)?format=json&show=all&pageSize=25&page=");
+                intent.putExtra("url1",ur);
                 intent.putExtra("url2","&apiKey=tghcgc6qnf72tat8a5kbja9r");
                 intent.putExtra("page",1);
                 intent.putExtra("decalage",0);
@@ -379,9 +407,16 @@ public class MainActivity extends AppCompatActivity
         ImageView image = (ImageView) rootView.findViewById(R.id.image);
         image.setTag(25+x);
         image.setTag(R.string.tag,id);
-        Picasso.with(getApplicationContext())
-                .load(prods.get(x).mediumImage)
-                .into(image);
+        if(!prods.get(x).largeImage.equals("null")){
+            Picasso.with(getApplicationContext())
+                    .load(prods.get(x).largeImage)
+                    .into(image);
+        }else{
+            Picasso.with(getApplicationContext())
+                    .load(prods.get(x).mediumImage)
+                    .into(image);
+        }
+
 
 
         return rootView;

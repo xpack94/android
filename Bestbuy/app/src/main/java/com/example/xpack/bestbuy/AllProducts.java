@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -40,9 +42,12 @@ public class AllProducts extends AppCompatActivity implements Serializable {
     String title;
     Button btnLoadMore;
     Boolean exist=false;
-
+    Toolbar toolbar;
     ArrayList<Products> produits=new ArrayList<Products>();
     ProgressDialog progress ;
+    ImageView logo,share;
+    SearchView search;
+    Boolean visible=true;
 
 
 
@@ -52,7 +57,19 @@ public class AllProducts extends AppCompatActivity implements Serializable {
 
         setContentView(R.layout.test);
 
+        toolbar= (Toolbar) findViewById(R.id.toolbar);
+        logo=(ImageView) findViewById(R.id.logo);
+        share=(ImageView) findViewById(R.id.share);
+        search=(SearchView) findViewById(R.id.searchView);
+        share.setVisibility(View.GONE);
+        // toolbar.setAlpha(Float.parseFloat("0.5"));
+        Picasso.with(getApplicationContext())
+                .load("http://www.userlogos.org/files/logos/mafi0z/BestBuy.png")
+                .into(logo);
+
+
         Intent intent=getIntent();
+
         title=intent.getExtras().getString("title");
 
         url1=intent.getExtras().getString("url1");
@@ -75,6 +92,11 @@ public class AllProducts extends AppCompatActivity implements Serializable {
 
                 Fetcher l = new Fetcher();
                 l.execute();
+                //si visible=false alors le button affichera qu'il y'a plus aucun autre produit a afficher
+                if(!visible){
+                    btnLoadMore.setText(getResources().getString(R.string.footer_text));
+                    btnLoadMore.setEnabled(false);
+                }
             }
         });
 
@@ -85,6 +107,18 @@ public class AllProducts extends AppCompatActivity implements Serializable {
 
 
 
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
 
 
@@ -118,8 +152,13 @@ public class AllProducts extends AppCompatActivity implements Serializable {
 
             try {
 
-
+                int size=produits.size();
                 Parser.getProducts(produits,url1+page+url2);
+                //verifier si on est rendu au dernier produit
+                //si oui le boutton load More deviendra invisible
+                if (size==produits.size()){
+                    visible=false;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
