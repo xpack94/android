@@ -1,8 +1,7 @@
 package com.example.xpack.bestbuy;
 
 import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +10,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
@@ -34,7 +36,8 @@ public class SingleProductInfos extends AppCompatActivity {
     int pos=0,offset;
     Toolbar toolbar;
     ImageView logo,share;
-
+    String sorted="false",type="";
+    SearchView search;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +46,7 @@ public class SingleProductInfos extends AppCompatActivity {
         setContentView(R.layout.single_product_infos);
         logo=(ImageView) findViewById(R.id.logo);
         toolbar =(Toolbar) findViewById(R.id.toolbar);
-        toolbar.setBackground(new ColorDrawable(Color.BLACK));
-        toolbar.setAlpha(Float.parseFloat("0.1"));
+
         Picasso.with(getApplicationContext())
                 .load("http://www.userlogos.org/files/logos/mafi0z/BestBuy.png")
                 .into(logo);
@@ -58,14 +60,80 @@ public class SingleProductInfos extends AppCompatActivity {
         url= args.getString("url");
         url3= args.getString("url3");
         offset=args.getInt("offset");
+        sorted=args.getString("sorted");
+        type=args.getString("type");
 
         startPosition = args.getInt("position");
         // produits= (ArrayList<Products>) args.getSerializable("produits");
         pager = (ViewPager) findViewById(R.id.pager);
         Fetcher fetcher = new Fetcher(url,url3);
         fetcher.execute();
+        search=(SearchView) findViewById(R.id.searchView);
 
 
+        search.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logo.setVisibility(View.GONE);
+
+            }
+        });
+        //reafficher le logo quand on quite la recherche
+        search.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                logo.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //si l'utilisateur tape un nom de produit a rechercher
+                //appeler l'activité AllProducts qui a son tours s'occupe de chercher
+                //le nom du produit tapé par l'utilisateur
+                Intent intent=new Intent(SingleProductInfos.this,AllProducts.class);
+                String ur="https://api.bestbuy.com/v1/products(search=";
+                String word="";
+                Boolean word_found=false;
+                int i=0;
+                while(i<query.length()){
+                    Log.e("t", "the inde is  "+i );
+                    while((i<query.length()) && (query.charAt(i)!=' ')){
+
+                        word+=query.charAt(i);
+                        word_found=true;
+                        i++;
+                        Log.e("t", "index:"+i+" word = "+word);
+                        // Log.e("t", "the word is  "+word );
+                    }
+
+                    if(word_found){
+                        word+=" ";
+                        word_found=false;
+                    }
+
+                    i++;
+                }
+                ur+=word.replaceAll(" ","&search=")+"*)?format=json&shwo=all&pageSize=25&page=";
+
+
+                //  intent.putExtra("url1","https://api.bestbuy.com/v1/products(name="+query+"*%7Csearch="+query+"*)?format=json&show=all&pageSize=25&page=");
+                intent.putExtra("url1",ur);
+                intent.putExtra("url2","&apiKey=tghcgc6qnf72tat8a5kbja9r");
+                intent.putExtra("page",1);
+                intent.putExtra("decalage",0);
+                intent.putExtra("title",getResources().getString(R.string.search_results));
+                startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -73,9 +141,7 @@ public class SingleProductInfos extends AppCompatActivity {
 
 
 
-                if (position % 24 == 0) {
 
-                }
             }
 
             @Override
@@ -123,6 +189,7 @@ public class SingleProductInfos extends AppCompatActivity {
             progress.setCancelable(false);
             progress.setTitle("loading products");
             progress.show();
+
         }
 
         @Override
@@ -130,10 +197,13 @@ public class SingleProductInfos extends AppCompatActivity {
 
 
             try {
-                for (int i = 1; i <= page; i++) {
 
-                    Parser.getProducts(produits, this.url+i +this.url3);
-                }
+                    for (int i = 1; i <= page; i++) {
+
+                        Parser.getProducts(produits, this.url+i +this.url3);
+                    }
+
+
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -141,6 +211,10 @@ public class SingleProductInfos extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            if(sorted.equals("true")){
+                MergeSort m=new MergeSort(produits,type);
+                m.sortGivenArray();
+            }
 
             return produits;
         }

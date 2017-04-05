@@ -345,7 +345,6 @@ public class MainActivity extends AppCompatActivity
 
                 Parser.getProducts(this.produits, url1 + id +url2+page+ url3);
 
-
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -429,10 +428,9 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra("position", Integer.parseInt(""+v.getTag()));
         intent.putExtra("url",url1+v.getTag(R.string.tag)+url2);
         intent.putExtra("url3",url3);
-
+        intent.putExtra("sorted","false");
 
         startActivity(intent);
-       // Log.e("t", ""+url1+v.getTag(R.string.tag)+url2 );
     }
 
 

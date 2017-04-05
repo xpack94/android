@@ -1,7 +1,5 @@
 package com.example.xpack.bestbuy;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +22,7 @@ public class Parser {
    // private static String url = "";
     private static OkHttpClient http;
     private static JSONObject json = null;
+    public static int TotalPages=0;
 
     private static JSONObject getJSON(String Url) throws IOException, JSONException {
 
@@ -43,6 +42,7 @@ public class Parser {
     public static ArrayList<Products> getProducts(ArrayList<Products> produits,String Url) throws IOException, JSONException {
 
         JSONObject json = getJSON(Url);
+        TotalPages=Integer.parseInt(json.getString("totalPages"));
         JSONArray products = json.getJSONArray("products");
 
 
@@ -54,7 +54,7 @@ public class Parser {
         for (int i=0;i<products.length();i++){
             JSONObject prod = products.getJSONObject(i);
             produits.add(new Products(
-                    prod.getString("salePrice")+"$",
+                    prod.getString("salePrice"),
                     prod.getString("name"),
                     prod.getString("mediumImage"),
                     prod.getString("customerReviewAverage"),
@@ -65,6 +65,7 @@ public class Parser {
                     prod.getString("longDescription"),
                     prod.getString("addToCartUrl"),
                     prod.getString("mediumImage")
+
             ));
         }
 

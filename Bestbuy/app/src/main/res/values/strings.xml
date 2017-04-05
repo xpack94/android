@@ -31,4 +31,8 @@
     <string name="footer_text">no more products to display</string>
 
 
+    <!--buttons-->
+    <string name="sortPrice">price</string>
+    <string name="sortRatings">reviews</string>
+
 </resources>

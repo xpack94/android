@@ -14,4 +14,6 @@
     <string name="not_available">pas disponible en ligne</string>
     <string name="search_products">chercher des produits</string>
     <string name="footer_text">plus aucun produit a afficher</string>
+    <string name="sortPrice">prix</string>
+    <string name="sortRatings">notes</string>
 </resources>

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,7 +28,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class AllProducts extends AppCompatActivity implements Serializable {
+public class test extends AppCompatActivity implements Serializable {
 
 
     ListView list;
@@ -48,14 +47,15 @@ public class AllProducts extends AppCompatActivity implements Serializable {
     SearchView search;
     Boolean visible=true;
     Button sortPrice,sortRatings;
-    String sorted="false",type="";
+    String sorted="true",type;
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-        setContentView(R.layout.lay);
+        setContentView(R.layout.test);
 
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         logo=(ImageView) findViewById(R.id.logo);
@@ -67,38 +67,13 @@ public class AllProducts extends AppCompatActivity implements Serializable {
                 .load("http://www.userlogos.org/files/logos/mafi0z/BestBuy.png")
                 .into(logo);
 
-        //le button qui permet de trier le p
+
+        RelativeLayout sortingButtons =(RelativeLayout) findViewById(R.id.sortingButtons);
+        sortingButtons.setVisibility(View.GONE);
         sortPrice=(Button) findViewById(R.id.sortPrice);
-        sortPrice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                type="salePrice";
-                Intent in=new Intent(AllProducts.this,test.class);
-                in.putExtra("url1",url1);
-                in.putExtra("url2",url2);
-                in.putExtra("page",1);
-                in.putExtra("decalage",0);
-                in.putExtra("type","salePrice");
-                startActivity(in);
-
-
-            }
-        });
-
+        sortPrice.setVisibility(View.GONE);
         sortRatings=(Button) findViewById(R.id.sortRank);
-        sortRatings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                type="ratings";
-                Intent in=new Intent(AllProducts.this,test.class);
-                in.putExtra("url1",url1);
-                in.putExtra("url2",url2);
-                in.putExtra("page",1);
-                in.putExtra("decalage",0);
-                in.putExtra("type","ratings");
-                startActivity(in);
-            }
-        });
+        sortRatings.setVisibility(View.GONE);
 
         Intent intent=getIntent();
 
@@ -108,18 +83,19 @@ public class AllProducts extends AppCompatActivity implements Serializable {
         url2=intent.getExtras().getString("url2");
         page=intent.getExtras().getInt("page");
         decalage=intent.getExtras().getInt("decalage");
+        type=intent.getExtras().getString("type");
         setTitle(title);
 
         progress=new ProgressDialog(this);
         list= (ListView) findViewById(R.id.list);
         btnLoadMore = new Button(this);
         btnLoadMore.setText("Load More");
-       // list.setOnScrollListener(new EndlessScrollListener());
+        // list.setOnScrollListener(new EndlessScrollListener());
         btnLoadMore.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    page++;
-                    pos++;
+                page++;
+                pos++;
 
 
                 Fetcher l = new Fetcher();
@@ -135,61 +111,13 @@ public class AllProducts extends AppCompatActivity implements Serializable {
         Fetcher l= new Fetcher();
         l.execute();
 
-        //masquer le logo quand le menu de recherche est cliqué
-        search.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logo.setVisibility(View.GONE);
 
-            }
-        });
-        //reafficher le logo quand on quite la recherche
-        search.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                logo.setVisibility(View.VISIBLE);
-                return false;
-            }
-        });
 
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //si l'utilisateur tape un nom de produit a rechercher
-                //appeler l'activité AllProducts qui a son tours s'occupe de chercher
-                //le nom du produit tapé par l'utilisateur
-                Intent intent=new Intent(AllProducts.this,AllProducts.class);
-                String ur="https://api.bestbuy.com/v1/products(search=";
-                String word="";
-                Boolean word_found=false;
-                int i=0;
-                while(i<query.length()){
-                    Log.e("t", "the inde is  "+i );
-                    while((i<query.length()) && (query.charAt(i)!=' ')){
 
-                        word+=query.charAt(i);
-                        word_found=true;
-                        i++;
-                        Log.e("t", "index:"+i+" word = "+word);
-                        // Log.e("t", "the word is  "+word );
-
-                    }
-
-                    if(word_found){
-                        word+=" ";
-                        word_found=false;
-                    }
-
-                    i++;
-                }
-                ur+=word.replaceAll(" ","&search=")+"*)?format=json&shwo=all&pageSize=25&page=";
-                intent.putExtra("url1",ur);
-                intent.putExtra("url2","&apiKey=tghcgc6qnf72tat8a5kbja9r");
-                intent.putExtra("page",1);
-                intent.putExtra("decalage",0);
-                intent.putExtra("title",getResources().getString(R.string.search_results));
-                startActivity(intent);
                 return false;
             }
 
@@ -215,6 +143,7 @@ public class AllProducts extends AppCompatActivity implements Serializable {
 
 
 
+
         public void onPreExecute() {
 
 
@@ -231,13 +160,11 @@ public class AllProducts extends AppCompatActivity implements Serializable {
             try {
 
                 int size=produits.size();
+                Parser.getProducts(produits,url1+page+url2);
 
-                    Parser.getProducts(produits,url1+page+url2);
-
-
-
-
-
+//
+                MergeSort a=new MergeSort(produits,type);
+                a.sortGivenArray();
                 //verifier si on est rendu au dernier produit
                 //si oui le boutton load More deviendra invisible
                 if (size==produits.size()){
@@ -248,6 +175,7 @@ public class AllProducts extends AppCompatActivity implements Serializable {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
 
 
             return produits;
@@ -263,25 +191,23 @@ public class AllProducts extends AppCompatActivity implements Serializable {
                 mAdapter.notifyDataSetChanged();
 
 
-
             }
 
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(AllProducts.this, SingleProductInfos.class);
+                    Intent intent = new Intent(test.this, SingleProductInfos.class);
 
                     intent.putExtra("page", page);
                     intent.putExtra("position", decalage+position);
                     intent.putExtra("url",url1);
                     intent.putExtra("url3",url2);
                     intent.putExtra("sorted",sorted);
-                    intent.putExtra("type",type);
                     //le offset est utiliser dans le viewpager pour savoir quand est-ce que on atteint la fin du viewpager et
                     //faire un load more
 
 
-                   // intent.putExtra("produits",produits);
+                    // intent.putExtra("produits",produits);
 
                     startActivity(intent);
                 }
@@ -299,6 +225,8 @@ public class AllProducts extends AppCompatActivity implements Serializable {
                 RelativeLayout r=(RelativeLayout) findViewById(R.id.layout_empty);
                 r.setVisibility(View.VISIBLE);
             }
+
+
 
 
 
@@ -349,21 +277,21 @@ public class AllProducts extends AppCompatActivity implements Serializable {
 
 
 
-                name.setText(produits.get(position).name);
-                sku.setText(produits.get(position).salePrice);
-                if (produits.get(position).customerReview=="null"){
-                    rat.setRating(Float.parseFloat("0"));
+            name.setText(produits.get(position).name);
+            sku.setText(produits.get(position).salePrice);
+            if (produits.get(position).customerReview=="null"){
+                rat.setRating(Float.parseFloat("0"));
 
             }else{
 
-                    rat.setRating(Float.parseFloat(produits.get(position).customerReview));
-                }
+                rat.setRating(Float.parseFloat(produits.get(position).customerReview));
+            }
 
 
 
-                Picasso.with(getApplicationContext())
-                        .load(produits.get(position).url)
-                        .into(image);
+            Picasso.with(getApplicationContext())
+                    .load(produits.get(position).url)
+                    .into(image);
 
             //verifier si le produit et disponible en ligne
             if (produits.get(position).isAvailable.equals("true")){
@@ -380,19 +308,11 @@ public class AllProducts extends AppCompatActivity implements Serializable {
 
 
 
-
-
             return convertView;
         }
 
 
-
-
     }
-
-
-
-
 
 
 }
