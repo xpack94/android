@@ -6,7 +6,6 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.ListFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -18,10 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-
-import java.util.ArrayList;
 
 
 public class Main extends AppCompatActivity   implements NavigationView.OnNavigationItemSelectedListener{
@@ -67,28 +63,11 @@ public class Main extends AppCompatActivity   implements NavigationView.OnNaviga
 
                 if(position == 0)
                     return new MainActivity();
+                if(position==1){
+                    return new BestSellings();
+                }
 
-                ListFragment f = new ListFragment();
-
-                ArrayList<String> items = new ArrayList<String>();
-
-                items.add("Rangée 1");
-                items.add("Rangée 2");
-                items.add("Rangée 3");
-
-                items.add("Test");
-                items.add("...");
-
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                        getApplicationContext(),
-                        android.R.layout.simple_list_item_1,
-                        android.R.id.text1,
-                        items
-                );
-
-                f.setListAdapter(arrayAdapter);
-
-                return f;
+                return new BestSellings();
             }
 
             @Override
