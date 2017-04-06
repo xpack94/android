@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,7 +31,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class AllProducts extends AppCompatActivity implements Serializable {
+public class AllProducts extends AppCompatActivity implements Serializable ,NavigationView.OnNavigationItemSelectedListener{
 
 
     ListView list;
@@ -57,12 +59,13 @@ public class AllProducts extends AppCompatActivity implements Serializable {
 
         setContentView(R.layout.lay);
 
+
+
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         logo=(ImageView) findViewById(R.id.logo);
         share=(ImageView) findViewById(R.id.share);
         search=(SearchView) findViewById(R.id.searchView);
         share.setVisibility(View.GONE);
-        // toolbar.setAlpha(Float.parseFloat("0.5"));
         Picasso.with(getApplicationContext())
                 .load("http://www.userlogos.org/files/logos/mafi0z/BestBuy.png")
                 .into(logo);
@@ -209,6 +212,10 @@ public class AllProducts extends AppCompatActivity implements Serializable {
 
     }
 
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        return false;
+    }
 
 
     public class Fetcher extends AsyncTask<Object, Object, ArrayList<Products>> {
