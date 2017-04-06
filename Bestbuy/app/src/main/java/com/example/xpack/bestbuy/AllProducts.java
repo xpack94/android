@@ -6,6 +6,9 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -60,6 +63,21 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
         setContentView(R.layout.lay);
 
 
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ImageView toggler=(ImageView) findViewById(R.id.toggler);
+        final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        toggle.setDrawerIndicatorEnabled(true);
+
+
+
+       toggler.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               drawer.openDrawer(GravityCompat.START);
+           }
+       });
 
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         logo=(ImageView) findViewById(R.id.logo);

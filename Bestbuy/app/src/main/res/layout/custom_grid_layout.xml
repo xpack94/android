@@ -5,17 +5,20 @@
 
 
     <ImageView
-        android:layout_width="250dp"
-        android:layout_height="145dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:id="@+id/thumbnail"
         android:scaleType="fitXY"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:id="@+id/name"
+        android:layout_width="120dp"
+        android:layout_height="35dp"
+        android:id="@+id/price"
         android:text="random text"
         android:textStyle="bold"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        android:background="#e0dbdb"
+        android:textAlignment="center"
+        android:paddingTop="7dp"/>
 
 </LinearLayout>

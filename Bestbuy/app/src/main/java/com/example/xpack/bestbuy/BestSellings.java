@@ -56,6 +56,8 @@ public class BestSellings extends Fragment {
             @Override
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
 
+                //detecter si on a scrollé jusqu'a la fin
+                //si oui on charge 25 autres produits
                 final int lastItem = i + i1;
                 if(scrolled){
                     if(lastItem == i2){
@@ -197,14 +199,15 @@ public class BestSellings extends Fragment {
             View row =inflater.inflate(R.layout.custom_grid_layout,parent,false);
 
             ImageView image=(ImageView) row.findViewById(R.id.thumbnail);
-            TextView title=(TextView) row.findViewById(R.id.name);
+            TextView title=(TextView) row.findViewById(R.id.price);
 
 
 
-            title.setText(produits.get(position).name);
+            title.setText(produits.get(position).salePrice);
+            title.append("$");
 
             Picasso.with(getActivity().getApplicationContext())
-                    .load(produits.get(position).largeImage)
+                    .load(produits.get(position).mediumImage)
                     .into(image);
 
             return row;
