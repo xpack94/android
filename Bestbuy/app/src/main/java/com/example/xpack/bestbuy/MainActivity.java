@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,7 @@ public class MainActivity extends Fragment {
 
                     }
                     try {
+                        Log.e("t", "checking internet " );
                         Thread.sleep(7000);
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -116,57 +118,60 @@ public class MainActivity extends Fragment {
 
         progress = new ProgressDialog(getActivity());
 
+        while (!haveNetworkConnection()){
 
-        //movies and music
-        Fetcher f = new Fetcher(1, url1, url2, "abcat0600000", produits3);
-        //video games
-        Fetcher j = new Fetcher(2, url1, url2, "abcat0700000", produits4);
-        //mobiles
-        Fetcher w = new Fetcher(3, url1, url2, "abcat0800000", produits5);
-        //computers and tablets
-        Fetcher k = new Fetcher(4, url1, url2, "abcat0500000", produits2);
-        //tv and home theater
-        Fetcher l = new Fetcher(5, url1, url2, "abcat0100000", produits1);
+        }
+            Fetcher f = new Fetcher(1, url1, url2, "abcat0600000", produits3);
+            //video games
+            Fetcher j = new Fetcher(2, url1, url2, "abcat0700000", produits4);
+            //mobiles
+            Fetcher w = new Fetcher(3, url1, url2, "abcat0800000", produits5);
+            //computers and tablets
+            Fetcher k = new Fetcher(4, url1, url2, "abcat0500000", produits2);
+            //tv and home theater
+            Fetcher l = new Fetcher(5, url1, url2, "abcat0100000", produits1);
 
-        l.execute();
-        k.execute();
-        f.execute();
-        j.execute();
-        w.execute();
+            l.execute();
+            k.execute();
+            f.execute();
+            j.execute();
+            w.execute();
 
-        tv_theater.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jumpToDetails(view);
-            }
-        });
-        com_tab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jumpToDetails(view);
-            }
-        });
+            tv_theater.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    jumpToDetails(view);
+                }
+            });
+            com_tab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    jumpToDetails(view);
+                }
+            });
 
-        mobiles.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jumpToDetails(view);
-            }
+            mobiles.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    jumpToDetails(view);
+                }
 
-        });
-        movies_music.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jumpToDetails(view);
-            }
-        });
+            });
+            movies_music.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    jumpToDetails(view);
+                }
+            });
 
-        videoGames.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jumpToDetails(view);
-            }
-        });
+            videoGames.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    jumpToDetails(view);
+                }
+            });
+
+
 
 
     }

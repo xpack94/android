@@ -203,12 +203,29 @@ public class BestSellings extends Fragment {
 
 
 
-            title.setText(produits.get(position).salePrice);
-            title.append("$");
 
-            Picasso.with(getActivity().getApplicationContext())
-                    .load(produits.get(position).mediumImage)
-                    .into(image);
+
+            if(!produits.get(position).mediumImage.equals("null")){
+                Picasso.with(getActivity().getApplicationContext())
+                        .load(produits.get(position).mediumImage)
+                        .into(image);
+
+                title.setText(produits.get(position).salePrice);
+                title.append("$");
+
+
+            }else if(!produits.get(position).largeImage.equals("null")){
+                Picasso.with(getActivity().getApplicationContext())
+                        .load(produits.get(position).largeImage)
+                        .into(image);
+
+                title.setText(produits.get(position).salePrice);
+                title.append("$");
+
+            }else{
+                title.setVisibility(View.GONE);
+            }
+
 
             return row;
         }

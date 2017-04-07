@@ -190,7 +190,7 @@ public class Main extends AppCompatActivity   implements NavigationView.OnNaviga
         int id = item.getItemId();
         Fragment f=null;
         if (id == R.id.Computer_Tablets) {
-            f=new Computers_Tablets();
+
         } else if (id == R.id.all_products) {
 
             intent.putExtra("url1","https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=");
