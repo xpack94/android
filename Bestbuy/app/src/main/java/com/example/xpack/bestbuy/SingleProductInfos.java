@@ -35,7 +35,7 @@ public class SingleProductInfos extends AppCompatActivity {
     pagerAdaper mAdapter ;
     int pos=0,offset;
     Toolbar toolbar;
-    ImageView logo,share;
+    ImageView logo,share,togglerImage;
     String sorted="false",type="";
     SearchView search;
     @Override
@@ -46,6 +46,7 @@ public class SingleProductInfos extends AppCompatActivity {
         setContentView(R.layout.single_product_infos);
         logo=(ImageView) findViewById(R.id.logo);
         toolbar =(Toolbar) findViewById(R.id.toolbar);
+        togglerImage=(ImageView) findViewById(R.id.toggler);
 
         Picasso.with(getApplicationContext())
                 .load("http://www.userlogos.org/files/logos/mafi0z/BestBuy.png")
@@ -75,6 +76,7 @@ public class SingleProductInfos extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 logo.setVisibility(View.GONE);
+                togglerImage.setVisibility(View.GONE);
 
             }
         });
@@ -83,6 +85,7 @@ public class SingleProductInfos extends AppCompatActivity {
             @Override
             public boolean onClose() {
                 logo.setVisibility(View.VISIBLE);
+                togglerImage.setVisibility(View.VISIBLE);
                 return false;
             }
         });

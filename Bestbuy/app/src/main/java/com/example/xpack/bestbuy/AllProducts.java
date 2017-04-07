@@ -49,7 +49,7 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
     Toolbar toolbar;
     ArrayList<Products> produits=new ArrayList<Products>();
     ProgressDialog progress ;
-    ImageView logo,share;
+    ImageView logo,share,togglerImage;
     SearchView search;
     Boolean visible=true;
     Button sortPrice,sortRatings;
@@ -83,6 +83,7 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
         logo=(ImageView) findViewById(R.id.logo);
         share=(ImageView) findViewById(R.id.share);
         search=(SearchView) findViewById(R.id.searchView);
+        togglerImage=(ImageView) findViewById(R.id.toggler);
         share.setVisibility(View.GONE);
         Picasso.with(getApplicationContext())
                 .load("http://www.userlogos.org/files/logos/mafi0z/BestBuy.png")
@@ -173,6 +174,8 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
             @Override
             public void onClick(View view) {
                 logo.setVisibility(View.GONE);
+                togglerImage.setVisibility(View.GONE);
+
 
             }
         });
@@ -181,6 +184,7 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
             @Override
             public boolean onClose() {
                 logo.setVisibility(View.VISIBLE);
+                togglerImage.setVisibility(View.VISIBLE);
                 return false;
             }
         });
