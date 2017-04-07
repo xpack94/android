@@ -49,6 +49,10 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:label="product informations"
             />
+        <activity android:name=".Filter"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="product informations"
+            />
 
     </application>
 

@@ -34,5 +34,17 @@
     <!--buttons-->
     <string name="sortPrice">price</string>
     <string name="sortRatings">reviews</string>
+    <string name="categories_dialog">select categories</string>
+    <string name="ok">ok</string>
+    <string name="cancel">cancel</string>
+    <string name="current_selection">your current selection</string>
+    <string name="reset">Reset All</string>
+    <string name="narrow_down_results">Narrow Your Results By</string>
+    <string name="curren_offers">Current Offers</string>
+    <string name="brands">Brands</string>
+    <string name="status">Status</string>
+    <string name="category">Category</string>
+    <string name="filter">Filter</string>
+
 
 </resources>

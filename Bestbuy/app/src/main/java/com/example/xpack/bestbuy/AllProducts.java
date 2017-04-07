@@ -121,6 +121,18 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
             }
         });
 
+
+        Button filter=(Button) findViewById(R.id.filter);
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent =new Intent(AllProducts.this,Filter.class);
+
+                startActivity(intent);
+            }
+        });
+
         Intent intent=getIntent();
 
         title=intent.getExtras().getString("title");

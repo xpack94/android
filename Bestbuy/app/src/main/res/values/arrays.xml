@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="array_of_categories">
+         <item  name="tv and home theater">tv and home theater</item>
+        <item  name="cameras and comoders">cameras  camcorders</item>
+        <item  name="computers and tablets">computers and tablets</item>
+        <item  name="video games">video games</item>
+        <item  name="movies and music">movies and music</item>
+        <item  name=" smartphone">smartphone</item>
+        <item  name=" tv_home_theater">tv home theater</item>
+        <item  name=" beauty">beauty</item>
+        <item  name=" gift cards">gift cards</item>
+        <item  name=" geek squad">geek squad</item>
+        <item  name=" smart home">smart home</item>
+        <item  name=" sport">sport</item>
+        <item  name=" appliances">appliances</item>
+        <item  name=" toys">toys</item>
+        <item  name=" home living">home living</item>
+        <item  name="office supplies">office supplies</item>
+        <item  name=" health fitness">health fitness</item>
+        <item  name=" wearable technology">wearable technology</item>
+        <item  name=" personal car">personal care</item>
+
+    </string-array>
+    <string-array name="array_of_current_offers">
+        <item  name="onSale">ON Sale</item>
+        <item  name="onClearance">On Clearance</item>
+        <item  name="available Online">Available Online</item>
+        <item  name="Available in Store">Available in Store</item>
+        </string-array>
+
+    <string-array name="array_of_brands">
+        <item  name="HP">Hp</item>
+        <item  name="dell">DELL</item>
+        <item  name=" apple">APPLE</item>
+        <item  name="lenovo">LENOVO</item>
+        <item  name="samsung">SAMSUNG</item>
+        <item  name=" funko">FUNKO</item>
+        <item  name="canon">CANON</item>
+        <item  name="xerox">XEROX</item>
+        <item  name="seico">SEICO</item>
+        <item  name="asus">ASUS</item>
+        <item  name="sony">SONY</item>
+        <item  name="tumi">TUMI</item>
+        <item  name="acer">ACER</item>
+        <item  name="3m">3M</item>
+        <item  name="epson">EPSON</item>
+        <item  name="panasonic">PANASONIC</item>
+        <item  name="yamaha">YAMAHA</item>
+        <item  name="remo">REMO</item>
+        <item  name="apc">APC</item>
+        <item  name="microsoft">MICROSOFT</item>
+        <item  name="energizer">ENERGIZER</item>
+        <item  name="belkin">BELKIN</item>
+        <item  name="lego">LEGO</item>
+
+
+
+
+    </string-array>
+    <string-array name="array_of_status">
+        <item  name="whats new">whats new</item>
+
+    </string-array>
+</resources>
