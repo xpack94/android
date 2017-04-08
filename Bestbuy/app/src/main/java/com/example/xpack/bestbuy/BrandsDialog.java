@@ -12,12 +12,20 @@ import java.util.ArrayList;
 public class BrandsDialog extends DialogFragment {
 
 
-    ArrayList <Integer> mSelectedItems;
-    int co=0;
-    @Override
+     ArrayList <Integer> mSelectedItems;
+      ArrayList<String> items;
+      static int size;
 
+    BrandsDialog(){
+        this.mSelectedItems = new ArrayList<Integer>();  // Where we track the selected items
+        this.size=mSelectedItems.size();
+        this.items=new ArrayList<String>();
+    }
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        mSelectedItems = new ArrayList<Integer>(6);  // Where we track the selected items
+
+
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Set the dialog title
 
@@ -32,11 +40,18 @@ public class BrandsDialog extends DialogFragment {
                             public void onClick(DialogInterface dialog, int which,
                                                 boolean isChecked) {
                                 if (isChecked) {
+                                    if(!search(which)){
+                                        mSelectedItems.add(which);
+                                        String w=getResources().getStringArray(R.array.array_of_brands)[which];
+                                        items.add(w);
+
+                                    }
                                     // If the user checked the item, add it to the selected items
-                                    mSelectedItems.add(which);
+
                                 } else if (mSelectedItems.contains(which)) {
                                     // Else, if the item is already in the array, remove it
                                     mSelectedItems.remove(Integer.valueOf(which));
+
                                 }
                             }
                         })
@@ -46,9 +61,12 @@ public class BrandsDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK, so save the mSelectedItems results somewhere
                         // or return them to the component that opened the dialog
-                        for (int i=0;i<mSelectedItems.size();i++){
+
+                        for (int i=size;i<mSelectedItems.size();i++){
+
                             int s=mSelectedItems.get(i);
-                            Filter.lin.addView(Filter.getView(getResources().getStringArray(R.array.array_of_brands)[s]));
+                            Filter.lin.addView(Filter.getView(getResources().getStringArray(R.array.array_of_brands)[s],"brands"));
+                            size=mSelectedItems.size();
                         }
 
                     }
@@ -61,6 +79,16 @@ public class BrandsDialog extends DialogFragment {
                 });
 
         return builder.create();
+    }
+
+    private Boolean search(int i){
+
+        for(int s=0;s<mSelectedItems.size();s++){
+            if(mSelectedItems.get(s)==i){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

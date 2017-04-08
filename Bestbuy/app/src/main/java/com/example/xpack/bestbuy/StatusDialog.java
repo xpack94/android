@@ -13,9 +13,16 @@ public class StatusDialog extends DialogFragment {
 
 
     ArrayList <Integer> mSelectedItems;
+    ArrayList<String> items;
+    static int size;
+    StatusDialog(){
+        this.mSelectedItems = new ArrayList<Integer>();  // Where we track the selected items
+        this.size=mSelectedItems.size();
+        this.items=new ArrayList<String>();
+    }
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        mSelectedItems = new ArrayList<Integer>();  // Where we track the selected items
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Set the dialog title
 
@@ -30,8 +37,13 @@ public class StatusDialog extends DialogFragment {
                             public void onClick(DialogInterface dialog, int which,
                                                 boolean isChecked) {
                                 if (isChecked) {
+                                    if(!search(which)){
+                                        mSelectedItems.add(which);
+                                        String w=getResources().getStringArray(R.array.array_of_status)[which];
+                                        items.add(w);
+                                    }
                                     // If the user checked the item, add it to the selected items
-                                    mSelectedItems.add(which);
+
                                 } else if (mSelectedItems.contains(which)) {
                                     // Else, if the item is already in the array, remove it
                                     mSelectedItems.remove(Integer.valueOf(which));
@@ -45,9 +57,10 @@ public class StatusDialog extends DialogFragment {
                         // User clicked OK, so save the mSelectedItems results somewhere
                         // or return them to the component that opened the dialog
 
-                        for (int i=0;i<mSelectedItems.size();i++){
+                        for (int i=size;i<mSelectedItems.size();i++){
                             int s=mSelectedItems.get(i);
-                            Filter.lin.addView(Filter.getView(getResources().getStringArray(R.array.array_of_status)[s]));
+                            Filter.lin.addView(Filter.getView(getResources().getStringArray(R.array.array_of_status)[s],"status"));
+                            size=mSelectedItems.size();
                         }
 
                     }
@@ -60,6 +73,16 @@ public class StatusDialog extends DialogFragment {
                 });
 
         return builder.create();
+    }
+
+    private Boolean search(int i){
+
+        for(int s=0;s<mSelectedItems.size();s++){
+            if(mSelectedItems.get(s)==i){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
