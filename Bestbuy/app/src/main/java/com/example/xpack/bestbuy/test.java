@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -43,7 +47,7 @@ public class test extends AppCompatActivity implements Serializable {
     Toolbar toolbar;
     ArrayList<Products> produits=new ArrayList<Products>();
     ProgressDialog progress ;
-    ImageView logo,share;
+    ImageView logo,share,togglerImage;
     SearchView search;
     Boolean visible=true;
     Button sortPrice,sortRatings;
@@ -55,12 +59,30 @@ public class test extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
 
 
-        setContentView(R.layout.test);
+        setContentView(R.layout.lay);
+
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ImageView toggler=(ImageView) findViewById(R.id.toggler);
+        final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        toggle.setDrawerIndicatorEnabled(true);
+
+
+
+        toggler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
+
 
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         logo=(ImageView) findViewById(R.id.logo);
         share=(ImageView) findViewById(R.id.share);
         search=(SearchView) findViewById(R.id.searchView);
+        togglerImage=(ImageView) findViewById(R.id.toggler);
         share.setVisibility(View.GONE);
         // toolbar.setAlpha(Float.parseFloat("0.5"));
         Picasso.with(getApplicationContext())
@@ -112,14 +134,68 @@ public class test extends AppCompatActivity implements Serializable {
         l.execute();
 
 
+        search.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logo.setVisibility(View.GONE);
+                togglerImage.setVisibility(View.GONE);
+
+
+            }
+        });
+        //reafficher le logo quand on quite la recherche
+        search.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                logo.setVisibility(View.VISIBLE);
+                togglerImage.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
+
 
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
 
-                return false;
-            }
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    //si l'utilisateur tape un nom de produit a rechercher
+                    //appeler l'activité AllProducts qui a son tours s'occupe de chercher
+                    //le nom du produit tapé par l'utilisateur
+                    Intent intent=new Intent(test.this,AllProducts.class);
+                    String ur="https://api.bestbuy.com/v1/products(search=";
+                    String word="";
+                    Boolean word_found=false;
+                    int i=0;
+                    while(i<query.length()){
+                        Log.e("t", "the inde is  "+i );
+                        while((i<query.length()) && (query.charAt(i)!=' ')){
+
+                            word+=query.charAt(i);
+                            word_found=true;
+                            i++;
+                            Log.e("t", "index:"+i+" word = "+word);
+                            // Log.e("t", "the word is  "+word );
+
+                        }
+
+                        if(word_found){
+                            word+=" ";
+                            word_found=false;
+                        }
+
+                        i++;
+                    }
+                    ur+=word.replaceAll(" ","&search=")+"*)?format=json&shwo=all&pageSize=25&page=";
+                    intent.putExtra("url1",ur);
+                    intent.putExtra("url2","&apiKey=tghcgc6qnf72tat8a5kbja9r");
+                    intent.putExtra("page",1);
+                    intent.putExtra("decalage",0);
+                    intent.putExtra("title",getResources().getString(R.string.search_results));
+                    startActivity(intent);
+                    return false;
+                }
+
 
             @Override
             public boolean onQueryTextChange(String newText) {
