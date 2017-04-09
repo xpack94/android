@@ -16,4 +16,7 @@
     <string name="footer_text">plus aucun produit a afficher</string>
     <string name="sortPrice">prix</string>
     <string name="sortRatings">notes</string>
+    <string name="salePrice">prix</string>
+    <string name="priceMax">entrer le prix minimal</string>
+    <string name="priceMin">entrer le prix maximal</string>
 </resources>

@@ -215,6 +215,7 @@ public class SingleProductInfos extends AppCompatActivity {
             }
 
             if(sorted.equals("true")){
+
                 MergeSort m=new MergeSort(produits,type);
                 m.sortGivenArray();
 

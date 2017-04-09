@@ -34,6 +34,7 @@ public class CategoriesDialog extends DialogFragment {
 
 
 
+
                     }
                 });
 

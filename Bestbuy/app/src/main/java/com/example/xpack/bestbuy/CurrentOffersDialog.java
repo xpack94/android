@@ -67,6 +67,7 @@ public class CurrentOffersDialog extends DialogFragment {
 
                                Filter.lin.addView(Filter.getView(getResources().getStringArray(R.array.array_of_current_offers)[s],"offers"));
                                 size=mSelectedItems.size();
+
                         }
                     }
                 })

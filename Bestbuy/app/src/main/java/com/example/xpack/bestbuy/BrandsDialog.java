@@ -67,7 +67,10 @@ public class BrandsDialog extends DialogFragment {
                             int s=mSelectedItems.get(i);
                             Filter.lin.addView(Filter.getView(getResources().getStringArray(R.array.array_of_brands)[s],"brands"));
                             size=mSelectedItems.size();
+
+
                         }
+
 
                     }
                 })
@@ -90,5 +93,6 @@ public class BrandsDialog extends DialogFragment {
         }
         return false;
     }
+
 
 }

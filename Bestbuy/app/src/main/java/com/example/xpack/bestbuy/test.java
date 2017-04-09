@@ -202,6 +202,7 @@ public class test extends AppCompatActivity implements Serializable {
                     intent.putExtra("position", decalage+position);
                     intent.putExtra("url",url1);
                     intent.putExtra("url3",url2);
+                    intent.putExtra("type",type);
                     intent.putExtra("sorted",sorted);
                     //le offset est utiliser dans le viewpager pour savoir quand est-ce que on atteint la fin du viewpager et
                     //faire un load more
