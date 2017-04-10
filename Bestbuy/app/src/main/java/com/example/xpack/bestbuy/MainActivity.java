@@ -38,11 +38,14 @@ public class MainActivity extends Fragment {
     String url2 = "*)?format=json&show=all&pageSize=25&page=";
     String url3 = "&apiKey=tghcgc6qnf72tat8a5kbja9r";
     int cat = 0;
+
     ArrayList<Products> produits1 = new ArrayList<Products>();
     ArrayList<Products> produits2 = new ArrayList<Products>();
     ArrayList<Products> produits3 = new ArrayList<Products>();
     ArrayList<Products> produits4 = new ArrayList<Products>();
     ArrayList<Products> produits5 = new ArrayList<Products>();
+    ArrayList<Products> produits6 = new ArrayList<Products>();
+    ArrayList<Products> produits7 = new ArrayList<Products>();
     TextView tv_theater, com_tab, mobiles, videoGames, movies_music;
     View v;
 
@@ -72,6 +75,7 @@ public class MainActivity extends Fragment {
                             @Override
                             public void run() {
                                 load();
+
                             }
                         });
 
@@ -118,6 +122,9 @@ public class MainActivity extends Fragment {
         while (!haveNetworkConnection()){
 
         }
+
+
+
             Fetcher f = new Fetcher(1, url1, url2, "abcat0600000", produits3);
             //video games
             Fetcher j = new Fetcher(2, url1, url2, "abcat0700000", produits4);
@@ -127,7 +134,6 @@ public class MainActivity extends Fragment {
             Fetcher k = new Fetcher(4, url1, url2, "abcat0500000", produits2);
             //tv and home theater
             Fetcher l = new Fetcher(5, url1, url2, "abcat0100000", produits1);
-
             l.execute();
             k.execute();
             f.execute();
@@ -203,9 +209,13 @@ public class MainActivity extends Fragment {
 
 
             try {
+                if(id.equals("")){
+                    Parser.getProducts(this.produits, url1  + page + url2);
+                }else{
+                    Parser.getProducts(this.produits, url1 + id + url2 + page + url3);
+                }
 
 
-                Parser.getProducts(this.produits, url1 + id + url2 + page + url3);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -251,7 +261,7 @@ public class MainActivity extends Fragment {
                     inLay4.addView(getView(x, prods, this.id));
 
                 }
-            } else if (number == 3) {
+            } else {
                 mobiles.setText(getResources().getString(R.string.mobiles) + ">");
                 mobiles.setTag("mobiles");
                 mobiles.setTag(R.string.tag, "abcat0800000");
@@ -259,6 +269,8 @@ public class MainActivity extends Fragment {
                     inLay5.addView(getView(x, prods, this.id));
                 }
             }
+
+
 
 
         }
@@ -318,8 +330,13 @@ public class MainActivity extends Fragment {
         } else if (tag.equals("videoGames")) {
             intent.putExtra("url1", url1 + v.getTag(R.string.tag) + url2);
             intent.putExtra("title", "" + getResources().getString(R.string.video_games));
-        } else {
+        } else if(tag.equals("mobiles")) {
             intent.putExtra("url1", url1 + v.getTag(R.string.tag) + url2);
+            intent.putExtra("title", "" + getResources().getString(R.string.mobiles));
+        }else{
+            String url="https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=";
+            String urll="&apiKey=tghcgc6qnf72tat8a5kbja9r";
+            intent.putExtra("url1", url);
             intent.putExtra("title", "" + getResources().getString(R.string.mobiles));
         }
         intent.putExtra("url2", url3);

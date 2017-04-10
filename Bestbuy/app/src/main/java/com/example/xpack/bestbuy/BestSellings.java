@@ -1,7 +1,10 @@
 package com.example.xpack.bestbuy;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,19 +36,52 @@ public class BestSellings extends Fragment {
     String url2="&apiKey=tghcgc6qnf72tat8a5kbja9r";
     int page=1,pos=1;
     itemsAdapter mAdapter;
-    int decalage=0;
+    int decalage=0,offset=0;
     String sorted="false",type="";
     Boolean scrolled=false;
     ArrayList<Products> produits=new ArrayList<Products>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.best_sellings, container, false);
         grid=(GridView) v.findViewById(R.id.gridView);
         progress=new ProgressDialog(getActivity());
 
-        pos=1;
-        Fetcher f=new Fetcher();
-        f.execute();
+        if(!haveNetworkConnection()){
+
+            new Thread(){
+                public void run(){
+                    while (!NoInternet.clicked && !haveNetworkConnection()){
+
+                    }
+
+
+                    //Thread.sleep(7000);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            pos=1;
+                            Fetcher f=new Fetcher();
+                            f.execute();
+                        }
+                    });
+
+
+
+
+
+                }
+            }.start();
+
+
+
+        }else{
+            pos=1;
+            Fetcher f=new Fetcher();
+            f.execute();
+        }
+
+
 
         grid.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -61,7 +97,7 @@ public class BestSellings extends Fragment {
                 final int lastItem = i + i1;
                 if(scrolled){
                     if(lastItem == i2){
-                        // here you have reached end of list, load more data
+
                         Fetcher f = new Fetcher();
                         page++;
                         pos++;
@@ -96,17 +132,14 @@ public class BestSellings extends Fragment {
         @Override
         protected ArrayList<Products> doInBackground(Object... params) {
 
+            while (!haveNetworkConnection()){
+
+            }
 
 
             try {
 
-
-
                 Parser.getProducts(produits,url1+page+url2);
-
-
-
-
 
                 //verifier si on est rendu au dernier produit
                 //si oui le boutton load More deviendra invisible
@@ -128,7 +161,7 @@ public class BestSellings extends Fragment {
                     mAdapter=new itemsAdapter(produits);
                     grid.setAdapter(mAdapter);
                 }else{
-                    Log.e("t", "pos is : "+pos );
+                    Log.e("t", ""+offset );
                     mAdapter.notifyDataSetChanged();
                 }
 
@@ -222,6 +255,12 @@ public class BestSellings extends Fragment {
                 title.setText(produits.get(position).salePrice);
                 title.append("$");
 
+            }else if(!produits.get(position).largerImage.equals("null")){
+                Picasso.with(getActivity().getApplicationContext())
+                        .load(produits.get(position).largerImage)
+                        .into(image);
+
+
             }else{
                 title.setVisibility(View.GONE);
             }
@@ -230,5 +269,24 @@ public class BestSellings extends Fragment {
             return row;
         }
     }
+
+    private boolean haveNetworkConnection(){
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+
+
 
 }

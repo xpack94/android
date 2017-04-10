@@ -49,6 +49,10 @@
     <string name="status">Status</string>
     <string name="category">Category</string>
     <string name="filter">Filter</string>
+    <string name="onSale">products On Sale</string>
+    <string name="storeLocator">Store Locator</string>
+    <string name="wishList">Wish List</string>
+    <string name="settings">Settings</string>
 
 
 </resources>

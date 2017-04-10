@@ -33,6 +33,7 @@ public class Filter extends Activity implements View.OnClickListener {
     TextView resetAll;
     View catLine,priceLine;
     Button done;
+    ImageView currentAdd,statusAdd,categoryAdd,priceAdd,brandsAdd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,12 @@ public class Filter extends Activity implements View.OnClickListener {
         Brands=(TextView) findViewById(R.id.brands);
         Status =(TextView) findViewById(R.id.status);
         Category =(TextView) findViewById(R.id.category);
+        categoryAdd=(ImageView) findViewById(R.id.categoryAdd);
+        currentAdd=(ImageView) findViewById(R.id.currentOffersAdd);
+        brandsAdd=(ImageView) findViewById(R.id.brandsAdd);
+        statusAdd=(ImageView) findViewById(R.id.statusAdd);
+        priceAdd=(ImageView) findViewById(R.id.priceAdd);
+
         salePrice=(TextView) findViewById(R.id.salePriceAdd);
         priceMin=(EditText) findViewById(R.id.priceMin);
         priceMax=(EditText) findViewById(R.id.priceMax);
@@ -57,6 +64,8 @@ public class Filter extends Activity implements View.OnClickListener {
         resetAll=(TextView) findViewById(R.id.resetAll);
         catLayout=(LinearLayout) findViewById(R.id.categories);
         priceLayout=(LinearLayout) findViewById(R.id.price);
+
+
         catLine=(View ) findViewById(R.id.cat);
         priceLine=(View ) findViewById(R.id.pri);
         done=(Button) findViewById(R.id.done);
@@ -70,7 +79,11 @@ public class Filter extends Activity implements View.OnClickListener {
         resetAll.setOnClickListener(this);
         done.setOnClickListener(this);
 
-
+        priceAdd.setOnClickListener(this);
+        currentAdd.setOnClickListener(this);
+        statusAdd.setOnClickListener(this);
+        categoryAdd.setOnClickListener(this);
+        brandsAdd.setOnClickListener(this);
 
 
     }
@@ -78,26 +91,26 @@ public class Filter extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        if(view.getId()==R.id.currentOffers){
+        if(view.getId()==R.id.currentOffers ||view.getId()==R.id.currentOffersAdd){
 
             current.show(f,"dialog");
 
 
-        }else if(view.getId()==R.id.brands){
+        }else if(view.getId()==R.id.brands || view.getId()==R.id.brandsAdd ){
             brands.show(f,"dialog");
 
-        }else if(view.getId()==R.id.status){
+        }else if(view.getId()==R.id.status || view.getId()==R.id.statusAdd ){
 
             status.show(f,"dialog");
 
-        }else if(view.getId()==R.id.salePriceAdd){
+        }else if(view.getId()==R.id.salePriceAdd || view.getId()==R.id.priceAdd ){
                 price.show(f,"dialog");
 
            //reset all est cliqué
         }else if(view.getId()==R.id.reset || view.getId()==R.id.resetAll){
             resetSlections();
 
-        }else if(view.getId()==R.id.category){
+        }else if(view.getId()==R.id.category || view.getId()==R.id.categoryAdd ){
             cat.show(f,"dialog");
         }else{
             //button done est cliqué

@@ -5,35 +5,36 @@
         <item android:title="categories">
         <menu>
         <item
-            android:id="@+id/all_products"
-            android:title="all products " />
+            android:id="@+id/HOME"
+            android:title="HOME "
+            android:icon="@drawable/home_24dp"/>
 
             <item
-                android:id="@+id/movies_music"
-                android:title="Movies and Music" />
+                android:id="@+id/all_products"
+                android:title="@string/all_products"
+                android:icon="@drawable/allproduct"/>
+            <item
+                android:id="@+id/itemsOnSale"
+                android:title="@string/onSale"
+                android:icon="@drawable/onsale_24dp"/>
 
             <item
-                android:id="@+id/video_games"
-                android:title="Video Games" />
-
-            <item
-                android:id="@+id/Mobies"
-                android:title="Mobiles" />
+                android:id="@+id/store"
+                android:title="@string/storeLocator"
+                android:icon="@drawable/storelocator_24dp"/>
 
         <item
-            android:id="@+id/Computer_Tablets"
-            android:title="Computers and tablets" />
+            android:id="@+id/wishlist"
+            android:title="@string/wishList"
+            android:icon="@drawable/wishlist_24dp"/>
 
         <item
-            android:id="@+id/tv_theater"
-            android:title="TV and home theater" />
+            android:id="@+id/settings"
+            android:title="@string/settings"
+            android:icon="@drawable/settings_24dp"/>
 
-            <item
-                android:id="@+id/Cameras"
-                android:title="Cameras" />
-        <item
-            android:id="@+id/audio"
-            android:title="Audio" />
+
+
 
         </menu>
         </item>

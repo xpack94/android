@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -54,7 +55,7 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
     Boolean visible=true;
     Button sortPrice,sortRatings;
     String sorted="false",type="";
-
+    DrawerLayout drawer;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,21 +64,32 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
         setContentView(R.layout.lay);
 
 
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ImageView toggler=(ImageView) findViewById(R.id.toggler);
-        final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
 
-        toggle.setDrawerIndicatorEnabled(true);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
 
 
-       toggler.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               drawer.openDrawer(GravityCompat.START);
-           }
-       });
+        View header=(View ) navigationView.getHeaderView(0);
+        ImageView v= (ImageView) header.findViewById(R.id.imageView);
+
+
+        ImageView toggler=(ImageView) findViewById(R.id.toggler);
+           toggler.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   drawer.openDrawer(GravityCompat.START);
+               }
+           });
+
+
+
+
 
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         logo=(ImageView) findViewById(R.id.logo);
@@ -248,7 +260,38 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        return false;
+        Intent intent = new Intent(getApplicationContext(), AllProducts.class);
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        Fragment f = null;
+        if (id == R.id.HOME) {
+            Intent i=new Intent(AllProducts.this,Main.class);
+            startActivity(i);
+            return true;
+        } else if (id == R.id.all_products) {
+
+            intent.putExtra("url1", "https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=");
+            intent.putExtra("title", "" + getResources().getString(R.string.all_products));
+
+        } else if (id == R.id.itemsOnSale) {
+            intent.putExtra("url1", "https://api.bestbuy.com/v1/products(onSale=true)?format=json&show=all&pageSize=25&page=");
+            intent.putExtra("title", "" + getResources().getString(R.string.onSale));
+        } else if (id == R.id.wishlist) {
+            return true;
+        } else if (id == R.id.store) {
+            return true;
+        } else if (id == R.id.settings) {
+            return true;
+        }
+
+        intent.putExtra("url2", "&apiKey=tghcgc6qnf72tat8a5kbja9r");
+        intent.putExtra("page", 1);
+        intent.putExtra("decalage", 0);
+        startActivity(intent);
+
+        drawer.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 
 
@@ -272,7 +315,7 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
             try {
 
                 int size=produits.size();
-
+                Log.e("t", " "+url1+page+url2 );
                     Parser.getProducts(produits,url1+page+url2);
 
 

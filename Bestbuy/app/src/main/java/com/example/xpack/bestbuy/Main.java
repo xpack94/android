@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 
@@ -27,17 +28,18 @@ public class Main extends AppCompatActivity   implements NavigationView.OnNaviga
     String url1="https://api.bestbuy.com/v1/products(categoryPath.id=";
     String url2="*)?format=json&show=all&pageSize=25&page=";
     String url3="&apiKey=tghcgc6qnf72tat8a5kbja9r";
-
+    DrawerLayout drawer;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -167,6 +169,26 @@ public class Main extends AppCompatActivity   implements NavigationView.OnNaviga
         return true;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unbindDrawables(findViewById(R.id.content_main));
+        System.gc();
+    }
+
+    private void unbindDrawables(View view) {
+        if (view.getBackground() != null) {
+            view.getBackground().setCallback(null);
+        }
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                unbindDrawables(((ViewGroup) view).getChildAt(i));
+            }
+            ((ViewGroup) view).removeAllViews();
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -182,43 +204,37 @@ public class Main extends AppCompatActivity   implements NavigationView.OnNaviga
 
         return super.onOptionsItemSelected(item);
     }
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         Intent intent=new Intent(getApplicationContext(),AllProducts.class);
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Fragment f=null;
-        if (id == R.id.Computer_Tablets) {
-
+        if (id == R.id.HOME) {
+            drawer.closeDrawers();
+            return true;
         } else if (id == R.id.all_products) {
 
             intent.putExtra("url1","https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=");
             intent.putExtra("title",""+getResources().getString(R.string.all_products));
 
-        } else if (id == R.id.tv_theater) {
-            intent.putExtra("url1",url1+"abcat0100000"+url2);
-            intent.putExtra("title",""+getResources().getString(R.string.tv_theater));
-        } else if (id == R.id.audio) {
-
-        } else if (id == R.id.movies_music) {
-            intent.putExtra("url1",url1+"abcat0600000"+url2);
-            intent.putExtra("title",getResources().getString(R.string.movies_music));
-        } else if (id == R.id.video_games) {
-            intent.putExtra("url1",url1+"abcat0700000"+url2);
-            intent.putExtra("title",getResources().getString(R.string.video_games));
-        }else if (id==R.id.Mobies){
-            intent.putExtra("url1",url1+"abcat0800000"+url2);
-            intent.putExtra("title",getResources().getString(R.string.mobiles));
+        } else if (id == R.id.itemsOnSale) {
+            intent.putExtra("url1","https://api.bestbuy.com/v1/products(onSale=true)?format=json&show=all&pageSize=25&page=");
+            intent.putExtra("title",""+getResources().getString(R.string.onSale));
+        }else if (id == R.id.wishlist) {
+            return true;
+        } else if (id == R.id.store) {
+            return true;
+        }else if (id==R.id.settings){
+            return true;
         }
-        else if (id==R.id.Cameras){
 
-        }
         intent.putExtra("url2","&apiKey=tghcgc6qnf72tat8a5kbja9r");
         intent.putExtra("page",1);
         intent.putExtra("decalage",0);
         startActivity(intent);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
