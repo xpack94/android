@@ -1,6 +1,7 @@
 package com.example.xpack.bestbuy;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
@@ -18,7 +19,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.xpack.bestbuy.db.Favorite;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -27,7 +30,8 @@ import com.squareup.picasso.Picasso;
 
 public class SingleProductFragment extends Fragment {
 
-
+    Button addToWishList;
+    private SQLiteDatabase db;
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -35,23 +39,24 @@ public class SingleProductFragment extends Fragment {
 
         Bundle args=getArguments();
 
-        String name = args.getString("name");
-        String image= args.getString("largeImage");
-        String salePrice=args.getString("salePrice");
+        final String name = args.getString("name");
+        final String image= args.getString("largeImage");
+        final String salePrice=args.getString("salePrice");
         String salesEnd=args.getString("salesEnd");
-        String ratings = args.getString("ratings");
+        final String ratings = args.getString("ratings");
         String ratingCount= args.getString("ratingCount");
-        String isAvailable=args.getString("isAvailable");
+        final String isAvailable=args.getString("isAvailable");
         String longDescription=args.getString("longDescription");
         final String addToCart = args.getString("addToCartUrl");
+        final String sku=args.getString("sku");
         final Animation Toggle;
-        final TextView ld;
+        final TextView ld,nameOfProduct;
         Toggle= AnimationUtils.loadAnimation(getActivity().getApplicationContext(),R.anim.slide_down);
         Toggle.setDuration(2000);
 
+        db = new DBHelper(getActivity()).getDB();
 
-
-        TextView nameOfProduct = (TextView) v.findViewById(R.id.name);
+        nameOfProduct = (TextView) v.findViewById(R.id.name);
         nameOfProduct.setText(name);
         TextView Price=(TextView) v.findViewById(R.id.salePrice);
         final TextView toggle =(TextView) v.findViewById(R.id.toggle);
@@ -152,7 +157,24 @@ public class SingleProductFragment extends Fragment {
 
 
 
+        addToWishList=(Button) v.findViewById(R.id.addToWishList);
 
+        addToWishList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (Favorite.exists(db, sku)) {
+                    Favorite.remove(db, sku);
+                    Toast.makeText(getActivity(), "Favorit retiré", Toast.LENGTH_SHORT).show();
+                } else {
+                    Favorite.add(db, sku,image,name,salePrice,ratings,isAvailable);
+                    Toast.makeText(getActivity(), "Favorit ajouté", Toast.LENGTH_SHORT).show();
+                }
+
+                // Invalide les rows pour les faire se redessiner
+
+            }
+        });
 
 
         Picasso.with(getActivity())

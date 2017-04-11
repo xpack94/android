@@ -38,6 +38,8 @@ public class SingleProductInfos extends AppCompatActivity {
     ImageView logo,share,togglerImage;
     String sorted="false",type="";
     SearchView search;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,6 @@ public class SingleProductInfos extends AppCompatActivity {
         logo=(ImageView) findViewById(R.id.logo);
         toolbar =(Toolbar) findViewById(R.id.toolbar);
         togglerImage=(ImageView) findViewById(R.id.toggler);
-
         Picasso.with(getApplicationContext())
                 .load("http://www.userlogos.org/files/logos/mafi0z/BestBuy.png")
                 .into(logo);
@@ -63,15 +64,13 @@ public class SingleProductInfos extends AppCompatActivity {
         offset=args.getInt("offset");
         sorted=args.getString("sorted");
         type=args.getString("type");
-
         startPosition = args.getInt("position");
         // produits= (ArrayList<Products>) args.getSerializable("produits");
+
         pager = (ViewPager) findViewById(R.id.pager);
         Fetcher fetcher = new Fetcher(url,url3);
         fetcher.execute();
         search=(SearchView) findViewById(R.id.searchView);
-
-
         search.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,7 +175,10 @@ public class SingleProductInfos extends AppCompatActivity {
         });
 
 
+
+
     }
+
 
 
     public class Fetcher extends AsyncTask<Object, Object, ArrayList<Products>> {
@@ -263,7 +265,10 @@ public class SingleProductInfos extends AppCompatActivity {
             args.putString("isAvailable", prod.isAvailable);
             args.putString("longDescription", prod.longDescription);
             args.putString("addToCartUrl", prod.addToCartUrl);
+            args.putString("sku",prod.sku);
            /// args.putString("logo","http://logok.org/wp-content/uploads/2014/09/Best_Buy_Logo.png");
+
+
 
 
 
@@ -278,4 +283,5 @@ public class SingleProductInfos extends AppCompatActivity {
         }
 
     }
+
 }

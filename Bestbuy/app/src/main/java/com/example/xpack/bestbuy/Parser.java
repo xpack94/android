@@ -32,8 +32,8 @@ public class Parser {
         if (http == null)
             http = new OkHttpClient();
 
-        Response response = http.newCall(request).execute();
 
+        Response response = http.newCall(request).execute();
         json = new JSONObject(response.body().string());
 
         return json;
@@ -65,7 +65,8 @@ public class Parser {
                     prod.getString("longDescription"),
                     prod.getString("addToCartUrl"),
                     prod.getString("mediumImage"),
-                    prod.getString("largeImage")
+                    prod.getString("largeImage"),
+                    prod.getString("sku")
             ));
         }
 

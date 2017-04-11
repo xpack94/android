@@ -2,6 +2,7 @@ package com.example.xpack.bestbuy;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,11 +22,14 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.xpack.bestbuy.db.Favorite;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -56,7 +60,8 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
     Button sortPrice,sortRatings;
     String sorted="false",type="";
     DrawerLayout drawer;
-
+    LinearLayout viewdItems;
+    private SQLiteDatabase db;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -89,13 +94,14 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
 
 
 
-
-
+        db = new DBHelper(this).getDB();
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         logo=(ImageView) findViewById(R.id.logo);
         share=(ImageView) findViewById(R.id.share);
         search=(SearchView) findViewById(R.id.searchView);
         togglerImage=(ImageView) findViewById(R.id.toggler);
+
+
         share.setVisibility(View.GONE);
         Picasso.with(getApplicationContext())
                 .load("http://www.userlogos.org/files/logos/mafi0z/BestBuy.png")
@@ -202,6 +208,7 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
         });
 
 
+
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -250,7 +257,7 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
 
 
 
-
+        viewdItems=(LinearLayout) findViewById(R.id.viewdItems);
 
 
 
@@ -265,15 +272,16 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
         int id = item.getItemId();
         Fragment f = null;
         if (id == R.id.HOME) {
+
             Intent i=new Intent(AllProducts.this,Main.class);
             startActivity(i);
             return true;
         } else if (id == R.id.all_products) {
-
-            intent.putExtra("url1", "https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=");
-            intent.putExtra("title", "" + getResources().getString(R.string.all_products));
+             drawer.closeDrawers();
+            return true;
 
         } else if (id == R.id.itemsOnSale) {
+
             intent.putExtra("url1", "https://api.bestbuy.com/v1/products(onSale=true)?format=json&show=all&pageSize=25&page=");
             intent.putExtra("title", "" + getResources().getString(R.string.onSale));
         } else if (id == R.id.wishlist) {
@@ -354,7 +362,6 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(AllProducts.this, SingleProductInfos.class);
-
                     intent.putExtra("page", page);
                     intent.putExtra("position", decalage+position);
                     intent.putExtra("url",url1);
@@ -418,7 +425,7 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
 
 
             if(convertView == null)
@@ -431,10 +438,10 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
             RatingBar rat= (RatingBar) convertView.findViewById(R.id.ratings);
             ImageView pic=(ImageView) convertView.findViewById(R.id.AvailablOnline);
             TextView avOnline =(TextView) convertView.findViewById(R.id.AvailablOnlineText);
+            TextView  addToWishList =(TextView) convertView.findViewById(R.id.addToWishList);
 
 
-
-                name.setText(produits.get(position).name);
+            name.setText(produits.get(position).name);
                 sku.setText(produits.get(position).salePrice);
                 if (produits.get(position).customerReview=="null"){
                     rat.setRating(Float.parseFloat("0"));
@@ -462,7 +469,26 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
 
             }
 
+            addToWishList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String sku=produits.get(position).sku;
+                    String image=produits.get(position).mediumImage;
+                    String name=produits.get(position).name;
+                    String salePrice=produits.get(position).salePrice;
+                    String available=produits.get(position).isAvailable;
+                    String ratings=produits.get(position).ratingCount;
+                    if (Favorite.exists(db, sku)) {
+                        Favorite.remove(db, sku);
+                        Toast.makeText(AllProducts.this, ""+getResources().getString(R.string.removedFromWishList), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Favorite.add(db, sku,image,name,salePrice,ratings,available);
+                        Toast.makeText(AllProducts.this, ""+getResources().getString(R.string.addedToWishList), Toast.LENGTH_SHORT).show();
 
+                    }
+
+                }
+            });
 
 
 
@@ -474,6 +500,30 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
 
 
     }
+
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        unbindDrawables(findViewById(R.id.content_main));
+//        System.gc();
+//    }
+
+//    private void unbindDrawables(View view)
+//    {
+//        if (view.getBackground() != null)
+//        {
+//            view.getBackground().setCallback(null);
+//        }
+//        if (view instanceof ViewGroup && !(view instanceof AdapterView))
+//        {
+//            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++)
+//            {
+//                unbindDrawables(((ViewGroup) view).getChildAt(i));
+//            }
+//            ((ViewGroup) view).removeAllViews();
+//        }
+//    }
+
 
 
 

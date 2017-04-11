@@ -53,6 +53,8 @@
     <string name="storeLocator">Store Locator</string>
     <string name="wishList">Wish List</string>
     <string name="settings">Settings</string>
+    <string name="addedToWishList">product added to wish list</string>
+    <string name="removedFromWishList">product removed from wish list</string>
 
 
 </resources>
