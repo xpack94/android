@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 public class SingleProductInfos extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    Boolean changedFavorite;
     private String url,url3;
     private int page;
     private ViewPager pager;
@@ -311,6 +312,14 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
             return produits.size();
         }
 
+    }
+
+    public void onBackPressed(){
+        //to update list if changed favorite (wishlist)
+        Intent intent = new Intent();
+        intent.putExtra("changedFavorite", changedFavorite);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
 }

@@ -183,6 +183,11 @@ public class SingleProductFragment extends Fragment {
                 }
 
                 // Invalide les rows pour les faire se redessiner
+                if (isAdded()){
+                    SingleProductInfos activity = (SingleProductInfos) getActivity();
+                    activity.changedFavorite = true;
+                }
+
 
             }
         });

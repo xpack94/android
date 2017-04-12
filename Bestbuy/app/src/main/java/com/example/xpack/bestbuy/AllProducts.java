@@ -374,10 +374,13 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
                     //le offset est utiliser dans le viewpager pour savoir quand est-ce que on atteint la fin du viewpager et
                     //faire un load more
 
+                    // intent.putExtra("produits",produits);
+                    // startActivity(intent);
+                    //veut savoir si add to wishlist a ete utiliser
+                    startActivityForResult(intent, 1);
 
-                   // intent.putExtra("produits",produits);
+                    onActivityResult(1, RESULT_OK, intent);
 
-                    startActivity(intent);
                 }
             });
 
@@ -515,6 +518,21 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
 
 
     }
+
+    //Invalidate list if wishlist is changed
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                Boolean changed = data.getExtras().getBoolean("changedFavorite");
+                if (changed){
+                    list.invalidateViews();
+                }
+            }
+        }
+    }
+
+
 
 //    @Override
 //    protected void onDestroy() {
