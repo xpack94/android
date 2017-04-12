@@ -176,16 +176,21 @@ public class Main extends AppCompatActivity   implements NavigationView.OnNaviga
         unbindDrawables(findViewById(R.id.content_main));
         System.gc();
     }
-
+    //faire un unbind des images pour les enlevé de la memoire
     private void unbindDrawables(View view) {
         if (view.getBackground() != null) {
             view.getBackground().setCallback(null);
         }
         if (view instanceof ViewGroup) {
             for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+
                 unbindDrawables(((ViewGroup) view).getChildAt(i));
             }
-            ((ViewGroup) view).removeAllViews();
+            try {
+                ((ViewGroup) view).removeAllViews();
+            } catch (UnsupportedOperationException  e) {
+
+            }
         }
     }
 
@@ -216,13 +221,20 @@ public class Main extends AppCompatActivity   implements NavigationView.OnNaviga
             return true;
         } else if (id == R.id.all_products) {
 
+            unbindDrawables(findViewById(R.id.content_main));
+            System.gc();
             intent.putExtra("url1","https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=");
             intent.putExtra("title",""+getResources().getString(R.string.all_products));
 
         } else if (id == R.id.itemsOnSale) {
+
+            unbindDrawables(findViewById(R.id.content_main));
+            System.gc();
             intent.putExtra("url1","https://api.bestbuy.com/v1/products(onSale=true)?format=json&show=all&pageSize=25&page=");
             intent.putExtra("title",""+getResources().getString(R.string.onSale));
         }else if (id == R.id.wishlist) {
+            Intent in=new Intent(Main.this,WishList.class);
+            startActivity(in);
             return true;
         } else if (id == R.id.store) {
             return true;

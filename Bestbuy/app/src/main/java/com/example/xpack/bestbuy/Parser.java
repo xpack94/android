@@ -1,12 +1,16 @@
 package com.example.xpack.bestbuy;
 
+import android.content.Context;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -23,17 +27,32 @@ public class Parser {
     private static OkHttpClient http;
     private static JSONObject json = null;
     public static int TotalPages=0;
+    private static Context context = null;
+
+    public static void setContext(Context context) {
+        Parser.context = context;
+    }
 
     private static JSONObject getJSON(String Url) throws IOException, JSONException {
 
 
+
+
+
         Request request = new Request.Builder().url(Url).build();
 
-        if (http == null)
-            http = new OkHttpClient();
+        if (http == null){
+            long cacheSize = 1024 * 1024 * 1024; // 10 MiB
+            Cache cache = new Cache(new File(context.getCacheDir(), "HttpResponseCache"), cacheSize);
+            http = new OkHttpClient
+                    .Builder()
+                    .cache(cache)
+                    .build();
+        }
+
+
 
         Response response = http.newCall(request).execute();
-
         json = new JSONObject(response.body().string());
 
         return json;
@@ -65,7 +84,8 @@ public class Parser {
                     prod.getString("longDescription"),
                     prod.getString("addToCartUrl"),
                     prod.getString("mediumImage"),
-                    prod.getString("largeImage")
+                    prod.getString("largeImage"),
+                    prod.getString("sku")
             ));
         }
 

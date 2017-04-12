@@ -73,7 +73,6 @@
         android:id="@+id/addToWishList"
         android:text="+"
         android:textSize="25sp"
-        android:onClick="addToWishList"
         android:textDirection="rtl"
         android:layout_marginLeft="2dp"
         />

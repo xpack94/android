@@ -15,11 +15,12 @@ public class Products {
     public String longDescription;
     public String addToCartUrl;
     public String largerImage;
+    public String sku;
 
 
 
     public Products(String sku, String name, String url, String customerReview, String largeImage, String salesEnd, String ratingCount,
-                    String isAvailable, String longDescription,String addToCartUrl,String mediumImage,String largerImage){
+                    String isAvailable, String longDescription,String addToCartUrl,String mediumImage,String largerImage,String id){
         this.salePrice=sku;
         this.name=name;
         this.url=url;
@@ -32,5 +33,6 @@ public class Products {
         this.addToCartUrl=addToCartUrl;
         this.mediumImage=mediumImage;
         this.largerImage=largerImage;
+        this.sku=id;
     }
 }

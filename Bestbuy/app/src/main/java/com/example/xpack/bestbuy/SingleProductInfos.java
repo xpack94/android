@@ -5,14 +5,17 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -24,7 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class SingleProductInfos extends AppCompatActivity {
+public class SingleProductInfos extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private String url,url3;
     private int page;
@@ -38,16 +41,39 @@ public class SingleProductInfos extends AppCompatActivity {
     ImageView logo,share,togglerImage;
     String sorted="false",type="";
     SearchView search;
+    DrawerLayout drawer;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        ActionBar bar = getActionBar();
 //        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#333")));
         setContentView(R.layout.single_product_infos);
+
+
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+//
+//        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawer.setDrawerListener(toggle);
+//        toggle.syncState();
+//
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        navigationView.setNavigationItemSelectedListener(this);
+//
+//
+//        View header = (View) navigationView.getHeaderView(0);
+//        ImageView v = (ImageView) header.findViewById(R.id.imageView);
+//
+
+
         logo=(ImageView) findViewById(R.id.logo);
         toolbar =(Toolbar) findViewById(R.id.toolbar);
         togglerImage=(ImageView) findViewById(R.id.toggler);
-
         Picasso.with(getApplicationContext())
                 .load("http://www.userlogos.org/files/logos/mafi0z/BestBuy.png")
                 .into(logo);
@@ -63,15 +89,13 @@ public class SingleProductInfos extends AppCompatActivity {
         offset=args.getInt("offset");
         sorted=args.getString("sorted");
         type=args.getString("type");
-
         startPosition = args.getInt("position");
         // produits= (ArrayList<Products>) args.getSerializable("produits");
+
         pager = (ViewPager) findViewById(R.id.pager);
         Fetcher fetcher = new Fetcher(url,url3);
         fetcher.execute();
         search=(SearchView) findViewById(R.id.searchView);
-
-
         search.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,6 +200,13 @@ public class SingleProductInfos extends AppCompatActivity {
         });
 
 
+
+
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        return false;
     }
 
 
@@ -263,7 +294,10 @@ public class SingleProductInfos extends AppCompatActivity {
             args.putString("isAvailable", prod.isAvailable);
             args.putString("longDescription", prod.longDescription);
             args.putString("addToCartUrl", prod.addToCartUrl);
+            args.putString("sku",prod.sku);
            /// args.putString("logo","http://logok.org/wp-content/uploads/2014/09/Best_Buy_Logo.png");
+
+
 
 
 
@@ -278,4 +312,5 @@ public class SingleProductInfos extends AppCompatActivity {
         }
 
     }
+
 }
