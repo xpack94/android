@@ -285,6 +285,8 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
             intent.putExtra("url1", "https://api.bestbuy.com/v1/products(onSale=true)?format=json&show=all&pageSize=25&page=");
             intent.putExtra("title", "" + getResources().getString(R.string.onSale));
         } else if (id == R.id.wishlist) {
+            Intent i=new Intent(AllProducts.this,WishList.class);
+            startActivity(i);
             return true;
         } else if (id == R.id.store) {
             return true;
@@ -468,6 +470,14 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
                 avOnline.setTextColor(Color.parseColor("#2F4F4F"));
 
             }
+            TextView t=(TextView) convertView.findViewById(R.id.addToWishList);
+            if (Favorite.exists(db, produits.get(position).sku)) {
+
+                t.setText("-");
+            }else{
+                t.setText("+");
+            }
+
 
             addToWishList.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -481,9 +491,14 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
                     if (Favorite.exists(db, sku)) {
                         Favorite.remove(db, sku);
                         Toast.makeText(AllProducts.this, ""+getResources().getString(R.string.removedFromWishList), Toast.LENGTH_SHORT).show();
+                        TextView t=(TextView) view.findViewById(R.id.addToWishList);
+                        t.setText("+");
+
                     } else {
-                        Favorite.add(db, sku,image,name,salePrice,ratings,available);
+                        Favorite.add(db, sku,name,image,salePrice,ratings,available);
                         Toast.makeText(AllProducts.this, ""+getResources().getString(R.string.addedToWishList), Toast.LENGTH_SHORT).show();
+                        TextView t=(TextView) view.findViewById(R.id.addToWishList);
+                        t.setText("-");
 
                     }
 

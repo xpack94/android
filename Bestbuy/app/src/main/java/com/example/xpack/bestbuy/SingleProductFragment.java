@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -158,6 +159,12 @@ public class SingleProductFragment extends Fragment {
 
 
         addToWishList=(Button) v.findViewById(R.id.addToWishList);
+        if (Favorite.exists(db, sku)) {
+            addToWishList.setText(R.string.removeFromWishList);
+        }else{
+            addToWishList.setText(R.string.addeToWishList);
+        }
+
 
         addToWishList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,10 +172,14 @@ public class SingleProductFragment extends Fragment {
 
                 if (Favorite.exists(db, sku)) {
                     Favorite.remove(db, sku);
-                    Toast.makeText(getActivity(), "Favorit retiré", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), ""+getResources().getString(R.string.removedFromWishList), Toast.LENGTH_SHORT).show();
+                    addToWishList.setText(R.string.addeToWishList);
+                    Log.e("t", "removed: " );
+
                 } else {
-                    Favorite.add(db, sku,image,name,salePrice,ratings,isAvailable);
-                    Toast.makeText(getActivity(), "Favorit ajouté", Toast.LENGTH_SHORT).show();
+                    Favorite.add(db, sku,name,image,salePrice,ratings,isAvailable);
+                    Toast.makeText(getActivity(), ""+getResources().getString(R.string.addedToWishList), Toast.LENGTH_SHORT).show();
+                    addToWishList.setText(R.string.removeFromWishList);
                 }
 
                 // Invalide les rows pour les faire se redessiner

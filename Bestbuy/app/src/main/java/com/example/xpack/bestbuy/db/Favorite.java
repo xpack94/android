@@ -21,15 +21,14 @@ public class Favorite {
         return number == 1;
     }
 
-    public static void add(SQLiteDatabase db, String key,String image,String name,String salePrice,String ratings,
-                           String available) {
+    public static void add(SQLiteDatabase db, String key,String name,String image,String salePrice,String ratings,String available) {
 
         ContentValues values = new ContentValues();
 
         values.put("key", key);
         values.put("added", System.currentTimeMillis() / 1000L);
-        values.put("image",image);
         values.put("name",name);
+        values.put("image",image);
         values.put("salePrice",salePrice);
         values.put("ratings",ratings);
         values.put("available",available);
@@ -52,6 +51,6 @@ public class Favorite {
      * @return
      */
     public static Cursor list(SQLiteDatabase db) {
-        return db.rawQuery("SELECT _id, key, datetime(added, 'unixepoch') AS added FROM favorites ORDER BY added DESC", null);
+        return db.rawQuery("SELECT _id, key,datetime(added, 'unixepoch'),name,image,salePrice,ratings,available AS added FROM favorites ORDER BY added DESC", null);
     }
 }
