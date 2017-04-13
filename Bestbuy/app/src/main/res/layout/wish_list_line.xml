@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="11dp"
+    android:paddingLeft="11dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:paddingTop="9dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/wishListName"
+            android:textSize="22dp"
+            android:textStyle="italic"
+            android:textColor="#555"
+            android:text="@string/list_name"
+            android:paddingTop="2dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_delete"
+            android:id="@+id/delete"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_edit"
+            android:id="@+id/edit"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/delete"
+            android:layout_marginEnd="14dp" />
+
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#d3d3d3">
+
+    <include
+        layout="@layout/new_list_toolbar"
+        android:id="@+id/new_list_toolbar"
+        ></include>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:hint="@string/list_name"
+        android:paddingLeft="25dp"
+        android:background="@android:color/white"
+        android:inputType="text"
+        android:id="@+id/listName"/>
+
+
+</LinearLayout>

@@ -58,6 +58,8 @@
     <string name="removeFromWishList">remove from wishlist</string>
     <string name="addeToWishList">add to wishList</string>
     <string name="default_list">default list</string>
+    <string name="Create_new_list">Create a New List</string>
+    <string name="list_name">List Name</string>
 
 
 </resources>

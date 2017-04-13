@@ -59,10 +59,10 @@ public class WishList extends AppCompatActivity  implements NavigationView.OnNav
                 if (position == 0)
                     return new FavoritesActivity();
                 if (position == 1) {
-                    return new BestSellings();
+                    return new MyLists();
                 }
 
-                return new BestSellings();
+                return new MyLists();
             }
 
             @Override
