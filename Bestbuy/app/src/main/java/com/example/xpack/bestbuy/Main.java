@@ -65,11 +65,11 @@ public class Main extends AppCompatActivity   implements NavigationView.OnNaviga
 
                 if(position == 0)
                     return new MainActivity();
-                if(position==1){
+                else {
                     return new BestSellings();
                 }
 
-                return new BestSellings();
+                //return new BestSellings();
             }
 
             @Override
@@ -221,15 +221,15 @@ public class Main extends AppCompatActivity   implements NavigationView.OnNaviga
             return true;
         } else if (id == R.id.all_products) {
 
-            unbindDrawables(findViewById(R.id.content_main));
-            System.gc();
+//            unbindDrawables(findViewById(R.id.content_main));
+//            System.gc();
             intent.putExtra("url1","https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=");
             intent.putExtra("title",""+getResources().getString(R.string.all_products));
 
         } else if (id == R.id.itemsOnSale) {
 
-            unbindDrawables(findViewById(R.id.content_main));
-            System.gc();
+//            unbindDrawables(findViewById(R.id.content_main));
+//            System.gc();
             intent.putExtra("url1","https://api.bestbuy.com/v1/products(onSale=true)?format=json&show=all&pageSize=25&page=");
             intent.putExtra("title",""+getResources().getString(R.string.onSale));
         }else if (id == R.id.wishlist) {

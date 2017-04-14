@@ -12,7 +12,7 @@ public class DBHelper extends SQLiteOpenHelper {
     static final String DATABASE_NAME = "toutv.db";
 
     static final String[] TABLES = new String[]{
-            "favorites",
+            "favorites"
     };
     static String salePrice="salePrice";
     static String ratings="ratings";
@@ -27,8 +27,13 @@ public class DBHelper extends SQLiteOpenHelper {
                     " `image` TEXT NOT NULL,"+
                      salePrice +" TEXT NOT NULL,"+
                      ratings+" TEXT NOT NULL,"+
-                     available+" TEXT NOT NULL"+
-                    ")"
+                     available+" TEXT NOT NULL,"+
+                    " `category.name` TEXT NOT NULL"+
+                    ")",
+
+
+
+
     };
 
     private static SQLiteDatabase db = null;

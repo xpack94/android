@@ -35,14 +35,10 @@ public class Parser {
 
     private static JSONObject getJSON(String Url) throws IOException, JSONException {
 
-
-
-
-
         Request request = new Request.Builder().url(Url).build();
 
         if (http == null){
-            long cacheSize = 1024 * 1024 * 1024; // 10 MiB
+            long cacheSize = 25 * 1024 * 1024; // 10 MiB
             Cache cache = new Cache(new File(context.getCacheDir(), "HttpResponseCache"), cacheSize);
             http = new OkHttpClient
                     .Builder()
@@ -50,9 +46,8 @@ public class Parser {
                     .build();
         }
 
-
-
         Response response = http.newCall(request).execute();
+
         json = new JSONObject(response.body().string());
 
         return json;

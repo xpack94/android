@@ -46,26 +46,13 @@
                     android:layout_marginLeft="6dp"
                     android:layout_marginBottom="4dp"
                    />
-                <HorizontalScrollView
-                    android:id="@+id/hsv3"
-                    android:layout_width="fill_parent"
-                    android:layout_height="118dp"
-                    android:layout_weight="0"
-                    android:fillViewport="true"
-                    android:measureAllChildren="false"
-                    android:scrollbars="horizontal"
-                    tools:scrollbars="horizontal">
-                    <LinearLayout
-                        android:id="@+id/innerLay3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_marginRight="0dp"
-                        android:layout_marginBottom="15dp"
-                        >
-                    </LinearLayout>
-                </HorizontalScrollView>
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/my_recycler_view1"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -76,26 +63,12 @@
                     android:layout_marginLeft="6dp"
                     android:layout_marginBottom="4dp"
                    />
-                <HorizontalScrollView
-                    android:id="@+id/hsv4"
-                    android:layout_width="fill_parent"
-                    android:layout_height="118dp"
-                    android:layout_weight="0"
-                    android:fillViewport="true"
-                    android:measureAllChildren="false"
-                    android:scrollbars="horizontal"
-                    tools:scrollbars="horizontal">
-                    <LinearLayout
-                        android:id="@+id/innerLay4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_marginRight="0dp"
-                        android:layout_marginBottom="15dp"
-                        >
-                    </LinearLayout>
-                </HorizontalScrollView>
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/my_recycler_view2"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
 
                 <TextView
@@ -105,28 +78,15 @@
                     android:textSize="17sp"
                     android:id="@+id/mobiles"
                     android:layout_marginLeft="6dp"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginBottom="6dp"
                    />
-                <HorizontalScrollView
-                    android:id="@+id/hsv5"
-                    android:layout_width="fill_parent"
-                    android:layout_height="118dp"
-                    android:layout_weight="0"
-                    android:fillViewport="true"
-                    android:measureAllChildren="false"
-                    android:scrollbars="horizontal"
-                    tools:scrollbars="horizontal">
-                    <LinearLayout
-                        android:id="@+id/innerLay5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_marginRight="0dp"
-                        android:layout_marginBottom="15dp"
-                        >
-                    </LinearLayout>
-                </HorizontalScrollView>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/my_recycler_view3"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -135,61 +95,31 @@
                     android:textSize="17sp"
                     android:id="@+id/Computer_Tablets"
                     android:layout_marginLeft="6dp"
-                    android:layout_marginBottom="4dp"
-                   />
-                <HorizontalScrollView
-                    android:id="@+id/hsv2"
-                    android:layout_width="fill_parent"
-                    android:layout_height="118dp"
-                    android:layout_weight="0"
-                    android:fillViewport="true"
-                    android:measureAllChildren="false"
-                    android:scrollbars="horizontal"
-                    tools:scrollbars="horizontal">
-                    <LinearLayout
-                        android:id="@+id/innerLay2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_marginRight="0dp"
-                        android:layout_marginBottom="15dp"
-                        >
-                    </LinearLayout>
-                </HorizontalScrollView>
+                    android:layout_marginBottom="6dp"
+                    />
+
+
+                <android.support.v7.widget.RecyclerView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/my_recycler_view4"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:id="@+id/tv_theater"
-                    android:textSize="17sp"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginBottom="4dp"
-                   />
-                <HorizontalScrollView
-                    android:id="@+id/hsv"
-                    android:layout_width="fill_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="0"
-                    android:fillViewport="true"
-                    android:measureAllChildren="false"
-                    android:scrollbars="horizontal"
-                    tools:scrollbars="horizontal">
-                    <LinearLayout
-                        android:id="@+id/innerLay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_marginRight="0dp"
-                        android:layout_marginBottom="15dp"
-                        >
-                    </LinearLayout>
-                </HorizontalScrollView>
+                    android:id="@+id/tv_theater"/>
 
-
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/my_recycler_view5"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
             </LinearLayout>
 

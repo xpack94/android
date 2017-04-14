@@ -47,7 +47,7 @@ public class BestSellings extends Fragment {
         grid=(GridView) v.findViewById(R.id.gridView);
         progress=new ProgressDialog(getActivity());
 
-        if(!haveNetworkConnection()){
+        if( !haveNetworkConnection()){
 
             new Thread(){
                 public void run(){

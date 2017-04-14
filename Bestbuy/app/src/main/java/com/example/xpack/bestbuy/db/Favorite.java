@@ -51,6 +51,6 @@ public class Favorite {
      * @return
      */
     public static Cursor list(SQLiteDatabase db) {
-        return db.rawQuery("SELECT _id, key,datetime(added, 'unixepoch'),name,image,salePrice,ratings,available AS added FROM favorites ORDER BY added DESC", null);
+        return db.rawQuery("SELECT _id, key,datetime(added, 'unixepoch') AS added, name, image,salePrice,ratings,available FROM favorites  ORDER BY added DESC", null);
     }
 }
