@@ -3,12 +3,14 @@ package com.example.xpack.bestbuy;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -55,6 +57,13 @@ public class FavoritesActivity extends Fragment {
 //        list.setAdapter(adapter);
 
         list.setAdapter(adapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
         return v;
     }
 
@@ -88,8 +97,18 @@ public class FavoritesActivity extends Fragment {
             TextView available=(TextView)view.findViewById(R.id.AvailablOnlineText);
             TextView removeFromWishList=(TextView) view.findViewById(R.id.addToWishList);
             removeFromWishList.setText("-");
-           // available.setText(cursor.getString(cursor.getColumnIndex(DBHelper.available)));
 
+            ImageView avail=(ImageView) view.findViewById(R.id.AvailablOnline);
+
+            if(cursor.getString(cursor.getColumnIndex(DBHelper.available)).equals("true")){
+                avail.setImageResource(R.drawable.available_24dp);
+                available.setText(R.string.available_online);
+                available.setTextColor(Color.parseColor("#2F4F4F"));
+            }else{
+                avail.setImageResource(R.drawable.ic_block_black_24dp);
+                available.setText(R.string.not_available);
+                available.setTextColor(Color.parseColor("#2F4F4F"));
+            }
             removeFromWishList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

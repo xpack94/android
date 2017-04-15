@@ -2,6 +2,7 @@ package com.example.xpack.bestbuy;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -159,40 +160,40 @@ public class MainActivity extends Fragment {
             j.execute();
             w.execute();
 
-//            tv_theater.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    jumpToDetails(view);
-//                }
-//            });
-//            com_tab.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    jumpToDetails(view);
-//                }
-//            });
-//
-//            mobiles.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    jumpToDetails(view);
-//                }
-//
-//            });
-//            movies_music.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    jumpToDetails(view);
-//                }
-//            });
-//
-//            videoGames.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    jumpToDetails(view);
-//                }
-//            });
-//
+            tv_theater.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    jumpToDetails(view);
+                }
+            });
+            com_tab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    jumpToDetails(view);
+                }
+            });
+
+            mobiles.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    jumpToDetails(view);
+                }
+
+            });
+            movies_music.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    jumpToDetails(view);
+                }
+            });
+
+            videoGames.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    jumpToDetails(view);
+                }
+            });
+
 
 
 
@@ -252,33 +253,35 @@ public class MainActivity extends Fragment {
             if(number==5){
                 TextView t=(TextView) v.findViewById(R.id.tv_theater);
                 tv_theater.setText(getResources().getString(R.string.tv_theater));
-                adapt5=new yourAdapter(produits);
+                tv_theater.setTag(R.string.tag, "abcat0100000");
+                tv_theater.setTag("tv_theater");
+                adapt5=new yourAdapter(produits,"abcat0100000");
                 myList5.setAdapter(adapt5);
 
             }else  if (number == 4) {
                 com_tab.setText(getResources().getString(R.string.computer_talets) + ">");
                 com_tab.setTag("com_tab");
                 com_tab.setTag(R.string.tag, "abcat0500000");
-                adapt4=new yourAdapter(produits);
+                adapt4=new yourAdapter(produits,"abcat0500000");
                 myList4.setAdapter(adapt4);
 
             } else if (number == 1) {
                 movies_music.setText(getResources().getString(R.string.movies_music) + ">");
                 movies_music.setTag("movies_music");
                 movies_music.setTag(R.string.tag, "abcat0600000");
-                adapt1=new yourAdapter(produits);
+                adapt1=new yourAdapter(produits,"abcat0600000");
                 myList1.setAdapter(adapt1);
             } else if (number == 2) {
                 videoGames.setText(getResources().getString(R.string.video_games) + ">");
                 videoGames.setTag("videoGames");
                 videoGames.setTag(R.string.tag, "abcat0700000");
-                adapt2=new yourAdapter(produits);
+                adapt2=new yourAdapter(produits,"abcat0700000");
                 myList2.setAdapter(adapt2);
             } else {
                 mobiles.setText(getResources().getString(R.string.mobiles) + ">");
                 mobiles.setTag("mobiles");
                 mobiles.setTag(R.string.tag, "abcat0800000");
-                adapt3=new yourAdapter(produits);
+                adapt3=new yourAdapter(produits,"abcat0800000");
                 myList3.setAdapter(adapt3);
             }
 
@@ -313,49 +316,49 @@ public class MainActivity extends Fragment {
 //        return rootView;
 //    }
 
-//    public void showInfo(View v) {
-//
-//        Intent intent = new Intent(v.getContext(), SingleProductInfos.class);
-//        intent.putExtra("page", 2);
-//        intent.putExtra("position", Integer.parseInt("" + v.getTag()));
-//        intent.putExtra("url", url1 + v.getTag(R.string.tag) + url2);
-//        intent.putExtra("url3", url3);
-//        intent.putExtra("sorted", "false");
-//
-//        startActivity(intent);
-//    }
+    public void showInfo(View v) {
 
-//
-//    public void jumpToDetails(View v) {
-//        String tag = (String) v.getTag();
-//        Intent intent = new Intent(v.getContext(), AllProducts.class);
-//
-//        if (tag.equals("tv_theater")) {
-//            intent.putExtra("url1", url1 + v.getTag(R.string.tag) + url2);
-//            intent.putExtra("title", "" + getResources().getString(R.string.tv_theater));
-//        } else if (tag.equals("com_tab")) {
-//            intent.putExtra("url1", url1 + v.getTag(R.string.tag) + url2);
-//            intent.putExtra("title", "" + getResources().getString(R.string.computer_talets));
-//        } else if (tag.equals("movies_music")) {
-//            intent.putExtra("url1", url1 + v.getTag(R.string.tag) + url2);
-//            intent.putExtra("title", "" + getResources().getString(R.string.movies_music));
-//        } else if (tag.equals("videoGames")) {
-//            intent.putExtra("url1", url1 + v.getTag(R.string.tag) + url2);
-//            intent.putExtra("title", "" + getResources().getString(R.string.video_games));
-//        } else if(tag.equals("mobiles")) {
-//            intent.putExtra("url1", url1 + v.getTag(R.string.tag) + url2);
-//            intent.putExtra("title", "" + getResources().getString(R.string.mobiles));
-//        }else{
-//            String url="https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=";
-//            String urll="&apiKey=tghcgc6qnf72tat8a5kbja9r";
-//            intent.putExtra("url1", url);
-//            intent.putExtra("title", "" + getResources().getString(R.string.mobiles));
-//        }
-//        intent.putExtra("url2", url3);
-//        intent.putExtra("page", 2);
-//        intent.putExtra("decalage", 25);
-//        startActivity(intent);
-//    }
+        Intent intent = new Intent(v.getContext(), SingleProductInfos.class);
+        intent.putExtra("page", 2);
+        intent.putExtra("position", Integer.parseInt("" + v.getTag()));
+        intent.putExtra("url", url1 + v.getTag(R.string.tag) + url2);
+        intent.putExtra("url3", url3);
+        intent.putExtra("sorted", "false");
+
+        startActivity(intent);
+    }
+
+
+    public void jumpToDetails(View v) {
+        String tag = (String) v.getTag();
+        Intent intent = new Intent(v.getContext(), AllProducts.class);
+
+        if (tag.equals("tv_theater")) {
+            intent.putExtra("url1", url1 + v.getTag(R.string.tag) + url2);
+            intent.putExtra("title", "" + getResources().getString(R.string.tv_theater));
+        } else if (tag.equals("com_tab")) {
+            intent.putExtra("url1", url1 + v.getTag(R.string.tag) + url2);
+            intent.putExtra("title", "" + getResources().getString(R.string.computer_talets));
+        } else if (tag.equals("movies_music")) {
+            intent.putExtra("url1", url1 + v.getTag(R.string.tag) + url2);
+            intent.putExtra("title", "" + getResources().getString(R.string.movies_music));
+        } else if (tag.equals("videoGames")) {
+            intent.putExtra("url1", url1 + v.getTag(R.string.tag) + url2);
+            intent.putExtra("title", "" + getResources().getString(R.string.video_games));
+        } else if(tag.equals("mobiles")) {
+            intent.putExtra("url1", url1 + v.getTag(R.string.tag) + url2);
+            intent.putExtra("title", "" + getResources().getString(R.string.mobiles));
+        }else{
+            String url="https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=";
+            String urll="&apiKey=tghcgc6qnf72tat8a5kbja9r";
+            intent.putExtra("url1", url);
+            intent.putExtra("title", "" + getResources().getString(R.string.mobiles));
+        }
+        intent.putExtra("url2", url3);
+        intent.putExtra("page", 2);
+        intent.putExtra("decalage", 25);
+        startActivity(intent);
+    }
 
 
 
@@ -429,9 +432,11 @@ public class MainActivity extends Fragment {
 
 
         ArrayList<Products> prods;
-
-        public yourAdapter(ArrayList<Products> produit) {
+        String id;
+        public yourAdapter(ArrayList<Products> produit,String id) {
             prods=produit;
+            this.id=id;
+
         }
 
         @Override
@@ -454,6 +459,15 @@ public class MainActivity extends Fragment {
                         .load(prods.get(position).mediumImage)
                         .into(holder.image);
             }
+            holder.image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    holder.image.setTag(25+position);
+                    holder.image.setTag(R.string.tag, id);
+                    showInfo(view);
+                }
+            });
+
 
 
 

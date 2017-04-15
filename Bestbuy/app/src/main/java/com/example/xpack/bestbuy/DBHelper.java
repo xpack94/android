@@ -8,11 +8,11 @@ import android.util.Log;
 public class DBHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    static final int DATABASE_VERSION = 5;
+    static final int DATABASE_VERSION = 7;
     static final String DATABASE_NAME = "toutv.db";
 
     static final String[] TABLES = new String[]{
-            "favorites"
+            "favorites","lists"
     };
     static String salePrice="salePrice";
     static String ratings="ratings";
@@ -28,9 +28,12 @@ public class DBHelper extends SQLiteOpenHelper {
                      salePrice +" TEXT NOT NULL,"+
                      ratings+" TEXT NOT NULL,"+
                      available+" TEXT NOT NULL,"+
-                    " `category.name` TEXT NOT NULL"+
+                    " `listName` TEXT NOT NULL"+
                     ")",
 
+            "CREATE TABLE `lists` (" +
+                    " `_id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+                    " `nameOfList` TEXT NOT NULL"+")"
 
 
 

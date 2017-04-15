@@ -60,6 +60,7 @@
     <string name="default_list">default list</string>
     <string name="Create_new_list">Create a New List</string>
     <string name="list_name">List Name</string>
+    <string name="alreadyExists">already exists</string>
 
 
 </resources>

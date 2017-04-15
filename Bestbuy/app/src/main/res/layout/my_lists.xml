@@ -13,7 +13,8 @@
         android:orientation="vertical"
         android:paddingTop="11dp"
         android:paddingLeft="11dp"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:layout_marginBottom="3dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,9 +31,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/defaultlist">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,7 +45,15 @@
             </LinearLayout>
 
 
-        </ScrollView>
+
+
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/myLists">
+
+        </ListView>
 
 
         <android.support.design.widget.FloatingActionButton
