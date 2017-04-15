@@ -117,7 +117,7 @@ public class MyLists extends Fragment  {
                     t=(TextView) f.findViewById(R.id.wishListName);
 
                     if (Favorite.existsList(db,text)) {
-                        Favorite.removeList(db, text);
+                        Toast.makeText(getActivity(),getResources().getString(R.string.alreadyExists),Toast.LENGTH_LONG).show();
 
                     } else {
                         Favorite.addList(db, text);
