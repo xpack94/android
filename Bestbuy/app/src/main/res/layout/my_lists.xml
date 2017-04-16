@@ -6,25 +6,37 @@
     android:background="#d3d3d3">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="70dp"
         android:id="@+id/defaultlist"
         android:orientation="vertical"
         android:paddingTop="11dp"
         android:paddingLeft="11dp"
         android:background="@android:color/white"
         android:layout_marginBottom="3dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/setDefault"
+            android:src="@android:drawable/ic_menu_manage"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="24dp" />
+
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_list"
             android:textSize="22dp"
             android:textColor="#555"
             android:textStyle="bold"
-            />
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/textView3" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -69,6 +81,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
+
+
 
 
 </RelativeLayout>

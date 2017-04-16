@@ -41,6 +41,15 @@
             android:layout_toStartOf="@+id/delete"
             android:layout_marginEnd="14dp" />
 
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@android:drawable/ic_menu_manage"
+            android:layout_marginEnd="16dp"
+            android:id="@+id/makeDefault"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/edit" />
+
 
     </RelativeLayout>
 

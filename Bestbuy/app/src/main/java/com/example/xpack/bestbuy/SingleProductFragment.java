@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -170,26 +169,29 @@ public class SingleProductFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if (Favorite.exists(db, sku)) {
-                    Favorite.remove(db, sku);
-                    Toast.makeText(getActivity(), ""+getResources().getString(R.string.removedFromWishList), Toast.LENGTH_SHORT).show();
-                    addToWishList.setText(R.string.addeToWishList);
-                    Log.e("t", "removed: " );
 
-                } else {
-                    Favorite.add(db, sku,name,image,salePrice,ratings,isAvailable);
-                    Toast.makeText(getActivity(), ""+getResources().getString(R.string.addedToWishList), Toast.LENGTH_SHORT).show();
-                    addToWishList.setText(R.string.removeFromWishList);
+                    if (Favorite.exists(db, sku)) {
+                        Favorite.remove(db, sku);
+                        Toast.makeText(getActivity(), ""+getResources().getString(R.string.removedFromWishList), Toast.LENGTH_SHORT).show();
+                        addToWishList.setText(R.string.addeToWishList);
+
+                    } else {
+                        Favorite.add(db, sku,name,image,salePrice,ratings,isAvailable);
+                        Toast.makeText(getActivity(), ""+getResources().getString(R.string.addedToWishList), Toast.LENGTH_SHORT).show();
+                        addToWishList.setText(R.string.removeFromWishList);
+                    }
+
+                    // Invalide les rows pour les faire se redessiner
+                    if (isAdded()){
+                        SingleProductInfos activity = (SingleProductInfos) getActivity();
+                        activity.changedFavorite = true;
+                    }
+
+
                 }
 
-                // Invalide les rows pour les faire se redessiner
-                if (isAdded()){
-                    SingleProductInfos activity = (SingleProductInfos) getActivity();
-                    activity.changedFavorite = true;
-                }
 
 
-            }
         });
 
 

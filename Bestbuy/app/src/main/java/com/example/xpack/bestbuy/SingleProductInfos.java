@@ -231,20 +231,28 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
         protected ArrayList<Products> doInBackground(Object... params) {
 
 
-            try {
 
-                    for (int i = 1; i <= page; i++) {
+                try {
+                    if(type.equals("productSku")){
+                        ParserBySku.getProducts(produits,this.url+page+this.url3);
+                    }else{
+                        for (int i = 1; i <= page; i++) {
 
-                        Parser.getProducts(produits, this.url+i +this.url3);
+                            Parser.getProducts(produits, this.url+i +this.url3);
+                        }
                     }
 
 
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
 
             if(sorted.equals("true")){
 

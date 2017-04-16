@@ -14,7 +14,7 @@ public class CurrentOffersDialog extends DialogFragment {
     ArrayList <Integer> mSelectedItems;
     ArrayList<String> items;
     static int  size;
-        CurrentOffersDialog(){
+      public CurrentOffersDialog(){
            this.mSelectedItems = new ArrayList<Integer>();  // Where we track the selected items
             this.size=mSelectedItems.size();
             this.items=new ArrayList<String>();

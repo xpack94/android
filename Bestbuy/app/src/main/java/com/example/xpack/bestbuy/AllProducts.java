@@ -325,8 +325,7 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
             try {
 
                 int size=produits.size();
-                Log.e("t", " "+url1+page+url2 );
-                    Parser.getProducts(produits,url1+page+url2);
+                Parser.getProducts(produits,url1+page+url2);
 
 
 

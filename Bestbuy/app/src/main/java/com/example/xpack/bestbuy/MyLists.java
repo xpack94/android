@@ -44,6 +44,8 @@ public class MyLists extends Fragment  {
     ListView list;
     RelativeLayout relative;
     String id="0";
+    RelativeLayout noItem;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,11 +56,13 @@ public class MyLists extends Fragment  {
         db = new DBHelper(getActivity()).getDB();
         Cursor c = Favorite.Mylist(db);
         adapter=new customAdapter(getActivity(),c);
-        LinearLayout defaultList= (LinearLayout) v.findViewById(R.id.defaultlist);
-
+        RelativeLayout defaultList= (RelativeLayout) v.findViewById(R.id.defaultlist);
+        ImageView setDefault =(ImageView) v.findViewById(R.id.setDefault);
         list = (ListView) v.findViewById(R.id.myLists);
+        noItem=(RelativeLayout) v.findViewById(R.id.noItem);
 
         inlay=(LinearLayout) v.findViewById(R.id.addNewWishList);
+
         add=(FloatingActionButton) v.findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +86,17 @@ public class MyLists extends Fragment  {
             }
         });
 
+        setDefault.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DefaultDialog dialog =new DefaultDialog("default");
+                dialog.show(getActivity().getFragmentManager(),"make it default");
+
+            }
+        });
+
         list.setAdapter(adapter);
+
 
         //afficher tous les produit qui son dans la list qui a eté cliqué
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -172,19 +186,21 @@ public class MyLists extends Fragment  {
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
 
-            TextView name=(TextView) view.findViewById(R.id.wishListName);
-            name.setText(cursor.getString(cursor.getColumnIndex("nameOfList")));
+            final TextView nameOfList=(TextView) view.findViewById(R.id.wishListName);
+            nameOfList.setText(cursor.getString(cursor.getColumnIndex("nameOfList")));
             final int rowId=cursor.getInt(cursor.getColumnIndex("_id"));
             ImageView delete=(ImageView) view.findViewById(R.id.delete);
             final ImageView edit=(ImageView) view.findViewById(R.id.edit);
-
+            ImageView makeAsDefault=(ImageView) view.findViewById(R.id.makeDefault);
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     RelativeLayout parent=(RelativeLayout) view.getParent();
                     TextView n=(TextView) parent.getChildAt(0);
-
                     Favorite.removeList(db,String.valueOf(n.getText()));
+                    if(name.equals(String.valueOf(n.getText()))){
+                        name="default";
+                    }
                     getActivity().recreate();
                 }
             });
@@ -203,6 +219,23 @@ public class MyLists extends Fragment  {
                 }
             });
 
+            makeAsDefault.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    RelativeLayout parent=(RelativeLayout) view.getParent();
+                    TextView n=(TextView) parent.getChildAt(0);
+                    String listName=String.valueOf(n.getText());
+                    if(!name.equals(listName)){
+                        DefaultDialog dialog=new DefaultDialog(listName);
+                        dialog.show(getActivity().getFragmentManager(),"set as default");
+                    }else{
+                        RemoveDefaultDialog dialog= new RemoveDefaultDialog();
+                        dialog.show(getActivity().getFragmentManager(),"remove default");
+                    }
+
+                }
+            });
 
         }
 
@@ -217,4 +250,4 @@ public class MyLists extends Fragment  {
 
 
 
-}
+    }
