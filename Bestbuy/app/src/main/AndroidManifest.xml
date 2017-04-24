@@ -62,6 +62,10 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:label="product informations"
             />
+        <activity android:name=".StoreLocator"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="product informations"
+            />
 
     </application>
 

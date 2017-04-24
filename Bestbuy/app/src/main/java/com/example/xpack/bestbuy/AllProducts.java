@@ -95,10 +95,8 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
 
 
         db = new DBHelper(this).getDB();
-        toolbar= (Toolbar) findViewById(R.id.toolbar);
-        logo=(ImageView) findViewById(R.id.logo);
-        share=(ImageView) findViewById(R.id.share);
-        search=(SearchView) findViewById(R.id.searchView);
+
+
         togglerImage=(ImageView) findViewById(R.id.toggler);
 
 

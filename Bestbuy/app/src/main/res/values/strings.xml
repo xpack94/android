@@ -68,6 +68,9 @@
     <string name="no">No</string>
     <string name="removeDefaultDialog">would you want to remove this list as a default dialog</string>
     <string name="no_product_in_wishList">you don\'t have any product in the wishList</string>
+    <string name="loadingStores">loading Stores</string>
+    <string name="address">address</string>
+    <string name="phone">phone</string>
 
 
 </resources>
