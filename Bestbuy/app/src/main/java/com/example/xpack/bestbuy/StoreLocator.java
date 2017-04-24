@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
@@ -15,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -56,9 +56,9 @@ public class StoreLocator extends Activity  implements Serializable,NavigationVi
 
         setContentView(R.layout.store_locator);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar=(Toolbar) findViewById(R.id.tool);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
@@ -67,17 +67,11 @@ public class StoreLocator extends Activity  implements Serializable,NavigationVi
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        View header = (View) navigationView.getHeaderView(0);
-        ImageView v = (ImageView) header.findViewById(R.id.imageView);
+
+        View header=(View ) navigationView.getHeaderView(0);
+        ImageView v= (ImageView) header.findViewById(R.id.imageView);
 
 
-        final ImageView toggler = (ImageView) findViewById(R.id.toggler);
-        toggler.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawer.openDrawer(GravityCompat.START);
-            }
-        });
 
 
         storesList = (ListView) findViewById(R.id.storesList);
@@ -114,7 +108,7 @@ public class StoreLocator extends Activity  implements Serializable,NavigationVi
             @Override
             public void onClick(View view) {
                 logo.setVisibility(View.GONE);
-                toggler.setVisibility(View.GONE);
+
 
 
 
@@ -125,7 +119,7 @@ public class StoreLocator extends Activity  implements Serializable,NavigationVi
             @Override
             public boolean onClose() {
                 logo.setVisibility(View.VISIBLE);
-                toggler.setVisibility(View.VISIBLE);
+
                 return false;
             }
         });
@@ -247,6 +241,16 @@ public class StoreLocator extends Activity  implements Serializable,NavigationVi
                 storesList.setVisibility(View.GONE);
 
             }
+
+            storesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent intent=new Intent(StoreLocator.this,StoreDetails.class);
+                    intent.putExtra("page",page);
+                    intent.putExtra("position",i);
+                    startActivity(intent);
+                }
+            });
 
 
         }

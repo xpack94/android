@@ -65,7 +65,10 @@ public class StoresParser {
                     prod.getString("address2"),
                     prod.getJSONArray("services"),
                     prod.getJSONArray("detailedHours"),
-                    prod.getString("phone")
+                    prod.getString("phone"),
+                    prod.getString("city"),
+                    prod.getString("fullPostalCode"),
+                    prod.getString("hoursAmPm")
             ));
         }
 

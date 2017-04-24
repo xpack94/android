@@ -15,9 +15,13 @@ public class Stores  {
     JSONArray services;
     JSONArray hours;
     String phone;
+    String city;
+    String postalCode;
+    String hoursAmPm;
 
 
-    public Stores(String name,String longName,String address1,String addres2,JSONArray services,JSONArray hours,String phone){
+    public Stores(String name,String longName,String address1,String addres2,JSONArray services,JSONArray hours,String phone,
+                  String city,String postalCode,String hoursAmPm){
         this.name=name;
         this.longName=longName;
         this.address1=address1;
@@ -25,7 +29,9 @@ public class Stores  {
         this.services=services;
         this.hours=hours;
         this.phone=phone;
-
+        this.city=city;
+        this.postalCode=postalCode;
+        this.hoursAmPm=hoursAmPm;
     }
 
 

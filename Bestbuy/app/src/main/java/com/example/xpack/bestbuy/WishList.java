@@ -49,8 +49,7 @@ public class WishList extends AppCompatActivity  implements NavigationView.OnNav
         TabLayout tabs = (TabLayout) findViewById(R.id.tabLayout);
         ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
 
-        ImageView tog=(ImageView) findViewById(R.id.toggler);
-        tog.setVisibility(View.GONE);
+
 
         pager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override

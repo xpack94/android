@@ -54,7 +54,7 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
     Toolbar toolbar;
     ArrayList<Products> produits=new ArrayList<Products>();
     ProgressDialog progress ;
-    ImageView logo,share,togglerImage;
+    ImageView logo,share;
     SearchView search;
     Boolean visible=true;
     Button sortPrice,sortRatings;
@@ -68,7 +68,7 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
 
         setContentView(R.layout.lay);
 
-
+        toolbar=(Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -84,23 +84,17 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
         ImageView v= (ImageView) header.findViewById(R.id.imageView);
 
 
-        ImageView toggler=(ImageView) findViewById(R.id.toggler);
-           toggler.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-                   drawer.openDrawer(GravityCompat.START);
-               }
-           });
 
 
 
         db = new DBHelper(this).getDB();
 
 
-        togglerImage=(ImageView) findViewById(R.id.toggler);
 
-
+        share=(ImageView) findViewById(R.id.share);
+        logo=(ImageView) findViewById(R.id.logo) ;
         share.setVisibility(View.GONE);
+        search=(SearchView) findViewById(R.id.searchView);
         Picasso.with(getApplicationContext())
                 .load("http://www.userlogos.org/files/logos/mafi0z/BestBuy.png")
                 .into(logo);
@@ -190,7 +184,7 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
             @Override
             public void onClick(View view) {
                 logo.setVisibility(View.GONE);
-                togglerImage.setVisibility(View.GONE);
+
 
 
             }
@@ -200,7 +194,6 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
             @Override
             public boolean onClose() {
                 logo.setVisibility(View.VISIBLE);
-                togglerImage.setVisibility(View.VISIBLE);
                 return false;
             }
         });

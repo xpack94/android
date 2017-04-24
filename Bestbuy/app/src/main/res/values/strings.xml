@@ -71,6 +71,9 @@
     <string name="loadingStores">loading Stores</string>
     <string name="address">address</string>
     <string name="phone">phone</string>
+    <string name="Services">Services</string>
+    <string name="storeDetails">Store Details</string>
+    <string name="hours">hours</string>
 
 
 </resources>

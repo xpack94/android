@@ -11,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -324,6 +323,7 @@ public class MainActivity extends Fragment {
         intent.putExtra("url", url1 + v.getTag(R.string.tag) + url2);
         intent.putExtra("url3", url3);
         intent.putExtra("sorted", "false");
+        intent.putExtra("type","");
 
         startActivity(intent);
     }
@@ -491,7 +491,7 @@ public class MainActivity extends Fragment {
         @Override
         public void onClick(View view) {
             int itemPosition = myList5.getChildPosition(view);
-            Log.e("t", "onClick: "+itemPosition );
+
         }
 
 

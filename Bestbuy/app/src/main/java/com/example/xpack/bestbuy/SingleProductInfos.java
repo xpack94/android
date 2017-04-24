@@ -101,7 +101,7 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
             @Override
             public void onClick(View view) {
                 logo.setVisibility(View.GONE);
-                togglerImage.setVisibility(View.GONE);
+
 
             }
         });
@@ -110,7 +110,6 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
             @Override
             public boolean onClose() {
                 logo.setVisibility(View.VISIBLE);
-                togglerImage.setVisibility(View.VISIBLE);
                 return false;
             }
         });
@@ -160,6 +159,20 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
+            }
+        });
+        share=(ImageView) findViewById(R.id.share);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = "Your body here";
+                String shareSub = "Your subject here";
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share using"));
             }
         });
 

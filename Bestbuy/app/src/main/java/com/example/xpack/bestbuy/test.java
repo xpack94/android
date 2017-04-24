@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -70,12 +69,6 @@ public class test extends AppCompatActivity implements Serializable {
 
 
 
-        toggler.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawer.openDrawer(GravityCompat.START);
-            }
-        });
 
 
         toolbar= (Toolbar) findViewById(R.id.toolbar);
@@ -138,7 +131,7 @@ public class test extends AppCompatActivity implements Serializable {
             @Override
             public void onClick(View view) {
                 logo.setVisibility(View.GONE);
-                togglerImage.setVisibility(View.GONE);
+
 
 
             }
@@ -148,7 +141,6 @@ public class test extends AppCompatActivity implements Serializable {
             @Override
             public boolean onClose() {
                 logo.setVisibility(View.VISIBLE);
-                togglerImage.setVisibility(View.VISIBLE);
                 return false;
             }
         });
