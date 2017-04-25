@@ -154,7 +154,7 @@ public class StoreDetails extends Activity  implements Serializable,NavigationVi
 
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "Your body here";
+                String shareBody = "\"http://www.google.com/maps/place/"+lat+","+lng;
                 String shareSub = "Your subject here";
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);

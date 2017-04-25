@@ -125,7 +125,7 @@ public class MyLists extends Fragment {
 
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                Log.i(getTag(), "keyCode: " + keyCode);
+                Log.i(getTag(), "keyCode of myLists: " + keyCode);
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
 
                     getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -195,8 +195,8 @@ public class MyLists extends Fragment {
             }
         } else if(requestCode==3){
             if (resultCode == Activity.RESULT_OK) {
-
-                list.invalidateViews();
+                Log.e("t", "MyLists " );
+                getActivity().recreate();
             }
         }
     }

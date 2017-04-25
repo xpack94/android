@@ -85,7 +85,8 @@ public class Parser {
                     prod.getJSONArray("crew"),
                     prod.getJSONArray("cast"),
                     prod.getString("regularPrice"),
-                    prod.getString("dollarSavings")
+                    prod.getString("dollarSavings"),
+                    prod.getString("url")
             ));
         }
 

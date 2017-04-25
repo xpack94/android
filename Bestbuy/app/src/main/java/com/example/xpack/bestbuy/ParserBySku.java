@@ -74,7 +74,8 @@ public class ParserBySku {
                     json.getJSONArray("crew"),
                     json.getJSONArray("cast"),
                     json.getString("regularPrice"),
-                    json.getString("dollarSavings")
+                    json.getString("dollarSavings"),
+                    json.getString("url")
             ));
 
 

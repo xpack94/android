@@ -60,6 +60,7 @@ public class SingleProductFragment extends Fragment {
         String cast=args.getString("cast");
         String regularPrice=args.getString("regularPrice");
         String dollarSavings=args.getString("dollarSavings");
+        String shareUrl=args.getString("shareUrl");
         inflater=getActivity().getLayoutInflater();
         final Animation Toggle;
         final TextView ld,nameOfProduct;

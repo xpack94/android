@@ -1,5 +1,6 @@
 package com.example.xpack.bestbuy;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -8,6 +9,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +73,30 @@ public class FavoritesActivity extends Fragment {
                 searchSku(textName);
             }
         });
+
+        v.setFocusableInTouchMode(true);
+        v.requestFocus();
+
+        v.setOnKeyListener(new View.OnKeyListener() {
+
+
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    Log.e("e", "onKey:of favorites " );
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    // String cameback="CameBack";
+                    Intent intent = new Intent();
+                    getActivity().setResult(Activity.RESULT_OK, intent);
+                    getActivity().finish();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
+
         return v;
     }
 
@@ -171,13 +199,30 @@ public class FavoritesActivity extends Fragment {
                     intent.putExtra("sorted","false");
                     intent.putExtra("type","productSku");
                     intent.putExtra("startPosition",1);
-                    startActivity(intent);
+                    startActivityForResult(intent, 1);
+                    onActivityResult(1, Activity.RESULT_OK, intent);
                 }
             }
         } finally {
             c.close();
         }
 
+    }
+
+
+    //Invalidate list if wishlist is changed
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK) {
+                Log.e("e", "favoritesActivity: " );
+                Boolean changed = data.getExtras().getBoolean("changedFavorite");
+
+                if (changed){
+                    getActivity().recreate();
+                }
+            }
+        }
     }
 
 

@@ -19,4 +19,8 @@
     <string name="salePrice">prix</string>
     <string name="priceMax">entrer le prix minimal</string>
     <string name="priceMin">entrer le prix maximal</string>
+    <string name="Create_new_list"></string>
+    <string name="Services"></string>
+    <string name="action_settings"></string>
+    <string name="addeToWishList"></string>
 </resources>

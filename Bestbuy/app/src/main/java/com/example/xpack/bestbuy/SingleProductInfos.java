@@ -45,7 +45,7 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
     String sorted="false",type="";
     SearchView search;
     DrawerLayout drawer;
-
+    String shareUrl;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,19 +165,7 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
             }
         });
         share=(ImageView) findViewById(R.id.share);
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                String shareBody = "Your body here";
-                String shareSub = "Your subject here";
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                startActivity(Intent.createChooser(sharingIntent, "Share using"));
-            }
-        });
 
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -343,8 +331,8 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
         }
 
         @Override
-        public Fragment getItem(int position) {
-            Products prod = produits.get(position);
+        public Fragment getItem(final int position) {
+            final Products prod = produits.get(position);
             SingleProductFragment fragment = new SingleProductFragment();
             Bundle args = new Bundle();
             args.putString("name", prod.name);
@@ -361,9 +349,27 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
             args.putSerializable("cast",prod.cast.toString());
             args.putString("regularPrice",prod.regularPrice);
             args.putString("dollarSavings",prod.dollarSavings);
+            args.putString("shareUrl",prod.shareUrl);
+
            /// args.putString("logo","http://logok.org/wp-content/uploads/2014/09/Best_Buy_Logo.png");
 
+            share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                    Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                    sharingIntent.setType("text/plain");
+                    if (position!=0){
+                        String shareBody =produits.get(position-1).shareUrl;
+                        String shareSub = "Your subject here";
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                        startActivity(Intent.createChooser(sharingIntent, "Share using"));
+                    }
+
+
+                }
+            });
 
 
 

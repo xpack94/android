@@ -1,5 +1,6 @@
 package com.example.xpack.bestbuy;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -156,6 +157,12 @@ public class WishList extends AppCompatActivity  implements NavigationView.OnNav
 
             intent.putExtra("url1","https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=");
             intent.putExtra("title",""+getResources().getString(R.string.all_products));
+            intent.putExtra("url2", "&apiKey=tghcgc6qnf72tat8a5kbja9r");
+            intent.putExtra("page", 1);
+            intent.putExtra("decalage", 0);
+            startActivityForResult(intent, 1);
+            onActivityResult(1, Activity.RESULT_OK, intent);
+            return true;
 
 
         } else if (id == R.id.itemsOnSale) {
@@ -182,6 +189,34 @@ public class WishList extends AppCompatActivity  implements NavigationView.OnNav
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+    //Invalidate list if wishlist is changed
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK) {
+                Log.e("e", "onActivityResult:1 " );
+                Boolean changed = data.getExtras().getBoolean("changedFavorite");
+
+                if (changed){
+                    recreate();
+                }
+            }
+        }else {
+            if(resultCode == Activity.RESULT_OK) {
+                Log.e("e", "onActivityResult:3 " );
+                recreate();
+
+            }
+        }
+    }
+
+    public void onBackPressed(){
+        //to update list if changed favorite (wishlist)
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
 }

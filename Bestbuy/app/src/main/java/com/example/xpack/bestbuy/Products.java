@@ -23,12 +23,13 @@ public class Products {
     JSONArray cast;
     String regularPrice;
     String dollarSavings;
+    String shareUrl;
 
 
 
     public Products(String sku, String name, String url, String customerReview, String largeImage, String salesEnd, String ratingCount,
                     String isAvailable, String longDescription,String addToCartUrl,String mediumImage,String largerImage,String id
-                ,  JSONArray details,JSONArray crew,JSONArray cast,String regularPrice,String dollarSavings){
+                ,  JSONArray details,JSONArray crew,JSONArray cast,String regularPrice,String dollarSavings,String shareUrl){
         this.salePrice=sku;
         this.name=name;
         this.url=url;
@@ -47,5 +48,6 @@ public class Products {
         this.cast=cast;
         this.regularPrice=regularPrice;
         this.dollarSavings=dollarSavings;
+        this.shareUrl=shareUrl;
     }
 }

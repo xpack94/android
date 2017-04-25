@@ -528,6 +528,13 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
         }
     }
 
+    public void onBackPressed(){
+        //to update list if changed favorite (wishlist)
+        Intent intent = new Intent();
+        intent.putExtra("changedFavorite", true);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 
 
 //    @Override
