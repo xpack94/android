@@ -230,7 +230,10 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
 
                     i++;
                 }
-                ur+=word.replaceAll(" ","&search=")+"*)?format=json&shwo=all&pageSize=25&page=";
+                ur+=word.replaceAll(" ","&search=")+"*)?format=json&show=all&pageSize=25&page=";
+
+
+                //  intent.putExtra("url1","https://api.bestbuy.com/v1/products(name="+query+"*%7Csearch="+query+"*)?format=json&show=all&pageSize=25&page=");
                 intent.putExtra("url1",ur);
                 intent.putExtra("url2","&apiKey=tghcgc6qnf72tat8a5kbja9r");
                 intent.putExtra("page",1);
@@ -280,7 +283,10 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
             startActivity(i);
             return true;
         } else if (id == R.id.store) {
+            Intent i =new Intent(AllProducts.this,StoreLocator.class);
+            startActivity(i);
             return true;
+
         } else if (id == R.id.settings) {
             return true;
         }

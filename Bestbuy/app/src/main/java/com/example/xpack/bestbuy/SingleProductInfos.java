@@ -9,8 +9,10 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -49,27 +51,27 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
         super.onCreate(savedInstanceState);
 //        ActionBar bar = getActionBar();
 //        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#333")));
-        setContentView(R.layout.single_product_infos);
+        setContentView(R.layout.single_product_with_drawer);
 
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//
-//        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawer.setDrawerListener(toggle);
-//        toggle.syncState();
-//
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
-//
-//
-//        View header = (View) navigationView.getHeaderView(0);
-//        ImageView v = (ImageView) header.findViewById(R.id.imageView);
-//
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        Log.e("r", "onCreate: "+drawer );
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+        View header = (View) navigationView.getHeaderView(0);
+        ImageView v = (ImageView) header.findViewById(R.id.imageView);
+
 
 
         logo=(ImageView) findViewById(R.id.logo);
@@ -134,6 +136,7 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
                         i++;
                         Log.e("t", "index:"+i+" word = "+word);
                         // Log.e("t", "the word is  "+word );
+
                     }
 
                     if(word_found){
@@ -143,7 +146,7 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
 
                     i++;
                 }
-                ur+=word.replaceAll(" ","&search=")+"*)?format=json&shwo=all&pageSize=25&page=";
+                ur+=word.replaceAll(" ","&search=")+"*)?format=json&show=all&pageSize=25&page=";
 
 
                 //  intent.putExtra("url1","https://api.bestbuy.com/v1/products(name="+query+"*%7Csearch="+query+"*)?format=json&show=all&pageSize=25&page=");
@@ -220,7 +223,44 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        return false;
+        Intent intent = new Intent(getApplicationContext(), AllProducts.class);
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        Fragment f = null;
+        if (id == R.id.HOME) {
+
+            Intent i=new Intent(SingleProductInfos.this,Main.class);
+            startActivity(i);
+            return true;
+        } else if (id == R.id.all_products) {
+            intent.putExtra("url1","https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=");
+            intent.putExtra("title",""+getResources().getString(R.string.all_products));
+
+
+        } else if (id == R.id.itemsOnSale) {
+
+            intent.putExtra("url1", "https://api.bestbuy.com/v1/products(onSale=true)?format=json&show=all&pageSize=25&page=");
+            intent.putExtra("title", "" + getResources().getString(R.string.onSale));
+        } else if (id == R.id.wishlist) {
+            Intent i=new Intent(SingleProductInfos.this,WishList.class);
+            startActivity(i);
+            return true;
+        } else if (id == R.id.store) {
+            Intent i = new Intent(SingleProductInfos.this,StoreLocator.class);
+            startActivity(i);
+            return true;
+        } else if (id == R.id.settings) {
+            return true;
+        }
+
+        intent.putExtra("url2", "&apiKey=tghcgc6qnf72tat8a5kbja9r");
+        intent.putExtra("page", 1);
+        intent.putExtra("decalage", 0);
+        startActivity(intent);
+
+        drawer.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 
 
@@ -317,6 +357,10 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
             args.putString("longDescription", prod.longDescription);
             args.putString("addToCartUrl", prod.addToCartUrl);
             args.putString("sku",prod.sku);
+            args.putString("details",prod.details.toString());
+            args.putSerializable("cast",prod.cast.toString());
+            args.putString("regularPrice",prod.regularPrice);
+            args.putString("dollarSavings",prod.dollarSavings);
            /// args.putString("logo","http://logok.org/wp-content/uploads/2014/09/Best_Buy_Logo.png");
 
 

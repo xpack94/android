@@ -18,10 +18,12 @@ public class Stores  {
     String city;
     String postalCode;
     String hoursAmPm;
+    String lat;
+    String lng;
 
 
     public Stores(String name,String longName,String address1,String addres2,JSONArray services,JSONArray hours,String phone,
-                  String city,String postalCode,String hoursAmPm){
+                  String city,String postalCode,String hoursAmPm,String lat,String lgt){
         this.name=name;
         this.longName=longName;
         this.address1=address1;
@@ -32,6 +34,8 @@ public class Stores  {
         this.city=city;
         this.postalCode=postalCode;
         this.hoursAmPm=hoursAmPm;
+        this.lat=lat;
+        this.lng=lgt;
     }
 
 

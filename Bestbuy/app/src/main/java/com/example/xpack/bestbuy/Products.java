@@ -1,6 +1,8 @@
 package com.example.xpack.bestbuy;
 
 
+import org.json.JSONArray;
+
 public class Products {
 
     public String url;
@@ -16,11 +18,17 @@ public class Products {
     public String addToCartUrl;
     public String largerImage;
     public String sku;
+    JSONArray details;
+    JSONArray crew;
+    JSONArray cast;
+    String regularPrice;
+    String dollarSavings;
 
 
 
     public Products(String sku, String name, String url, String customerReview, String largeImage, String salesEnd, String ratingCount,
-                    String isAvailable, String longDescription,String addToCartUrl,String mediumImage,String largerImage,String id){
+                    String isAvailable, String longDescription,String addToCartUrl,String mediumImage,String largerImage,String id
+                ,  JSONArray details,JSONArray crew,JSONArray cast,String regularPrice,String dollarSavings){
         this.salePrice=sku;
         this.name=name;
         this.url=url;
@@ -34,5 +42,10 @@ public class Products {
         this.mediumImage=mediumImage;
         this.largerImage=largerImage;
         this.sku=id;
+        this.details=details;
+        this.crew=crew;
+        this.cast=cast;
+        this.regularPrice=regularPrice;
+        this.dollarSavings=dollarSavings;
     }
 }

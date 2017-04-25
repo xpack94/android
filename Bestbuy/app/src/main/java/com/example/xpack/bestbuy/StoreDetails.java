@@ -3,6 +3,7 @@ package com.example.xpack.bestbuy;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,6 +44,8 @@ public class StoreDetails extends Activity  implements Serializable,NavigationVi
     int page;
     int position;
     ImageView share;
+    Button directions;
+    Double lat,lng;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_store);
@@ -158,6 +162,16 @@ public class StoreDetails extends Activity  implements Serializable,NavigationVi
             }
         });
 
+        directions=(Button) findViewById(R.id.directions);
+        directions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String uri = "http://www.google.com/maps/place/ "+ lat + "," + lng;
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                startActivity(intent);
+            }
+        });
+
         Fetcher f=new Fetcher();
         f.execute();
 
@@ -243,6 +257,10 @@ public class StoreDetails extends Activity  implements Serializable,NavigationVi
             }
 
             offers.setText(service);
+
+
+            lat=Double.parseDouble(prods.get(position).lat);
+            lng=Double.parseDouble(prods.get(position).lng);
 
 
         }

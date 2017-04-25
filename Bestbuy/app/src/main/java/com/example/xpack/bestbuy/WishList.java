@@ -11,7 +11,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,6 +25,7 @@ import android.widget.ImageView;
 public class WishList extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawer;
+    SearchView searchView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +86,58 @@ public class WishList extends AppCompatActivity  implements NavigationView.OnNav
         tabs.setupWithViewPager(pager);
 
 
+
+        searchView=(SearchView) findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //si l'utilisateur tape un nom de produit a rechercher
+                //appeler l'activité AllProducts qui a son tours s'occupe de chercher
+                //le nom du produit tapé par l'utilisateur
+                Intent intent=new Intent(WishList.this,AllProducts.class);
+                String ur="https://api.bestbuy.com/v1/products(search=";
+                String word="";
+                Boolean word_found=false;
+                int i=0;
+                while(i<query.length()){
+                    Log.e("t", "the inde is  "+i );
+                    while((i<query.length()) && (query.charAt(i)!=' ')){
+
+                        word+=query.charAt(i);
+                        word_found=true;
+                        i++;
+                        Log.e("t", "index:"+i+" word = "+word);
+                        // Log.e("t", "the word is  "+word );
+
+                    }
+
+                    if(word_found){
+                        word+=" ";
+                        word_found=false;
+                    }
+
+                    i++;
+                }
+                ur+=word.replaceAll(" ","&search=")+"*)?format=json&show=all&pageSize=25&page=";
+
+
+                //  intent.putExtra("url1","https://api.bestbuy.com/v1/products(name="+query+"*%7Csearch="+query+"*)?format=json&show=all&pageSize=25&page=");
+                intent.putExtra("url1",ur);
+                intent.putExtra("url2","&apiKey=tghcgc6qnf72tat8a5kbja9r");
+                intent.putExtra("page",1);
+                intent.putExtra("decalage",0);
+                intent.putExtra("title",getResources().getString(R.string.search_results));
+                startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+
     }
 
 
@@ -111,7 +166,10 @@ public class WishList extends AppCompatActivity  implements NavigationView.OnNav
             drawer.closeDrawers();
             return true;
         } else if (id == R.id.store) {
+            Intent i =new Intent(WishList.this,StoreLocator.class);
+            startActivity(i);
             return true;
+
         } else if (id == R.id.settings) {
             return true;
         }

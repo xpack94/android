@@ -24,6 +24,10 @@ import android.widget.Toast;
 import com.example.xpack.bestbuy.db.Favorite;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by xpack on 27/03/17.
  */
@@ -32,9 +36,12 @@ public class SingleProductFragment extends Fragment {
 
     Button addToWishList;
     private SQLiteDatabase db;
+    LayoutInflater inflater;
+    LinearLayout addDetails,castLayout,showCast;
+    TextView detailsToggler,castToggler;
     @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.single_product, container, false);
 
         Bundle args=getArguments();
@@ -49,6 +56,11 @@ public class SingleProductFragment extends Fragment {
         String longDescription=args.getString("longDescription");
         final String addToCart = args.getString("addToCartUrl");
         final String sku=args.getString("sku");
+        String details=args.getString("details");
+        String cast=args.getString("cast");
+        String regularPrice=args.getString("regularPrice");
+        String dollarSavings=args.getString("dollarSavings");
+        inflater=getActivity().getLayoutInflater();
         final Animation Toggle;
         final TextView ld,nameOfProduct;
         Toggle= AnimationUtils.loadAnimation(getActivity().getApplicationContext(),R.anim.slide_down);
@@ -211,6 +223,101 @@ public class SingleProductFragment extends Fragment {
         });
 
 
+
+        try {
+            JSONArray array = new JSONArray(details);
+            addDetails=(LinearLayout) v.findViewById(R.id.addDetails);
+            for (int i=0;i<array.length();i++){
+                JSONObject obj=array.getJSONObject(i);
+
+                addDetails.setVisibility(View.GONE);
+                View view= inflater.inflate(R.layout.details,null);
+                TextView t1=(TextView) view.findViewById(R.id.name);
+                TextView t2=(TextView) view.findViewById(R.id.value);
+
+                String dName=obj.getString("name");
+                String dValue=obj.getString("value");
+                t1.setText(dName);
+                t2.setText(dValue);
+                addDetails.addView(view);
+
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            castLayout=(LinearLayout) v.findViewById(R.id.castAdd);
+            showCast=(LinearLayout) v.findViewById(R.id.cast);
+            JSONArray array = new JSONArray(cast);
+            if(array.length()==0){
+
+                showCast.setVisibility(View.GONE);
+            }else{
+                for (int i=0;i<array.length();i++){
+                    JSONObject obj=array.getJSONObject(i);
+                    View view=inflater.inflate(R.layout.details,null);
+                    castLayout.setVisibility(View.GONE);
+                    TextView t1=(TextView) view.findViewById(R.id.name);
+                    TextView t2=(TextView) view.findViewById(R.id.value);
+                    String dName=obj.getString("name");
+                    String role=obj.getString("role");
+                    t1.setText(dName);
+                    t2.setText(role);
+                    castLayout.addView(view);
+
+                }
+            }
+
+        }catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        LinearLayout detailsClick=(LinearLayout) v.findViewById(R.id.details);
+        detailsToggler=(TextView) v.findViewById(R.id.detailsToggler);
+        detailsClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(String.valueOf(detailsToggler.getText()) .equals("+")){
+                    addDetails.setVisibility(View.VISIBLE);
+                    detailsToggler.setText("-");
+                }else{
+                    detailsToggler.setText("+");
+                    addDetails.setVisibility(View.GONE);
+                }
+
+            }
+        });
+
+        //gerer les toggle de la section cast
+        //cast est invisible si il y'a rien a l'interieur
+        castToggler=(TextView) v.findViewById(R.id.castToggler);
+        LinearLayout castClick=(LinearLayout) v.findViewById(R.id.castClick);
+        castClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(String.valueOf(castToggler.getText()) .equals("+")){
+                    castLayout.setVisibility(View.VISIBLE);
+                    castToggler.setText("-");
+                }else{
+                    castToggler.setText("+");
+                    castLayout.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        LinearLayout l=(LinearLayout) v.findViewById(R.id.savings);
+        if(Float.parseFloat(salePrice)==Float.parseFloat(regularPrice)){
+
+            l.setVisibility(View.GONE);
+        }else{
+
+            TextView t=(TextView) v.findViewById(R.id.moneySaved);
+            t.append(" "+dollarSavings+"$");
+        }
 
 
 

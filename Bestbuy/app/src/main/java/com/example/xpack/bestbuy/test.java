@@ -2,15 +2,20 @@ package com.example.xpack.bestbuy;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,7 +26,9 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.xpack.bestbuy.db.Favorite;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -31,7 +38,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class test extends AppCompatActivity implements Serializable {
+public class test extends AppCompatActivity implements Serializable , NavigationView.OnNavigationItemSelectedListener {
 
 
     ListView list;
@@ -51,8 +58,9 @@ public class test extends AppCompatActivity implements Serializable {
     Boolean visible=true;
     Button sortPrice,sortRatings;
     String sorted="true",type;
-
-
+    private SQLiteDatabase db;
+    DrawerLayout drawer;
+    SearchView searchView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +68,21 @@ public class test extends AppCompatActivity implements Serializable {
 
         setContentView(R.layout.lay);
 
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ImageView toggler=(ImageView) findViewById(R.id.toggler);
-        final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        toolbar=(Toolbar) findViewById(R.id.toolbar);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+
+        View header=(View ) navigationView.getHeaderView(0);
+        ImageView v= (ImageView) header.findViewById(R.id.imageView);
+
 
         toggle.setDrawerIndicatorEnabled(true);
 
@@ -76,6 +95,7 @@ public class test extends AppCompatActivity implements Serializable {
         share=(ImageView) findViewById(R.id.share);
         search=(SearchView) findViewById(R.id.searchView);
         togglerImage=(ImageView) findViewById(R.id.toggler);
+        db = new DBHelper(this).getDB();
         share.setVisibility(View.GONE);
         // toolbar.setAlpha(Float.parseFloat("0.5"));
         Picasso.with(getApplicationContext())
@@ -146,48 +166,49 @@ public class test extends AppCompatActivity implements Serializable {
         });
 
 
+        searchView=(SearchView) findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //si l'utilisateur tape un nom de produit a rechercher
+                //appeler l'activité AllProducts qui a son tours s'occupe de chercher
+                //le nom du produit tapé par l'utilisateur
+                Intent intent=new Intent(test.this,AllProducts.class);
+                String ur="https://api.bestbuy.com/v1/products(search=";
+                String word="";
+                Boolean word_found=false;
+                int i=0;
+                while(i<query.length()){
+                    Log.e("t", "the inde is  "+i );
+                    while((i<query.length()) && (query.charAt(i)!=' ')){
 
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    //si l'utilisateur tape un nom de produit a rechercher
-                    //appeler l'activité AllProducts qui a son tours s'occupe de chercher
-                    //le nom du produit tapé par l'utilisateur
-                    Intent intent=new Intent(test.this,AllProducts.class);
-                    String ur="https://api.bestbuy.com/v1/products(search=";
-                    String word="";
-                    Boolean word_found=false;
-                    int i=0;
-                    while(i<query.length()){
-                        Log.e("t", "the inde is  "+i );
-                        while((i<query.length()) && (query.charAt(i)!=' ')){
-
-                            word+=query.charAt(i);
-                            word_found=true;
-                            i++;
-                            Log.e("t", "index:"+i+" word = "+word);
-                            // Log.e("t", "the word is  "+word );
-
-                        }
-
-                        if(word_found){
-                            word+=" ";
-                            word_found=false;
-                        }
-
+                        word+=query.charAt(i);
+                        word_found=true;
                         i++;
-                    }
-                    ur+=word.replaceAll(" ","&search=")+"*)?format=json&shwo=all&pageSize=25&page=";
-                    intent.putExtra("url1",ur);
-                    intent.putExtra("url2","&apiKey=tghcgc6qnf72tat8a5kbja9r");
-                    intent.putExtra("page",1);
-                    intent.putExtra("decalage",0);
-                    intent.putExtra("title",getResources().getString(R.string.search_results));
-                    startActivity(intent);
-                    return false;
-                }
+                        Log.e("t", "index:"+i+" word = "+word);
+                        // Log.e("t", "the word is  "+word );
 
+                    }
+
+                    if(word_found){
+                        word+=" ";
+                        word_found=false;
+                    }
+
+                    i++;
+                }
+                ur+=word.replaceAll(" ","&search=")+"*)?format=json&show=all&pageSize=25&page=";
+
+
+                //  intent.putExtra("url1","https://api.bestbuy.com/v1/products(name="+query+"*%7Csearch="+query+"*)?format=json&show=all&pageSize=25&page=");
+                intent.putExtra("url1",ur);
+                intent.putExtra("url2","&apiKey=tghcgc6qnf72tat8a5kbja9r");
+                intent.putExtra("page",1);
+                intent.putExtra("decalage",0);
+                intent.putExtra("title",getResources().getString(R.string.search_results));
+                startActivity(intent);
+                return false;
+            }
 
             @Override
             public boolean onQueryTextChange(String newText) {
@@ -205,6 +226,48 @@ public class test extends AppCompatActivity implements Serializable {
 
     }
 
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        Intent intent = new Intent(getApplicationContext(), AllProducts.class);
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        Fragment f = null;
+        if (id == R.id.HOME) {
+
+            Intent i=new Intent(test.this,Main.class);
+            startActivity(i);
+            return true;
+        } else if (id == R.id.all_products) {
+            intent.putExtra("url1","https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=");
+            intent.putExtra("title",""+getResources().getString(R.string.all_products));
+            return true;
+
+        } else if (id == R.id.itemsOnSale) {
+
+            intent.putExtra("url1", "https://api.bestbuy.com/v1/products(onSale=true)?format=json&show=all&pageSize=25&page=");
+            intent.putExtra("title", "" + getResources().getString(R.string.onSale));
+        } else if (id == R.id.wishlist) {
+            Intent i=new Intent(test.this,WishList.class);
+            startActivity(i);
+            return true;
+        } else if (id == R.id.store) {
+            Intent i =new Intent(test.this,StoreLocator.class);
+            startActivity(i);
+            return true;
+
+        } else if (id == R.id.settings) {
+            return true;
+        }
+
+        intent.putExtra("url2", "&apiKey=tghcgc6qnf72tat8a5kbja9r");
+        intent.putExtra("page", 1);
+        intent.putExtra("decalage", 0);
+        startActivity(intent);
+
+        drawer.closeDrawer(GravityCompat.START);
+
+        return true;
+    }
 
 
     public class Fetcher extends AsyncTask<Object, Object, ArrayList<Products>> {
@@ -229,10 +292,10 @@ public class test extends AppCompatActivity implements Serializable {
 
                 int size=produits.size();
                 Parser.getProducts(produits,url1+page+url2);
-
-//
                 MergeSort a=new MergeSort(produits,type);
+
                 a.sortGivenArray();
+
                 //verifier si on est rendu au dernier produit
                 //si oui le boutton load More deviendra invisible
                 if (size==produits.size()){
@@ -277,8 +340,10 @@ public class test extends AppCompatActivity implements Serializable {
 
 
                     // intent.putExtra("produits",produits);
+                    startActivityForResult(intent, 1);
 
-                    startActivity(intent);
+                    onActivityResult(1, RESULT_OK, intent);
+
                 }
             });
 
@@ -330,7 +395,7 @@ public class test extends AppCompatActivity implements Serializable {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
 
 
             if(convertView == null)
@@ -343,7 +408,7 @@ public class test extends AppCompatActivity implements Serializable {
             RatingBar rat= (RatingBar) convertView.findViewById(R.id.ratings);
             ImageView pic=(ImageView) convertView.findViewById(R.id.AvailablOnline);
             TextView avOnline =(TextView) convertView.findViewById(R.id.AvailablOnlineText);
-
+            TextView  addToWishList =(TextView) convertView.findViewById(R.id.addToWishList);
 
 
             name.setText(produits.get(position).name);
@@ -374,6 +439,41 @@ public class test extends AppCompatActivity implements Serializable {
 
             }
 
+            TextView t=(TextView) convertView.findViewById(R.id.addToWishList);
+            if (Favorite.exists(db, produits.get(position).sku)) {
+
+                t.setText("-");
+            }else{
+                t.setText("+");
+            }
+
+
+
+            addToWishList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String sku=produits.get(position).sku;
+                    String image=produits.get(position).mediumImage;
+                    String name=produits.get(position).name;
+                    String salePrice=produits.get(position).salePrice;
+                    String available=produits.get(position).isAvailable;
+                    String ratings=produits.get(position).ratingCount;
+                    if (Favorite.exists(db, sku)) {
+                        Favorite.remove(db, sku);
+                        Toast.makeText(test.this, ""+getResources().getString(R.string.removedFromWishList), Toast.LENGTH_SHORT).show();
+                        TextView t=(TextView) view.findViewById(R.id.addToWishList);
+                        t.setText("+");
+
+                    } else {
+                        Favorite.add(db, sku,name,image,salePrice,ratings,available);
+                        Toast.makeText(test.this, ""+getResources().getString(R.string.addedToWishList), Toast.LENGTH_SHORT).show();
+                        TextView t=(TextView) view.findViewById(R.id.addToWishList);
+                        t.setText("-");
+
+                    }
+
+                }
+            });
 
 
 
@@ -382,6 +482,19 @@ public class test extends AppCompatActivity implements Serializable {
 
 
     }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                Boolean changed = data.getExtras().getBoolean("changedFavorite");
+                if (changed){
+                    list.invalidateViews();
+                }
+            }
+        }
+    }
+
 
 
 }

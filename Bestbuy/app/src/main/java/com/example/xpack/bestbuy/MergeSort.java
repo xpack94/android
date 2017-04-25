@@ -1,7 +1,5 @@
 package com.example.xpack.bestbuy;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 public class MergeSort {
@@ -22,9 +20,11 @@ public class MergeSort {
     }
 
     public void sortGivenArray(){
+
         divide(0, this.inputArray.size()-1);
         if(!type.equals("salePrice")){
             swap();
+
         }
     }
 
@@ -106,8 +106,7 @@ public class MergeSort {
         int last=this.inputArray.size()-1;
         Products t;
         for(int i=0;i<(this.inputArray.size()/2);i++){
-            Log.e("t", "index is "+i );
-            Log.e("t", "last is "+last );
+
 
             t=inputArray.get(last);
             inputArray.set(last,inputArray.get(i));

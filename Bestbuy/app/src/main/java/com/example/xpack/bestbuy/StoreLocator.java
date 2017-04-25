@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
@@ -33,7 +35,7 @@ import java.util.ArrayList;
  * Created by xpack on 23/04/17.
  */
 
-public class StoreLocator extends Activity  implements Serializable,NavigationView.OnNavigationItemSelectedListener {
+public class StoreLocator extends Activity implements Serializable, NavigationView.OnNavigationItemSelectedListener {
     Toolbar toolbar;
     DrawerLayout drawer;
     SearchView search;
@@ -42,13 +44,15 @@ public class StoreLocator extends Activity  implements Serializable,NavigationVi
     Button btnLoadMore;
     ArrayList<Stores> stores = new ArrayList<Stores>();
     int page = 1, pos = 1;
-    Boolean visible=true,exist=false;
-    ImageView logo,share;
-
-
+    Boolean visible = true, exist = false;
+    ImageView logo, share;
     String url1 = "https://api.bestbuy.com/v1/stores?format=json&show=all&pageSize=25&page=";
     String url2 = "&apiKey=tghcgc6qnf72tat8a5kbja9r";
-    StoresAdapter mAdapter ;
+    StoresAdapter mAdapter;
+    double lat;
+    double lng;
+    boolean fromGps=false;
+    SearchView searchView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +60,7 @@ public class StoreLocator extends Activity  implements Serializable,NavigationVi
 
         setContentView(R.layout.store_locator);
 
-        toolbar=(Toolbar) findViewById(R.id.tool);
+        toolbar = (Toolbar) findViewById(R.id.tool);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -67,11 +71,8 @@ public class StoreLocator extends Activity  implements Serializable,NavigationVi
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
-        View header=(View ) navigationView.getHeaderView(0);
-        ImageView v= (ImageView) header.findViewById(R.id.imageView);
-
-
+        View header = (View) navigationView.getHeaderView(0);
+        ImageView v = (ImageView) header.findViewById(R.id.imageView);
 
 
         storesList = (ListView) findViewById(R.id.storesList);
@@ -88,28 +89,26 @@ public class StoreLocator extends Activity  implements Serializable,NavigationVi
                 Fetcher l = new Fetcher();
                 l.execute();
                 //si visible=false alors le button affichera qu'il y'a plus aucun autre produit a afficher
-                if(!visible){
-                    btnLoadMore.setText(getResources().getString(R.string.footer_text));
+                if (!visible) {
+                    btnLoadMore.setText(getResources().getString(R.string.footer_store_text));
                     btnLoadMore.setEnabled(false);
                 }
             }
         });
 
-        logo=(ImageView) findViewById(R.id.logo);
-        share=(ImageView) findViewById(R.id.share);
+        logo = (ImageView) findViewById(R.id.logo);
+        share = (ImageView) findViewById(R.id.share);
 
         share.setVisibility(View.GONE);
         Picasso.with(getApplicationContext())
                 .load("http://www.userlogos.org/files/logos/mafi0z/BestBuy.png")
                 .into(logo);
 
-        search=(SearchView) findViewById(R.id.searchView);
+        search = (SearchView) findViewById(R.id.searchView);
         search.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 logo.setVisibility(View.GONE);
-
-
 
 
             }
@@ -123,43 +122,46 @@ public class StoreLocator extends Activity  implements Serializable,NavigationVi
                 return false;
             }
         });
-
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView=(SearchView) findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 //si l'utilisateur tape un nom de produit a rechercher
                 //appeler l'activité AllProducts qui a son tours s'occupe de chercher
                 //le nom du produit tapé par l'utilisateur
-                Intent intent = new Intent(StoreLocator.this, AllProducts.class);
-                String ur = "https://api.bestbuy.com/v1/products(search=";
-                String word = "";
-                Boolean word_found = false;
-                int i = 0;
-                while (i < query.length()) {
-                    Log.e("t", "the inde is  " + i);
-                    while ((i < query.length()) && (query.charAt(i) != ' ')) {
+                Intent intent=new Intent(StoreLocator.this,AllProducts.class);
+                String ur="https://api.bestbuy.com/v1/products(search=";
+                String word="";
+                Boolean word_found=false;
+                int i=0;
+                while(i<query.length()){
+                    Log.e("t", "the inde is  "+i );
+                    while((i<query.length()) && (query.charAt(i)!=' ')){
 
-                        word += query.charAt(i);
-                        word_found = true;
+                        word+=query.charAt(i);
+                        word_found=true;
                         i++;
-                        Log.e("t", "index:" + i + " word = " + word);
+                        Log.e("t", "index:"+i+" word = "+word);
                         // Log.e("t", "the word is  "+word );
 
                     }
 
-                    if (word_found) {
-                        word += " ";
-                        word_found = false;
+                    if(word_found){
+                        word+=" ";
+                        word_found=false;
                     }
 
                     i++;
                 }
-                ur += word.replaceAll(" ", "&search=") + "*)?format=json&shwo=all&pageSize=25&page=";
-                intent.putExtra("url1", ur);
-                intent.putExtra("url2", "&apiKey=tghcgc6qnf72tat8a5kbja9r");
-                intent.putExtra("page", 1);
-                intent.putExtra("decalage", 0);
-                intent.putExtra("title", getResources().getString(R.string.search_results));
+                ur+=word.replaceAll(" ","&search=")+"*)?format=json&show=all&pageSize=25&page=";
+
+
+                //  intent.putExtra("url1","https://api.bestbuy.com/v1/products(name="+query+"*%7Csearch="+query+"*)?format=json&show=all&pageSize=25&page=");
+                intent.putExtra("url1",ur);
+                intent.putExtra("url2","&apiKey=tghcgc6qnf72tat8a5kbja9r");
+                intent.putExtra("page",1);
+                intent.putExtra("decalage",0);
+                intent.putExtra("title",getResources().getString(R.string.search_results));
                 startActivity(intent);
                 return false;
             }
@@ -170,8 +172,28 @@ public class StoreLocator extends Activity  implements Serializable,NavigationVi
             }
         });
 
+
+
         Fetcher f= new Fetcher();
-        f.execute();
+
+        GPSTracker tracker = new GPSTracker(this);
+        if (!tracker.canGetLocation()) {
+            tracker.showSettingsAlert();
+        } else {
+             lat= tracker.getLatitude();
+             lng= tracker.getLongitude();
+            fromGps=true;
+            f.execute();
+
+        }
+
+
+        if(!fromGps){
+            f.execute();
+
+        }
+
+
     }
 
 
@@ -193,7 +215,14 @@ public class StoreLocator extends Activity  implements Serializable,NavigationVi
             try {
 
                 int size = stores.size();
-                StoresParser.getStores(stores, url1 + page + url2);
+                if(fromGps){
+                    String ur="https://api.bestbuy.com/v1/stores(area("+lat+","+lng+",100))?format=json&show=all&pageSize=25&page=";
+                    StoresParser.getStores(stores, ur + page + url2);
+                    Log.e("e", ": "+ur );
+                }else{
+                    StoresParser.getStores(stores, url1 + page + url2);
+                }
+
 
 
                 //verifier si on est rendu au dernier produit
@@ -248,6 +277,7 @@ public class StoreLocator extends Activity  implements Serializable,NavigationVi
                     Intent intent=new Intent(StoreLocator.this,StoreDetails.class);
                     intent.putExtra("page",page);
                     intent.putExtra("position",i);
+
                     startActivity(intent);
                 }
             });
@@ -312,7 +342,45 @@ public class StoreLocator extends Activity  implements Serializable,NavigationVi
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        return false;
+        Intent intent = new Intent(getApplicationContext(), AllProducts.class);
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        Fragment f = null;
+        if (id == R.id.HOME) {
+
+            Intent i=new Intent(StoreLocator.this,Main.class);
+            startActivity(i);
+            return true;
+        } else if (id == R.id.all_products) {
+            intent.putExtra("url1","https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=");
+            intent.putExtra("title",""+getResources().getString(R.string.all_products));
+
+        } else if (id == R.id.itemsOnSale) {
+
+            intent.putExtra("url1", "https://api.bestbuy.com/v1/products(onSale=true)?format=json&show=all&pageSize=25&page=");
+            intent.putExtra("title", "" + getResources().getString(R.string.onSale));
+        } else if (id == R.id.wishlist) {
+            Intent i=new Intent(StoreLocator.this,WishList.class);
+            startActivity(i);
+            return true;
+        } else if (id == R.id.store) {
+
+            drawer.closeDrawers();
+            return true;
+        } else if (id == R.id.settings) {
+            return true;
+        }
+
+        intent.putExtra("url2", "&apiKey=tghcgc6qnf72tat8a5kbja9r");
+        intent.putExtra("page", 1);
+        intent.putExtra("decalage", 0);
+        startActivity(intent);
+
+        drawer.closeDrawer(GravityCompat.START);
+
+        return true;
     }
+
+
 }
 

@@ -74,6 +74,14 @@
     <string name="Services">Services</string>
     <string name="storeDetails">Store Details</string>
     <string name="hours">hours</string>
+    <string name="getDirections">Get Directions</string>
+    <string name="enableGps">Gps isnt  enable do you want to go to settings</string>
+    <string name="gps">gps</string>
+    <string name="footer_store_text">no more stores to display</string>
+    <string name="details">details</string>
+    <string name="name">name</string>
+    <string name="cast">cast</string>
+    <string name="save">save</string>
 
 
 </resources>

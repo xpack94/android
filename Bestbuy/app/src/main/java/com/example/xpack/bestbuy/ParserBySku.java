@@ -69,7 +69,12 @@ public class ParserBySku {
                     json.getString("addToCartUrl"),
                     json.getString("mediumImage"),
                     json.getString("largeImage"),
-                    json.getString("sku")
+                    json.getString("sku"),
+                    json.getJSONArray("details"),
+                    json.getJSONArray("crew"),
+                    json.getJSONArray("cast"),
+                    json.getString("regularPrice"),
+                    json.getString("dollarSavings")
             ));
 
 

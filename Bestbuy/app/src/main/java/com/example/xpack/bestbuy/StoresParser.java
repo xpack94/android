@@ -68,7 +68,9 @@ public class StoresParser {
                     prod.getString("phone"),
                     prod.getString("city"),
                     prod.getString("fullPostalCode"),
-                    prod.getString("hoursAmPm")
+                    prod.getString("hoursAmPm"),
+                    prod.getString("lat"),
+                    prod.getString("lng")
             ));
         }
 

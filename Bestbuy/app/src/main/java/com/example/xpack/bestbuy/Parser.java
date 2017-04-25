@@ -80,7 +80,12 @@ public class Parser {
                     prod.getString("addToCartUrl"),
                     prod.getString("mediumImage"),
                     prod.getString("largeImage"),
-                    prod.getString("sku")
+                    prod.getString("sku"),
+                    prod.getJSONArray("details"),
+                    prod.getJSONArray("crew"),
+                    prod.getJSONArray("cast"),
+                    prod.getString("regularPrice"),
+                    prod.getString("dollarSavings")
             ));
         }
 

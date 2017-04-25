@@ -181,10 +181,28 @@
                 android:id="@+id/services"
                 android:textSize="14sp"
                 android:text="services"/>
+
+
+
         </LinearLayout>
 
     </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:text="@string/getDirections"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:id="@+id/directions" />
+        </LinearLayout>
 </LinearLayout>
+
 </ScrollView>
+
 </LinearLayout>

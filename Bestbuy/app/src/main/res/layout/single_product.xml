@@ -88,6 +88,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/savings">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:text="@string/save"
+                android:textColor="@android:color/holo_red_dark"
+                android:layout_marginBottom="8dp"
+                android:id="@+id/moneySaved"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:theme="@style/Base.V12.Widget.AppCompat.AutoCompleteTextView"
             android:background="#e0dbdb"
@@ -213,6 +227,92 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:background="#e0dbdb" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/details"
+            android:background="#e0dbdb"
+            android:layout_marginTop="1dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/details"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="25dp"/>
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:layout_marginLeft="170dp"
+                    android:textSize="25dp"
+                    android:textAlignment="center"
+                    android:paddingTop="2dp"
+                    android:id="@+id/detailsToggler"/>
+
+            </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               android:id="@+id/addDetails">
+
+
+           </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/cast"
+            android:background="#e0dbdb"
+            android:layout_marginTop="1dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/castClick">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:text="@string/cast"
+                    android:paddingTop="4dp"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="28dp"
+                    android:textStyle="bold"
+
+                    />
+                <TextView
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/castToggler"
+                    android:text="+"
+                    android:textSize="25dp"
+                    android:textAlignment="center"
+                    android:layout_marginLeft="196dp"
+
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/castAdd"
+                android:orientation="vertical"></LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 
