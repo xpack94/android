@@ -387,4 +387,5 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
         finish();
     }
 
+
 }

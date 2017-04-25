@@ -203,7 +203,10 @@ public class Main extends AppCompatActivity   implements NavigationView.OnNaviga
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.filter) {
+            Intent intent =new Intent(Main.this,Filter.class);
+
+            startActivity(intent);
             return true;
         }
 
