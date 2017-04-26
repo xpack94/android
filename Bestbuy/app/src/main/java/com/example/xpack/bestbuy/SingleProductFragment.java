@@ -1,6 +1,10 @@
 package com.example.xpack.bestbuy;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -9,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -187,11 +192,19 @@ public class SingleProductFragment extends Fragment {
                         Favorite.remove(db, sku);
                         Toast.makeText(getActivity(), ""+getResources().getString(R.string.removedFromWishList), Toast.LENGTH_SHORT).show();
                         addToWishList.setText(R.string.addeToWishList);
+                        if (Settings.onOff){
+                            showNotificationAdd(name,"product Deleted from wishList");
+                        }
+
 
                     } else {
                         Favorite.add(db, sku,name,image,salePrice,ratings,isAvailable);
                         Toast.makeText(getActivity(), ""+getResources().getString(R.string.addedToWishList), Toast.LENGTH_SHORT).show();
                         addToWishList.setText(R.string.removeFromWishList);
+                        if (Settings.onOff){
+                            showNotificationAdd(name,"product Added to wishList");
+
+                        }
                     }
 
                     // Invalide les rows pour les faire se redessiner
@@ -327,6 +340,22 @@ public class SingleProductFragment extends Fragment {
 
 
 
+    }
+
+    public void showNotificationAdd(String productName,String content ) {
+        PendingIntent pi = PendingIntent.getActivity(getActivity(), 0, new Intent(getActivity(),WishList.class), 0);
+        Resources r = getResources();
+        Notification notification = new NotificationCompat.Builder(getActivity())
+                .setTicker(r.getString(R.string.notifTitle))
+                .setSmallIcon(android.R.drawable.ic_menu_report_image)
+                .setContentTitle(content)
+                .setContentText(productName)
+                .setContentIntent(pi)
+                .setAutoCancel(true)
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(getActivity().NOTIFICATION_SERVICE);
+        notificationManager.notify(0, notification);
     }
 
 

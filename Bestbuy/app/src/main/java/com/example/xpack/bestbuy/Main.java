@@ -244,6 +244,8 @@ public class Main extends AppCompatActivity   implements NavigationView.OnNaviga
                 startActivity(in);
                 return true;
         }else if (id==R.id.settings){
+            Intent inte=new Intent(Main.this,Settings.class);
+            startActivity(inte);
             return true;
         }
 

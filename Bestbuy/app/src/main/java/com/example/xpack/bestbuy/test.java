@@ -1,13 +1,18 @@
 package com.example.xpack.bestbuy;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -256,6 +261,8 @@ public class test extends AppCompatActivity implements Serializable , Navigation
             return true;
 
         } else if (id == R.id.settings) {
+            Intent inte=new Intent(test.this,Settings.class);
+            startActivity(inte);
             return true;
         }
 
@@ -463,13 +470,18 @@ public class test extends AppCompatActivity implements Serializable , Navigation
                         Toast.makeText(test.this, ""+getResources().getString(R.string.removedFromWishList), Toast.LENGTH_SHORT).show();
                         TextView t=(TextView) view.findViewById(R.id.addToWishList);
                         t.setText("+");
+                        if (Settings.onOff){
+                            showNotificationAdd(name,"product Removed from wishList");
+                        }
 
                     } else {
                         Favorite.add(db, sku,name,image,salePrice,ratings,available);
                         Toast.makeText(test.this, ""+getResources().getString(R.string.addedToWishList), Toast.LENGTH_SHORT).show();
                         TextView t=(TextView) view.findViewById(R.id.addToWishList);
                         t.setText("-");
-
+                        if (Settings.onOff){
+                            showNotificationAdd(name,"product Added to wishList");
+                        }
                     }
 
                 }
@@ -495,6 +507,21 @@ public class test extends AppCompatActivity implements Serializable , Navigation
         }
     }
 
+    public void showNotificationAdd(String productName,String content ) {
+        PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this,WishList.class), 0);
+        Resources r = getResources();
+        Notification notification = new NotificationCompat.Builder(this)
+                .setTicker(r.getString(R.string.notifTitle))
+                .setSmallIcon(android.R.drawable.ic_menu_report_image)
+                .setContentTitle(content)
+                .setContentText(productName)
+                .setContentIntent(pi)
+                .setAutoCancel(true)
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(0, notification);
+    }
 
 
 }

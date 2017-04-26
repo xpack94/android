@@ -113,7 +113,7 @@ public class MyLists extends Fragment {
                 name = String.valueOf(t.getText());
                 Intent intent = new Intent(getActivity(), WishList.class);
                 startActivityForResult(intent, 3);
-                startActivity(intent);
+                onActivityResult(3, getActivity().RESULT_OK, intent);
             }
         });
 
@@ -125,7 +125,6 @@ public class MyLists extends Fragment {
 
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                Log.i(getTag(), "keyCode of myLists: " + keyCode);
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
 
                     getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -195,7 +194,7 @@ public class MyLists extends Fragment {
             }
         } else if(requestCode==3){
             if (resultCode == Activity.RESULT_OK) {
-                Log.e("t", "MyLists " );
+                Log.e("e", "onActivityResult: " );
                 getActivity().recreate();
             }
         }

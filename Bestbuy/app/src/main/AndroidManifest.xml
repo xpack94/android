@@ -74,6 +74,10 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:label="product informations"
             />
+        <activity android:name=".Settings"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="product informations"
+            />
 
     </application>
 

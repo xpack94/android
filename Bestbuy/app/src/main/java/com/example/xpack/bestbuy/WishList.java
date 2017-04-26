@@ -87,7 +87,8 @@ public class WishList extends AppCompatActivity  implements NavigationView.OnNav
         tabs.setupWithViewPager(pager);
 
 
-
+        ImageView share=(ImageView) findViewById(R.id.share);
+        share.setVisibility(View.GONE);
         searchView=(SearchView) findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -178,6 +179,8 @@ public class WishList extends AppCompatActivity  implements NavigationView.OnNav
             return true;
 
         } else if (id == R.id.settings) {
+            Intent inte=new Intent(WishList.this,Settings.class);
+            startActivity(inte);
             return true;
         }
 

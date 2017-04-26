@@ -1,8 +1,12 @@
 package com.example.xpack.bestbuy;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -10,6 +14,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -83,7 +88,6 @@ public class FavoritesActivity extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    Log.e("e", "onKey:of favorites " );
                     getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     // String cameback="CameBack";
                     Intent intent = new Intent();
@@ -114,7 +118,7 @@ public class FavoritesActivity extends Fragment {
         }
 
         @Override
-        public void bindView(View view, Context context, Cursor cursor) {
+        public void bindView(View view, Context context, final Cursor cursor) {
 
             TextView name=(TextView)view.findViewById(R.id.name);
             name.setText(cursor.getString(cursor.getColumnIndex("name")));
@@ -145,8 +149,13 @@ public class FavoritesActivity extends Fragment {
             removeFromWishList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Favorite.remove(db,cur.getString(cur.getColumnIndex("key")));
-                    getActivity().recreate();
+                        Favorite.remove(db,cur.getString(cur.getColumnIndex("key")));
+                        if (Settings.onOff){
+                            showNotificationAdd(cur.getString(cur.getColumnIndex("name")),"product Deleted from wishList");
+                        }
+
+                        getActivity().recreate();
+
 
                 }
             });
@@ -215,7 +224,7 @@ public class FavoritesActivity extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK) {
-                Log.e("e", "favoritesActivity: " );
+                Log.e("e", "called : " );
                 Boolean changed = data.getExtras().getBoolean("changedFavorite");
 
                 if (changed){
@@ -223,6 +232,22 @@ public class FavoritesActivity extends Fragment {
                 }
             }
         }
+    }
+
+    public void showNotificationAdd(String productName,String content ) {
+        PendingIntent pi = PendingIntent.getActivity(getActivity(), 0, new Intent(getActivity(),WishList.class), 0);
+        Resources r = getResources();
+        Notification notification = new NotificationCompat.Builder(getActivity())
+                .setTicker(r.getString(R.string.notifTitle))
+                .setSmallIcon(android.R.drawable.ic_menu_report_image)
+                .setContentTitle(content)
+                .setContentText(productName)
+                .setContentIntent(pi)
+                .setAutoCancel(true)
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(getActivity().NOTIFICATION_SERVICE);
+        notificationManager.notify(0, notification);
     }
 
 

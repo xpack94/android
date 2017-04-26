@@ -368,6 +368,8 @@ public class StoreLocator extends Activity implements Serializable, NavigationVi
             drawer.closeDrawers();
             return true;
         } else if (id == R.id.settings) {
+            Intent inte=new Intent(StoreLocator.this,Settings.class);
+            startActivity(inte);
             return true;
         }
 

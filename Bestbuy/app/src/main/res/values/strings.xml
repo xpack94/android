@@ -82,6 +82,16 @@
     <string name="name">name</string>
     <string name="cast">cast</string>
     <string name="save">save</string>
+    <string name="notifications">notifications</string>
+    <string name="notifTitle">wishList changed</string>
+    <string name="notifContentAdded">product added </string>
+    <string name="notifTextAdd">new product has been added to wishList</string>
+    <string name="notifContentDeleted">product Deleted</string>
+    <string name="notifTextDeleted">a product has been deleted from the  wishList</string>
+    <string name="soldAndShipped">sold and shipped by BestBuy</string>
+    <string name="onLineOnly">Only sold online</string>
+    <string name="addToCart">add to cart</string>
+    <string name="ratingCount">rating count</string>
 
 
 </resources>

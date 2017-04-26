@@ -115,8 +115,15 @@ public class Filter extends Activity implements View.OnClickListener {
         }else{
             //button done est cliqué
             String url=makeUrl();
-            url+=")?format=json&show=all&pageSize=25&page=";
+
+            if (url.equals("https://api.bestbuy.com/v1/products(")){
+                url="https://api.bestbuy.com/v1/products?format=json&show=all&pageSize=25&page=";
+            }else{
+                url+=")?format=json&show=all&pageSize=25&page=";
+            }
+
             String url2="&apiKey=tghcgc6qnf72tat8a5kbja9r";
+
             Intent intent=new Intent(Filter.this,AllProducts.class);
             intent.putExtra("url1",url);
             intent.putExtra("url2",url2);

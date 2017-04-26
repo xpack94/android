@@ -80,7 +80,7 @@
                 android:id="@+id/Available"
                 android:textSize="11sp"
                 android:textStyle="italic"
-                android:text="sold and shipped by BestBuy"
+                android:text="@string/soldAndShipped"
                 android:paddingRight="6dp"/>
 
 
@@ -115,7 +115,7 @@
                 android:id="@+id/isAvailable"
                 android:textSize="15sp"
                 android:textStyle="italic"
-                android:text="Only sold online"
+                android:text="@string/onLineOnly"
                 android:layout_marginLeft="20dp"
                 android:background="@android:color/transparent"
                 android:textColorLink="@android:color/transparent"/>
@@ -124,7 +124,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:id="@+id/addToCart"
-                    android:text="add to cart"
+                    android:text="@string/addToCart"
                     android:textSize="10sp"
                     android:layout_marginLeft="25dp"
                     android:background="@drawable/yellow_button"
@@ -152,7 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/ratingCount"
-                android:text="rating count"
+                android:text="@string/ratingCount"
                 android:textSize="15sp"
                 android:layout_marginLeft="25dp"
                 android:focusable="false"

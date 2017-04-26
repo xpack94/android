@@ -380,51 +380,6 @@ public class MainActivity extends Fragment {
         return haveConnectedWifi || haveConnectedMobile;
     }
 
-//
-//    private class customAdapter extends BaseAdapter {
-//
-//
-//        ArrayList<Products> produits;
-//
-//        public customAdapter(ArrayList<Products> produits) {
-//            super();
-//            this.produits = produits;
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return produits.size();
-//        }
-//
-//        @Override
-//        public Object getItem(int i) {
-//            return produits.get(i);
-//        }
-//
-//        @Override
-//        public long getItemId(int i) {
-//            return 0;
-//        }
-//
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//
-//            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(getContext().LAYOUT_INFLATER_SERVICE);
-//            View row = inflater.inflate(R.layout.groups, parent, false);
-//
-//            ImageView image = (ImageView) row.findViewById(R.id.image);
-//
-//
-//            if(produits.get(position).mediumImage!=null){
-//                Log.e("t", "getView: "+produits.get(position).mediumImage );
-//                Picasso.with(getActivity().getApplicationContext())
-//                        .load(produits.get(position).mediumImage)
-//                        .into(image);
-//            }
-//
-//            return row;
-//        }
-//    }
 
 
 

@@ -238,6 +238,8 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
             startActivity(i);
             return true;
         } else if (id == R.id.settings) {
+            Intent inte=new Intent(SingleProductInfos.this,Settings.class);
+            startActivity(inte);
             return true;
         }
 
@@ -392,6 +394,8 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
         setResult(RESULT_OK, intent);
         finish();
     }
+
+
 
 
 }
