@@ -78,8 +78,8 @@ public class Main extends AppCompatActivity   implements NavigationView.OnNaviga
             }
 
             private String[] titles = new String[]{
-                    "HOME",
-                    "BestSellings"
+                    getResources().getString(R.string.home),
+                    getResources().getString(R.string.bestSellings)
             };
 
             @Override
@@ -144,9 +144,9 @@ public class Main extends AppCompatActivity   implements NavigationView.OnNaviga
 
                     i++;
                 }
-                ur+=word.replaceAll(" ","&search=")+"*)?format=json&show=all&pageSize=25&page=";
-
-
+                ur+=word.replaceAll(" ","&search=");
+                ur=ur.substring(0,ur.length()-8);
+                ur+=")?format=json&show=all&pageSize=25&page=";
                 //  intent.putExtra("url1","https://api.bestbuy.com/v1/products(name="+query+"*%7Csearch="+query+"*)?format=json&show=all&pageSize=25&page=");
                 intent.putExtra("url1",ur);
                 intent.putExtra("url2","&apiKey=tghcgc6qnf72tat8a5kbja9r");

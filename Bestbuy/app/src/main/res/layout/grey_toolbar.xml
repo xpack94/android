@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/done"
         android:background="@drawable/blue_button"
-        android:text="Done"
+        android:text="@string/done"
         android:textSize="14dp"
         android:textColor="@android:color/white"
         android:layout_alignParentTop="true"

@@ -218,7 +218,7 @@ public class MainActivity extends Fragment {
 
         public void onPreExecute() {
             progress.setCancelable(false);
-            progress.setTitle("loading...");
+            progress.setTitle(getResources().getString(R.string.loading));
             progress.show();
         }
 
@@ -251,7 +251,7 @@ public class MainActivity extends Fragment {
             progress.hide();
             if(number==5){
                 TextView t=(TextView) v.findViewById(R.id.tv_theater);
-                tv_theater.setText(getResources().getString(R.string.tv_theater));
+                tv_theater.setText(getResources().getString(R.string.tv_theater)+">");
                 tv_theater.setTag(R.string.tag, "abcat0100000");
                 tv_theater.setTag("tv_theater");
                 adapt5=new yourAdapter(produits,"abcat0100000");
@@ -290,30 +290,7 @@ public class MainActivity extends Fragment {
         }
     }
 
-//    private View getView(int x, ArrayList<Products> prods, String id) {
-//        View rootView = inflater.inflate(R.layout.groups, null);
-//        ImageView image = (ImageView) rootView.findViewById(R.id.image);
-//        image.setTag(25 + x);
-//        image.setTag(R.string.tag, id);
-//        if (!prods.get(x).largeImage.equals("null")) {
-//            Picasso.with(getActivity().getApplicationContext())
-//                    .load(prods.get(x).largeImage)
-//                    .into(image);
-//        } else {
-//            Picasso.with(getActivity().getApplicationContext())
-//                    .load(prods.get(x).mediumImage)
-//                    .into(image);
-//        }
-//
-//        image.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                showInfo(view);
-//            }
-//        });
-//
-//        return rootView;
-//    }
+
 
     public void showInfo(View v) {
 

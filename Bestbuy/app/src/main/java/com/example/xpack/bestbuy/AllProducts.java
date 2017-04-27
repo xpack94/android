@@ -162,7 +162,7 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
         progress=new ProgressDialog(this);
         list= (ListView) findViewById(R.id.list);
         btnLoadMore = new Button(this);
-        btnLoadMore.setText("Load More");
+        btnLoadMore.setText(getResources().getString(R.string.loadMore));
        // list.setOnScrollListener(new EndlessScrollListener());
         btnLoadMore.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -217,13 +217,11 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
                 Boolean word_found=false;
                 int i=0;
                 while(i<query.length()){
-                    Log.e("t", "the inde is  "+i );
                     while((i<query.length()) && (query.charAt(i)!=' ')){
 
                         word+=query.charAt(i);
                         word_found=true;
                         i++;
-                        Log.e("t", "index:"+i+" word = "+word);
                         // Log.e("t", "the word is  "+word );
 
                     }
@@ -235,9 +233,9 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
 
                     i++;
                 }
-                ur+=word.replaceAll(" ","&search=")+"*)?format=json&show=all&pageSize=25&page=";
-
-
+                ur+=word.replaceAll(" ","&search=");
+                ur=ur.substring(0,ur.length()-8);
+                ur+=")?format=json&show=all&pageSize=25&page=";
                 //  intent.putExtra("url1","https://api.bestbuy.com/v1/products(name="+query+"*%7Csearch="+query+"*)?format=json&show=all&pageSize=25&page=");
                 intent.putExtra("url1",ur);
                 intent.putExtra("url2","&apiKey=tghcgc6qnf72tat8a5kbja9r");
@@ -317,7 +315,7 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
 
 
             progress.setCancelable(false);
-            progress.setTitle("loading products");
+            progress.setTitle(getResources().getString(R.string.loadingProducts));
             progress.show();
         }
 
@@ -329,6 +327,7 @@ public class AllProducts extends AppCompatActivity implements Serializable ,Navi
             try {
 
                 int size=produits.size();
+                Log.e("d", "urls is "+url1+page+url2 );
                 Parser.getProducts(produits,url1+page+url2);
 
 

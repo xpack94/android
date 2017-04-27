@@ -123,7 +123,7 @@ public class Filter extends Activity implements View.OnClickListener {
             }
 
             String url2="&apiKey=tghcgc6qnf72tat8a5kbja9r";
-
+            Log.e("e", " "+url+1+url2 );
             Intent intent=new Intent(Filter.this,AllProducts.class);
             intent.putExtra("url1",url);
             intent.putExtra("url2",url2);

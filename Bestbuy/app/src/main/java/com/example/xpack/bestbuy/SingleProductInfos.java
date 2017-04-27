@@ -146,8 +146,9 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
 
                     i++;
                 }
-                ur+=word.replaceAll(" ","&search=")+"*)?format=json&show=all&pageSize=25&page=";
-
+                ur+=word.replaceAll(" ","&search=");
+                ur=ur.substring(0,ur.length()-8);
+                ur+=")?format=json&show=all&pageSize=25&page=";
 
                 //  intent.putExtra("url1","https://api.bestbuy.com/v1/products(name="+query+"*%7Csearch="+query+"*)?format=json&show=all&pageSize=25&page=");
                 intent.putExtra("url1",ur);
@@ -265,7 +266,7 @@ public class SingleProductInfos extends AppCompatActivity implements NavigationV
         public void onPreExecute() {
 
             progress.setCancelable(false);
-            progress.setTitle("loading products");
+            progress.setTitle(getResources().getString(R.string.loadingProducts));
             progress.show();
 
         }

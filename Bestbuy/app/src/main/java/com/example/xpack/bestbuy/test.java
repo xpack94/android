@@ -129,7 +129,7 @@ public class test extends AppCompatActivity implements Serializable , Navigation
         progress=new ProgressDialog(this);
         list= (ListView) findViewById(R.id.list);
         btnLoadMore = new Button(this);
-        btnLoadMore.setText("Load More");
+        btnLoadMore.setText(getResources().getString(R.string.loadMore));
         // list.setOnScrollListener(new EndlessScrollListener());
         btnLoadMore.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -202,8 +202,9 @@ public class test extends AppCompatActivity implements Serializable , Navigation
 
                     i++;
                 }
-                ur+=word.replaceAll(" ","&search=")+"*)?format=json&show=all&pageSize=25&page=";
-
+                ur+=word.replaceAll(" ","&search=");
+                ur=ur.substring(0,ur.length()-8);
+                ur+=")?format=json&show=all&pageSize=25&page=";
 
                 //  intent.putExtra("url1","https://api.bestbuy.com/v1/products(name="+query+"*%7Csearch="+query+"*)?format=json&show=all&pageSize=25&page=");
                 intent.putExtra("url1",ur);
@@ -286,7 +287,7 @@ public class test extends AppCompatActivity implements Serializable , Navigation
 
 
             progress.setCancelable(false);
-            progress.setTitle("loading products");
+            progress.setTitle(getResources().getString(R.string.loadingProducts));
             progress.show();
         }
 

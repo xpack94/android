@@ -9,7 +9,7 @@
     <string name="internetMessage" translatable="false">vous n\'etes pas connecter sur internet! verifier votre connexion ou clicker sur ok pour allumer le wifi</string>
     <string name="all_products" translatable="false">tous les produits</string>
     <string name="search_results">resultats de la recherche</string>
-    <string name="no_item_found">aucun produit n\'a etait trouvé</string>
+    <string name="no_item_found">aucun produit n\'a eté trouvé</string>
     <string name="available_online">disponible en ligne</string>
     <string name="not_available">pas disponible en ligne</string>
     <string name="search_products">chercher des produits</string>
@@ -32,7 +32,7 @@
     <string name="cast">cast</string>
     <string name="categories_dialog">selectioner les categories</string>
     <string name="category">categorie</string>
-    <string name="choose_list"></string>
+    <string name="choose_list">choisisez une list ou l\'ajouter</string>
     <string name="curren_offers">Offres actuelles</string>
     <string name="current_selection">votre selection actuelle</string>
     <string name="default_list">"liste par defaut "</string>
@@ -77,5 +77,14 @@
     <string name="storeDetails">details du magasin</string>
     <string name="storeLocator">localisateur de magasin</string>
     <string name="yes">oui</string>
-    <string name="wishList">wishList</string>
+    <string name="wishList">favoris</string>
+    <string name="price">prix</string>
+    <string name="noDescription">aucune description n\'est disponible pour ce produit</string>
+    <string name="loadingProducts">chagement des produits</string>
+    <string name="loadMore">afficher plus</string>
+    <string name="inStore">disponible qu\'en magasin</string>
+    <string name="homeTheater"></string>
+    <string name="done">terminer</string>
+    <string name="home">Accueil</string>
+    <string name="bestSellings">Meilleures Ventes</string>
 </resources>

@@ -29,7 +29,7 @@
            android:layout_width="wrap_content"
            android:layout_height="39dp"
            android:id="@+id/filter"
-           android:text="filter"
+           android:text="@string/filter"
            android:textSize="12dp"
            android:textStyle="italic"
            android:layout_marginLeft="10dp"

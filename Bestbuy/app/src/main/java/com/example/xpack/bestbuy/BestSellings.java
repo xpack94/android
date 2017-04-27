@@ -125,7 +125,7 @@ public class BestSellings extends Fragment {
 
 
             progress.setCancelable(false);
-            progress.setTitle("loading products");
+            progress.setTitle(getResources().getString(R.string.loadingProducts));
             progress.show();
         }
 

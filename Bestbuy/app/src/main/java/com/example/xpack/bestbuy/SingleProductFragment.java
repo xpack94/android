@@ -94,7 +94,7 @@ public class SingleProductFragment extends Fragment {
             ld.setText(longDescription);
 
         }else{
-            ld.setText("this item has no description");
+            ld.setText(""+getResources().getString(R.string.noDescription));
 
         }
 
@@ -142,11 +142,11 @@ public class SingleProductFragment extends Fragment {
 
 
         if (isAvailable.equals("true")){
-            inStoreAvailability.setText("item available online");
+            inStoreAvailability.setText(getResources().getString(R.string.onLineOnly));
             add_to_cart.setEnabled(true);
             add_to_cart.setClickable(true);
         }else{
-            inStoreAvailability.setText("item only available in store");
+            inStoreAvailability.setText(getResources().getString(R.string.inStore));
 
         }
 

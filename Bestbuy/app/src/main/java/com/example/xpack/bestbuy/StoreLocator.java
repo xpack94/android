@@ -153,8 +153,9 @@ public class StoreLocator extends Activity implements Serializable, NavigationVi
 
                     i++;
                 }
-                ur+=word.replaceAll(" ","&search=")+"*)?format=json&show=all&pageSize=25&page=";
-
+                ur+=word.replaceAll(" ","&search=");
+                ur=ur.substring(0,ur.length()-8);
+                ur+=")?format=json&show=all&pageSize=25&page=";
 
                 //  intent.putExtra("url1","https://api.bestbuy.com/v1/products(name="+query+"*%7Csearch="+query+"*)?format=json&show=all&pageSize=25&page=");
                 intent.putExtra("url1",ur);

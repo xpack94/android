@@ -131,7 +131,9 @@ public class StoreDetails extends Activity  implements Serializable,NavigationVi
 
                     i++;
                 }
-                ur += word.replaceAll(" ", "&search=") + "*)?format=json&shwo=all&pageSize=25&page=";
+                ur+=word.replaceAll(" ","&search=");
+                ur=ur.substring(0,ur.length()-8);
+                ur+=")?format=json&show=all&pageSize=25&page=";
                 intent.putExtra("url1", ur);
                 intent.putExtra("url2", "&apiKey=tghcgc6qnf72tat8a5kbja9r");
                 intent.putExtra("page", 1);
